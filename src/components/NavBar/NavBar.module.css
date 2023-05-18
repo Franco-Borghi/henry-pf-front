@@ -1,0 +1,62 @@
+.ctnNavBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: rgb(228, 225, 225);
+  padding: 20px 20px 8px 20px;
+}
+
+.logo {
+  height: 50px;
+  object-fit: contain;
+  margin-left: 5px;
+}
+
+.ctnInput {
+  display: flex;
+  align-items: center;
+}
+
+.inputSearch {
+  background-color: white;
+  height: 35px;
+  width: 600px;
+  border-radius: 8px;
+  padding-left: 10px;
+}
+
+.btnIconSearch {
+  height: 40px;
+  width: 45px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btnIconSearch:hover {
+  transition: 0.2s;
+  transform: scale(1.05);
+}
+
+.ctnIcons {
+  display: flex;
+}
+
+.btnIcon {
+  height: 40px;
+  width: 45px;
+  margin: 0px 8px 5px 0px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btnIcon:hover {
+  transition: 0.2s;
+  transform: scale(1.05);
+}
+
+.txtBtnIcons {
+  margin: 0px;
+  margin-right: 5px;
+  text-align: center;
+}
