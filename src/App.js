@@ -1,5 +1,5 @@
 import "./App.css";
-import NavBar from "./components/NavBar/NavBar";
+import Home from "./components/Home/Home";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<NavBar />} />
+          <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>
     </>
