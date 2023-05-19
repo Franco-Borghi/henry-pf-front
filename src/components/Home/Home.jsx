@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NavBar from "../NavBar/NavBar";
 import Motorcycles from "../Motorcycles/Motorcycles";
-import Filter from "../Filter/Filter";
+import { useDispatch } from "react-redux";
+import { fetchData } from "../../redux/actions";
 
 
 export default function Home() {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    fetchData(dispatch)
+  }, [])
 
   return <div>
-    <NavBar />
-    {/* <Motorcycles /> */}
-    <Filter></Filter>
+    <NavBar/>
+    <Motorcycles/>
   </div>;
 }

@@ -2,9 +2,9 @@ export default function Order(props){
     
     function handleClick(e){
         if(e.target.value === "ascending"){
-            props.setDisplayedMoto([...props.displayedMoto.sort((a, b) => a.price - b.price)])
+            props.setDisplayedMotorcycles([...props.displayedMotorcycles.sort((a, b) => a.price - b.price)])
         } else if (e.target.value === "descending"){
-            props.setDisplayedMoto([...props.displayedMoto.sort((a, b) => b.price - a.price)])
+            props.setDisplayedMotorcycles([...props.displayedMotorcycles.sort((a, b) => b.price - a.price)])
         }
     }
 
