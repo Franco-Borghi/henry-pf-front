@@ -1,9 +1,13 @@
-import NavBar from "../NavBar/NavBar"
-import Filter from "../Filter/Filter";
+import React from "react";
+import NavBar from "../NavBar/NavBar";
+import Motorcycles from "../Motorcycles/Motorcycles";
+
 
 export default function Home() {
+
   return <div>
-    <NavBar></NavBar>
-    <Filter></Filter>
+    <NavBar />
+    <Motorcycles />
+    
   </div>;
 }
