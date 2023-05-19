@@ -1,13 +1,13 @@
 import "./App.css";
-import NavBar from "./components/NavBar/NavBar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./components/Home/Home"
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<NavBar />} />
+          <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>
     </>
