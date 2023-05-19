@@ -1,15 +1,19 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import motorcycles from "../../data.json"
+import { useDispatch, useSelector } from "react-redux"
+import { changeFilterBrand, changeFilterCategory } from "../../redux/actions"
+
 
 export default function Filter(){
     const motorcyclesData = motorcycles.motorcycles
     const [categories, setCategories] = useState([])
     const [marcas, setMarcas] = useState([])
-    let [categoriesFilter, setCategoriesFilter] = useState([])
-    let [brandsFilter, setBrandsFilter] = useState([])
+    const categoriesFilter = useSelector(state => state.filterCategory)
+    const brandsFilter = useSelector(state => state.filterBrand)
+    const dispatch = useDispatch();
     let [displayedMoto, setDisplayedMoto] = useState([])
-    const changeCat = useRef(categoriesFilter)
-    const changeBrand = useRef(brandsFilter)
+    motorcyclesData.forEach(m => {if(!marcas.includes(m.brand)) setMarcas(marcas.concat(m.brand))})
+    motorcyclesData.forEach(m => {if(!categories.includes(m.category)) setCategories(categories.concat(m.category))})
 
     useEffect(() =>{
         if(categoriesFilter.length >0 && brandsFilter.length > 0){
@@ -21,44 +25,12 @@ export default function Filter(){
         }else setDisplayedMoto(motorcyclesData)
     }, [categoriesFilter, brandsFilter])
 
-    useEffect(()=>{
-        const auxMarcas = []
-        const auxCategories = []
-        if(categoriesFilter.length === 0 && brandsFilter.length === 0){
-            displayedMoto.forEach(m => {if(!auxMarcas.includes(m.brand)) auxMarcas.push(m.brand)})
-            displayedMoto.forEach(m => {if(!auxCategories.includes(m.category)) auxCategories.push(m.category)})
-            auxCategories.sort()
-            setCategories(auxCategories)
-            auxMarcas.sort()
-            setMarcas(auxMarcas)
-        }
-        if(changeCat.current.length !== categoriesFilter.length) {
-            if(categoriesFilter.length === 0) motorcyclesData.forEach(m => {if(!auxMarcas.includes(m.brand)) auxMarcas.push(m.brand)})
-            else displayedMoto.forEach(m => {if(!auxMarcas.includes(m.brand)) auxMarcas.push(m.brand)})
-            changeCat.current = categoriesFilter
-            auxMarcas.sort()
-            setMarcas(auxMarcas)
-        }else if(changeBrand.current.length !== brandsFilter.length){
-            if(brandsFilter.length === 0) motorcyclesData.forEach(m => {if(!auxCategories.includes(m.category)) auxCategories.push(m.category)})
-            else displayedMoto.forEach(m => {if(!auxCategories.includes(m.category)) auxCategories.push(m.category)})
-            console.log(changeBrand.current, brandsFilter);
-            changeBrand.current = brandsFilter
-            auxCategories.sort()
-            setCategories(auxCategories)
-        }
-        // console.log(displayedMoto);
-    }, [displayedMoto])
-
     function handleFilterCat(e){
-        e.target.checked ?
-        setCategoriesFilter(categoriesFilter.concat(e.target.value)) :
-        setCategoriesFilter([...categoriesFilter.filter(c => c !== e.target.value)])
+        dispatch(changeFilterCategory(e.target.value))
     }
 
     function handleFilterBrand(e){
-        e.target.checked ? 
-        setBrandsFilter(brandsFilter.concat(e.target.value)):
-        setBrandsFilter([...brandsFilter.filter(c => c !== e.target.value)])
+        dispatch(changeFilterBrand(e.target.value))
     }
 
     return <>
