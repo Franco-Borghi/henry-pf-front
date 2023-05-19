@@ -7,12 +7,12 @@ import { changeFilterBrand, changeFilterCategory } from "../../redux/actions"
 export default function Filter(){
     const motorcyclesData = motorcycles.motorcycles
     const [categories, setCategories] = useState([])
-    const [marcas, setMarcas] = useState([])
+    const [brands, setBrands] = useState([])
     const categoriesFilter = useSelector(state => state.filterCategory)
     const brandsFilter = useSelector(state => state.filterBrand)
     const dispatch = useDispatch();
     let [displayedMoto, setDisplayedMoto] = useState([])
-    motorcyclesData.forEach(m => {if(!marcas.includes(m.brand)) setMarcas(marcas.concat(m.brand))})
+    motorcyclesData.forEach(m => {if(!brands.includes(m.brand)) setBrands(brands.concat(m.brand))})
     motorcyclesData.forEach(m => {if(!categories.includes(m.category)) setCategories(categories.concat(m.category))})
 
     useEffect(() =>{
@@ -34,11 +34,11 @@ export default function Filter(){
     }
 
     return <>
-    <h1>FILTROS</h1>
-    <h4>Categoria</h4>
+    <h1>Filters</h1>
+    <h4>Category</h4>
     {categories.map(c => <><input type="checkbox" onClick={handleFilterCat} value={c} checked={categoriesFilter.includes(c)}/><label>{c}</label></>)}
-    <h4>Marca</h4>
-    {marcas.map(c => <><input type="checkbox" onClick={handleFilterBrand} value={c} checked={brandsFilter.includes(c)} /><label>{c}</label></>)}
+    <h4>Brand</h4>
+    {brands.map(c => <><input type="checkbox" onClick={handleFilterBrand} value={c} checked={brandsFilter.includes(c)} /><label>{c}</label></>)}
     {displayedMoto.length>0 ? displayedMoto.map(m => <div><p>Brand: {m.brand} Cat: {m.category}</p></div>): <p>No hay nada en el inventario que cumpla con los filtros</p>}
     </>
 }
