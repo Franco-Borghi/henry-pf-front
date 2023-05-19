@@ -1,14 +1,14 @@
 import { useRef } from "react";
 import styles from "./SearchBar.module.css";
-import axios from "axios"
+import { useDispatch } from "react-redux";
+import { fetchDataByName } from "../../redux/actions";
 
 export default function SearchBar(){
     const searchInput = useRef(null)
+    const dispatch = useDispatch()
 
     function searchMoto(value){
-        axios.get(`http://localhost:3001/motorcycles?name=${value}`)
-        .then(r => console.log(r.data))
-        .catch(err => console.log(err.message))
+        fetchDataByName(dispatch, value)
     }
 
     return <div className={styles.ctnInput}>

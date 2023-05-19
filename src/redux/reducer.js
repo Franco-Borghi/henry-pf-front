@@ -13,12 +13,13 @@ export const reducer = (state = initialState, action) => {
         case GET_ALL_MOTOS:
             return {
                 ...state,
+                motos: [...action.payload]
             }
 
         case GET_MOTOS_BY_NAME:
             return {
                 ...state,
-               
+                motos: [...action.payload]
             }
 
         case GET_MOTO_BY_ID:
