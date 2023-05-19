@@ -13,31 +13,6 @@
   margin-left: 5px;
 }
 
-.ctnInput {
-  display: flex;
-  align-items: center;
-}
-
-.inputSearch {
-  background-color: white;
-  height: 35px;
-  width: 600px;
-  border-radius: 8px;
-  padding-left: 10px;
-}
-
-.btnIconSearch {
-  height: 40px;
-  width: 45px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.btnIconSearch:hover {
-  transition: 0.2s;
-  transform: scale(1.05);
-}
-
 .ctnIcons {
   display: flex;
 }
