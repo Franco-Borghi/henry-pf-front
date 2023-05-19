@@ -49,6 +49,6 @@ export default function Filter(){
     <h4>Brand</h4>
     {brands.map(c => <><input type="checkbox" onClick={handleFilterBrand} value={c} checked={brandsFilter.includes(c)} /><label>{c}</label></>)}
     <Order displayedMoto={displayedMoto} setDisplayedMoto={setDisplayedMoto}></Order>
-    {displayedMoto.length>0 ? displayedMoto.map(m => <div><p>Brand: {m.brand} Cat: {m.category} Price: {m.price}</p></div>): <p>No hay nada en el inventario que cumpla con los filtros</p>}
+    {displayedMoto.length>0 ? displayedMoto.map(m => <div><p>Brand: {m.brand} Cat: {m.category} Price: {m.price}</p></div>): <p>Nothing suits the filtering</p>}
     </>
 }
