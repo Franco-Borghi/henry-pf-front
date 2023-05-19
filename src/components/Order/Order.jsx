@@ -10,7 +10,7 @@ export default function Order(props){
 
     return<>
     <h3>Order by price</h3>
-    <input type="radio" value="ascending" name="order" id="ascending" onClick={handleClick}/> <label htmlFor="ascending">Ascending</label>
-    <input type="radio" value="descending" name="order" id="descending" onClick={handleClick}/> <label htmlFor="descending">Descending</label>
+    <input type="radio" value="ascending" name="order" id="ascending" onClick={handleClick} ref={props.refAsc}/> <label htmlFor="ascending">Ascending</label>
+    <input type="radio" value="descending" name="order" id="descending" onClick={handleClick} ref={props.refDesc}/> <label htmlFor="descending">Descending</label>
     </>
 }
