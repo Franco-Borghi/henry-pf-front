@@ -1,3 +1,4 @@
+import SearchBar from "../SearchBar/SearchBar";
 import styles from "./NavBar.module.css";
 
 export default function NavBar() {
@@ -5,17 +6,7 @@ export default function NavBar() {
     <div className={styles.ctnNavBar}>
       <img className={styles.logo} src={"./Logho-Mi-moto.png"} alt="logo" />
 
-      <div className={styles.ctnInput}>
-        <input
-          className={styles.inputSearch}
-          size="small"
-          fullWidth
-          placeholder="Search"
-        />
-        <button className={styles.btnIconSearch}>
-          <ion-icon size="small" name="search-outline"></ion-icon>
-        </button>
-      </div>
+      <SearchBar></SearchBar>
 
       <div className={styles.ctnIcons}>
         <div>
