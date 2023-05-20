@@ -1,6 +1,7 @@
 .ctnInput {
     display: flex;
     align-items: center;
+    gap: 10px;
   }
   
   .inputSearch {
@@ -16,9 +17,10 @@
     width: 45px;
     border-radius: 8px;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    background-color: rgb(65,64,64);
   }
   
   .btnIconSearch:hover {
-    transition: 0.2s;
     transform: scale(1.05);
   }

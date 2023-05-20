@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import styles from "./SearchBar.module.css";
+import styles from "./SearchBar.module.scss";
 import { useDispatch } from "react-redux";
 import { fetchDataByName } from "../../redux/actions";
 
@@ -20,7 +20,7 @@ export default function SearchBar(){
       ref={searchInput}
     />
     <button className={styles.btnIconSearch} onClick={() => searchMoto(searchInput.current.value)}>
-      <ion-icon size="small" name="search-outline"></ion-icon>
+      <ion-icon style={{ color: '#fff' }} size="small" name="search-outline"></ion-icon>
     </button>
   </div>
 }
