@@ -1,0 +1,66 @@
+.nav-bar-container {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(227, 218, 218);
+}
+
+.ctnNavBar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1440px;
+  padding: 10px 25px; 
+
+  .logo {
+    height: 50px;
+    object-fit: contain;
+  }
+}
+
+
+
+.ctnIcons {
+  display: flex;
+  gap: 16px;
+
+  .icon-container {
+    position: relative;
+
+    &:hover {
+      .txtBtnIcons {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.btnIcon {
+  height: 40px;
+  width: 45px;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  background-color: rgb(65,64,64);
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.txtBtnIcons {
+  background-color: rgb(65,64,64);
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 5px;
+  right: 0;
+  opacity: 0;
+  position: absolute;
+  bottom: -35px;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
