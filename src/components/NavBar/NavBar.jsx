@@ -1,11 +1,12 @@
 import SearchBar from "../SearchBar/SearchBar";
 import styles from "./NavBar.module.scss";
+import logo from '../Footer/dinamo.png'
 
 export default function NavBar(props) {
   return (
     <nav className={styles['nav-bar-container']}>
       <div className={styles.ctnNavBar}>
-        <img className={styles.logo} src={"./Logho-Mi-moto.png"} alt="logo" />
+        <img className={styles.logo} src={logo} alt="logo" />
 
         <SearchBar setSearchQuery={props.setSearchQuery}></SearchBar>
 
