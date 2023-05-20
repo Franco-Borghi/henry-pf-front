@@ -2,6 +2,7 @@ import FB from "../Footer/fb.png"
 import IG from "../Footer/ig.png"
 import WPP from "../Footer/wpp.png"
 import DN from "../Footer/dinamo.png"
+import {Link} from "react-router-dom"
 
 export default function Footer(){
 <footer>
@@ -11,7 +12,7 @@ export default function Footer(){
     
 
     <div>
-        <a href="/home">Inicio</a>
+        <Link to="/home">Home</Link>
         <a href="https://www.dinamotos.mx/wp-content/uploads/2016/08/terminos-y-condiciones-DINAMO.pdf">Términos y condiciones</a>
         <a href="https://www.dinamotos.mx/wp-content/uploads/2016/08/aviso-privacidad-DINAMO.pdf">Política de privacidad</a>
     </div>
