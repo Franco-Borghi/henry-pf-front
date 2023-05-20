@@ -5,6 +5,7 @@ import Filter from "../Filter/Filter"
 import Order from '../Order/Order';
 import { useSelector } from 'react-redux';
 import FilterBar from '../FilterBar/FilterBar';
+import styles from './Motorcycles.module.css'
 
 export default function Motorcycles() {
     // const [motorcyclesData, setMotorcyclesData] = useState([]); // Cuando este el back se cambia a la llamada al back para obtener los datos
@@ -53,21 +54,26 @@ export default function Motorcycles() {
 
 
   return (
-    <div>
-      {currentMotorcycles.length > 0 ? currentMotorcycles.map((motorcycle) => (
-        <Motorcycle key={motorcycle.id} info={motorcycle} />
-      )): <p>No motorcycles available</p>}
-
-      {/* <FilterBar> */}
+    <div className={styles.motorcyclesPage}>
+    <div className={styles.filterOrderSection}>
         <Filter displayedMotorcycles={displayedMotorcycles}/>
         <Order displayedMotorcycles={displayedMotorcycles} setDisplayedMotorcycles={setDisplayedMotorcycles} refAsc={ascendingBtn} refDesc={descendingBtn}></Order>
+    </div>
+    <div className={styles.MotorcycleList}>
+        {currentMotorcycles.length > 0 ? currentMotorcycles.map((motorcycle) => (
+            <div className={styles.motorcycleItem} key={motorcycle.id}>
+                <Motorcycle info={motorcycle} />
+            </div>
+        )): <p className={styles.paragraph}>No motorcycles available</p>}
+    </div>
+    <div className={styles.pagination}>
         <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={goToPage}
-          onPreviousPage={goToPreviousPage}
-          onNextPage={goToNextPage}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={goToPage}
+            onPreviousPage={goToPreviousPage}
+            onNextPage={goToNextPage}
         />
-      {/* </ FilterBar> */}
-    </div>  
+    </div>
+</div> 
   )}
