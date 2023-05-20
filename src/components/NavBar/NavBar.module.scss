@@ -5,7 +5,8 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  background-color: rgb(227, 218, 218);
+  // background-color: rgb(227, 218, 218);
+  background-color: #282828;
 }
 
 .ctnNavBar {
@@ -45,15 +46,16 @@
   border-radius: 8px;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
-  background-color: rgb(65,64,64);
+  background-color: rgb(68,68,68);
 
   &:hover {
     transform: scale(1.05);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
 }
 
 .txtBtnIcons {
-  background-color: rgb(65,64,64);
+  background-color: rgb(68,68,68);
   color: #fff;
   padding: 5px 8px;
   border-radius: 5px;
@@ -63,4 +65,5 @@
   bottom: -35px;
   text-align: center;
   transition: all 0.3s ease-in-out;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
