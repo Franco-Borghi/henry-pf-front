@@ -31,12 +31,24 @@ export default function Filter(props){
 
     return (
         <div className={styles['filters']}>
-            <h1>Filters</h1>
-            <button onClick={resetFilters}>Reset Filters</button>
+        <h1>Filters</h1>
+        <button className={styles.buttonReset} onClick={resetFilters}>Reset Filters</button>
+        <div className={styles['filterSection']}>
             <h4>Category</h4>
-            {categories.map(c => <><input type="checkbox" onClick={handleFilterCat} value={c} checked={categoriesFilter.includes(c)}/><label>{c}</label></>)}
-            <h4>Brand</h4>
-            {brands.map(c => <><input type="checkbox" onClick={handleFilterBrand} value={c} checked={brandsFilter.includes(c)} /><label>{c}</label></>)}
+            {categories.map(c => 
+              <div key={c}>
+                <input type="checkbox" onClick={handleFilterCat} value={c} checked={categoriesFilter.includes(c)}/><label>{c}</label><br/>
+              </div>
+            )}
         </div>
+        <div className={styles['filterSection']}>
+            <h4>Brand</h4>
+            {brands.map(c => 
+              <div key={c}>
+                <input type="checkbox" onClick={handleFilterBrand} value={c} checked={brandsFilter.includes(c)} /><label>{c}</label><br/>
+              </div>
+            )}
+        </div>
+    </div>
     )
 }

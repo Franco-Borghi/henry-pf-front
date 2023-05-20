@@ -1,0 +1,35 @@
+.motorcycle {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.motorcycleImage {
+    width: 70%; 
+    max-width: 100px; 
+}
+
+.motorcycleInfo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.imageContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imageContainer img {
+    width: 500px;  
+    height: 300px;  
+    object-fit: cover; 
+    margin-top: 10px;
+}
+    

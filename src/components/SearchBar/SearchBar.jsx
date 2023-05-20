@@ -14,8 +14,6 @@ export default function SearchBar(){
     return <div className={styles.ctnInput}>
     <input
       className={styles.inputSearch}
-      size="small"
-      fullWidth
       placeholder="Search"
       ref={searchInput}
     />

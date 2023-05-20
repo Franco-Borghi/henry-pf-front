@@ -1,3 +1,7 @@
+import React from 'react';
+import styles from './Order.module.css'
+
+
 export default function Order(props){
     
     function handleClick(e){
@@ -8,9 +12,15 @@ export default function Order(props){
         }
     }
 
-    return<>
-    <h3>Order by price</h3>
+    return (
+        <div className={styles.order}>
+    <h4>Order by price</h4>
+    <div>
     <input type="radio" value="ascending" name="order" id="ascending" onClick={handleClick} ref={props.refAsc}/> <label htmlFor="ascending">Ascending</label>
+    </div>
+    <div>
     <input type="radio" value="descending" name="order" id="descending" onClick={handleClick} ref={props.refDesc}/> <label htmlFor="descending">Descending</label>
-    </>
+    </div>
+    </div>
+    )
 }
