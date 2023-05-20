@@ -4,6 +4,7 @@ import Pagination from '../Pagination/Pagination';
 import Filter from "../Filter/Filter"
 import Order from '../Order/Order';
 import { useSelector } from 'react-redux';
+import FilterBar from '../FilterBar/FilterBar';
 
 export default function Motorcycles() {
     // const [motorcyclesData, setMotorcyclesData] = useState([]); // Cuando este el back se cambia a la llamada al back para obtener los datos
@@ -53,18 +54,20 @@ export default function Motorcycles() {
 
   return (
     <div>
-      <Filter displayedMotorcycles={displayedMotorcycles}/>
-      <Order displayedMotorcycles={displayedMotorcycles} setDisplayedMotorcycles={setDisplayedMotorcycles} refAsc={ascendingBtn} refDesc={descendingBtn}></Order>
       {currentMotorcycles.length > 0 ? currentMotorcycles.map((motorcycle) => (
         <Motorcycle key={motorcycle.id} info={motorcycle} />
       )): <p>No motorcycles available</p>}
-      <Pagination
-      currentPage={currentPage}
-      totalPages={totalPages}
-      onPageChange={goToPage}
-      onPreviousPage={goToPreviousPage}
-      onNextPage={goToNextPage}
 
-      />
+      {/* <FilterBar> */}
+        <Filter displayedMotorcycles={displayedMotorcycles}/>
+        <Order displayedMotorcycles={displayedMotorcycles} setDisplayedMotorcycles={setDisplayedMotorcycles} refAsc={ascendingBtn} refDesc={descendingBtn}></Order>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={goToPage}
+          onPreviousPage={goToPreviousPage}
+          onNextPage={goToNextPage}
+        />
+      {/* </ FilterBar> */}
     </div>  
   )}

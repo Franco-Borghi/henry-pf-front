@@ -1,6 +1,7 @@
-import { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { changeFilterBrand, changeFilterCategory } from "../../redux/actions"
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { changeFilterBrand, changeFilterCategory } from "../../redux/actions";
+import styles from './Filter.module.scss';
 
 
 export default function Filter(props){
@@ -28,12 +29,14 @@ export default function Filter(props){
         brandsFilter.forEach(b => dispatch(changeFilterBrand(b)))
     }
 
-    return <>
-    <h1>Filters</h1>
-    <button onClick={resetFilters}>Reset Filters</button>
-    <h4>Category</h4>
-    {categories.map(c => <><input type="checkbox" onClick={handleFilterCat} value={c} checked={categoriesFilter.includes(c)}/><label>{c}</label></>)}
-    <h4>Brand</h4>
-    {brands.map(c => <><input type="checkbox" onClick={handleFilterBrand} value={c} checked={brandsFilter.includes(c)} /><label>{c}</label></>)}
-    </>
+    return (
+        <div className={styles['filters']}>
+            <h1>Filters</h1>
+            <button onClick={resetFilters}>Reset Filters</button>
+            <h4>Category</h4>
+            {categories.map(c => <><input type="checkbox" onClick={handleFilterCat} value={c} checked={categoriesFilter.includes(c)}/><label>{c}</label></>)}
+            <h4>Brand</h4>
+            {brands.map(c => <><input type="checkbox" onClick={handleFilterBrand} value={c} checked={brandsFilter.includes(c)} /><label>{c}</label></>)}
+        </div>
+    )
 }
