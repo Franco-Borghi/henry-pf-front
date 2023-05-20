@@ -10,15 +10,15 @@ export default function Footer(){
         <footer className={styles.footer}>
             <section>
                 <div className={styles['logo-container']}>
-                    <Link to="/home">
+                    <Link to="/">
                         <img src={DN} alt="logo Dinamo"></img>
                     </Link>
                 </div>
                 
                 <div className={styles['links']}>
-                    <Link to="/home">Home</Link>
-                    <a href="https://www.dinamotos.mx/wp-content/uploads/2016/08/terminos-y-condiciones-DINAMO.pdf">Términos y condiciones</a>
-                    <a href="https://www.dinamotos.mx/wp-content/uploads/2016/08/aviso-privacidad-DINAMO.pdf">Política de privacidad</a>
+                    <Link to="/">Home</Link>
+                    <a href="https://www.dinamotos.mx/wp-content/uploads/2016/08/terminos-y-condiciones-DINAMO.pdf">Conditions of use</a>
+                    <a href="https://www.dinamotos.mx/wp-content/uploads/2016/08/aviso-privacidad-DINAMO.pdf">Privacy Notice</a>
                 </div>
             
                 <div className={styles['contact-us']}>
@@ -28,12 +28,12 @@ export default function Footer(){
                             <a href="https://www.instagram.com/dinamotocicletas/?hl=es"><img src={IG} alt="link to instagram"></img></a>
                             <a href=""><img src={WPP} alt="link to whatsapp"></img></a>
                         </div>
-                    <p>Correo electrónico: motos@dinamo.com.mx</p>
+                    <p>E-mail: motos@dinamo.com.mx</p>
                 </div>
             </section>
 
             <section>
-                <p style={{ color: '#fff' }}>Dinamo© 2023 Todos los derechos reservados.</p>
+                <p style={{ color: '#fff' }}>Dinamo© 2023 All rights reserved.</p>
             </section>
         </footer>
     )
