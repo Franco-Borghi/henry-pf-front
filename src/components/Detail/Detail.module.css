@@ -1,0 +1,49 @@
+.detailContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .motorcycleTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  
+  
+  
+  .motorcycleImage {
+    width: 300px;
+    height: auto;
+    margin-top: 20px;
+  }
+  
+  .motorcycleInfo {
+    margin-top: 20px;
+  }
+  
+  .motorcycleId {
+    font-weight: bold;
+  }
+  
+  .labelWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .label {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+  }
+  
+  .statContainer {
+    margin-top: 20px;
+  }
+  
+  .stat {
+    margin-bottom: 5px;
+  }
+  
