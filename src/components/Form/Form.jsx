@@ -72,8 +72,8 @@ export default function Form(){
 
     function handleChange(e){
         let inputsAux = {...inputs, [e.target.name]: e.target.value}
-        setInputs(inputsAux)
-        setErrors(validate(inputsAux, categories))
+        setInputs(inputsAux);
+        // setErrors(validate(inputsAux, categories))
     }
 
     return (
