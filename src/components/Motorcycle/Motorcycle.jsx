@@ -7,7 +7,7 @@ export default function Motorcycle(props) {
   return (
     <div className={styles.motorcycle}>
       <div className={styles.path}></div>
-      <Link to={`/motorcycles/${id}`}>
+      <Link to={`/${id}`}>
         <div className={styles.imageContainer}>
           <img className={styles.motorcyleImage} src={image} alt={brand} />
         </div>
