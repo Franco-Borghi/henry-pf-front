@@ -55,10 +55,13 @@ export default function Motorcycles() {
 
   return (
     <div className={styles.motorcyclesPage}>
-    <div className={styles.filterOrderSection}>
-        <Filter displayedMotorcycles={displayedMotorcycles}/>
-        <Order displayedMotorcycles={displayedMotorcycles} setDisplayedMotorcycles={setDisplayedMotorcycles} refAsc={ascendingBtn} refDesc={descendingBtn}></Order>
-    </div>
+      <FilterBar>
+        <div className={styles.filterOrderSection}>
+            <Filter displayedMotorcycles={displayedMotorcycles}/>
+            <Order displayedMotorcycles={displayedMotorcycles} setDisplayedMotorcycles={setDisplayedMotorcycles} refAsc={ascendingBtn} refDesc={descendingBtn}></Order>
+        </div>
+
+      </FilterBar>
     <div className={styles.MotorcycleList}>
         {currentMotorcycles.length > 0 ? currentMotorcycles.map((motorcycle) => (
             <div className={styles.motorcycleItem} key={motorcycle.id}>

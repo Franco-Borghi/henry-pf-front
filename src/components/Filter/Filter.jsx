@@ -31,7 +31,7 @@ export default function Filter(props){
 
     return (
         <div className={styles['filters']}>
-        <h1>Filters</h1>
+        <h1 style={{ marginBottom: '10px'}}>Filters</h1>
         <button className={styles.buttonReset} onClick={resetFilters}>Reset Filters</button>
         <div className={styles['filterSection']}>
             <h4>Category</h4>
