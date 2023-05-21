@@ -1,13 +1,16 @@
 import SearchBar from "../SearchBar/SearchBar";
 import styles from "./NavBar.module.scss";
 import logo from '../Footer/dinamo.png'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function NavBar(props) {
+
+  const navigate = useNavigate();
+
   return (
     <nav className={styles['nav-bar-container']}>
       <div className={styles.ctnNavBar}>
-        <img className={styles.logo} src={logo} alt="logo" />
+        <img onClick={() => navigate('/')} className={styles.logo} src={logo} alt="logo" />
 
         <SearchBar setSearchQuery={props.setSearchQuery}></SearchBar>
 

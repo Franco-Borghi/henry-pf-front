@@ -1,0 +1,40 @@
+.create-motorcycle-container {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  padding-left: 250px;
+    // background: linear-gradient(360deg, rgb(2, 134, 255) 0%, rgb(2, 157, 255) 28%, rgba(2,181,255,1) 60%, rgba(2,240,255,1) 100%);
+
+  .return-to-home-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    cursor: pointer;
+  }
+
+  .body {
+    width: 100%;
+    max-width: 1440px;
+    padding: 40px;
+
+    h1 {
+      padding: 10px 15px;
+      border-radius: 10px;
+      background-color: #282828;
+      width: fit-content;
+      margin: 0 auto 40px;
+
+      span {
+        font-size: 40px;
+        text-align: center;
+        font-weight: bold;
+        background: linear-gradient(360deg, rgb(2, 134, 255) 0%, rgb(2, 157, 255) 28%, rgba(2,181,255,1) 60%, rgba(2,240,255,1) 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+    }
+  }
+}

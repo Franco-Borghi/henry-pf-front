@@ -1,10 +1,10 @@
 import "./App.scss";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home/Home"
-import Form from "./components/Form/Form";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchData } from "./redux/actions";
+import { CreateMotorcycle } from "./containers/CreateMotorcycle/CreateMotorcycle";
 
 function App() {
 
@@ -18,7 +18,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />}/>
-          <Route path="/create" element={<Form/>}/>
+          <Route path="/create" element={<CreateMotorcycle/>}/>
         </Routes>
       </BrowserRouter>
     </>
