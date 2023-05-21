@@ -14,7 +14,10 @@ export default function Detail() {
       try {
         const response = await axios.get(`http://localhost:3001/motorcycles/${id}`);
         setMotorcycle(response.data);
-        response.data.items.forEach(i => {if(!colors.includes(i.color)) setColors(colors.concat(i.color))})
+        let auxColors = []
+        response.data.items.forEach(i => {if(!auxColors.includes(i.color)) auxColors.push(i.color)
+        setColors(auxColors)
+        })
       } catch (error) {
         console.log(error);
       }
@@ -32,8 +35,12 @@ export default function Detail() {
       <h2>Brand: {motorcycle.brand}</h2>
       <h2>Model: {motorcycle.model}</h2>
       <h2>Category: {motorcycle.category}</h2>
+      <h2>Transmission: {motorcycle.transmission}</h2>
+      <h2>Year: {motorcycle.year}</h2>
       <h2>Price: {motorcycle.price}</h2>
-      <h2>Color options: {colors}</h2>
+      <h2>CC: {motorcycle.cc}</h2>
+      <h2>Color options: {colors?.map(c => <p>{c}</p>)}</h2>
+      <h4>Description: {motorcycle.description}</h4>
       <img src={motorcycle.image} alt={motorcycle.brand} />
       <Footer></Footer>
     </div>
