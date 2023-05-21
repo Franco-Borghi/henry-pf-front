@@ -1,35 +1,112 @@
 .motorcycle {
     width: 100%;
+    height: 350px;
+    max-width: 750px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 15px;
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
+    position: relative;
     align-items: center;
     text-align: center;
-}
+    margin: 25px;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
 
-.motorcycleImage {
-    width: 70%; 
-    max-width: 100px; 
-}
+    &:hover {
+        transform: scale(1.02);
+    }
 
-.motorcycleInfo {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+    .path {
+        position: absolute;
+        z-index: -1;
+        clip-path: polygon(75% 0, 100% 0, 100% 100%, 50% 100%);
+        background-color: blue;
+        background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+    }
 
-.imageContainer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    > a {
+        display: flex;
+        width: 100%;
+        height: 100%;
 
-.imageContainer img {
-    width: 500px;  
-    height: 300px;  
-    object-fit: cover; 
-    margin-top: 10px;
-}
-    
+        .imageContainer {
+            width: 50%;
+            display: flex;
+            align-items: center;
+            height: 100%;
+
+            img {
+                width: 100%;
+                object-fit: cover;
+                object-position: center;
+            }
+        }
+
+        .motorcycleInfo {
+            display: flex;
+            flex-direction: column;
+            padding: 40px 25px;
+            height: 100%;
+            width: 50%;
+            align-items: center;
+            justify-content: space-between;
+
+            h3 {
+                color: #282828;
+                font-size: 32px;
+                font-weight: 40px;
+            }
+
+            .info {
+                width: 100%;
+
+                h3,
+                h4 {
+                    color: #282828;
+                }
+
+                h3 {
+                    text-align: start;
+                }
+
+                h4 {
+                    text-align: start;
+                    padding-top: 16px;
+                    padding-bottom: 16px;
+                }
+
+                p {
+                    font-size: 14px;
+                    color: #282828;
+                    text-align: start;
+                }
+            }
+
+            .buttonContainer {
+                width: 100%;
+                padding: 0 40px;
+                text-align: start;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 40px;
+
+                h4 {
+                    text-align: start;
+                    color: #282828;
+                }
+
+                a {
+                    color: #fff;
+                    background-color: #282828;
+                    border-radius: 10px;
+                    padding: 8px 16px;
+                }
+            }
+        }
+    }
+} 
