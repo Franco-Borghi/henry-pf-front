@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchData } from "./redux/actions";
 import { CreateMotorcycle } from "./containers/CreateMotorcycle/CreateMotorcycle";
+import Detail from "./components/Detail/Detail";
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/create" element={<CreateMotorcycle/>}/>
+          <Route path="/:id" element={<Detail/>}/>
         </Routes>
       </BrowserRouter>
     </>

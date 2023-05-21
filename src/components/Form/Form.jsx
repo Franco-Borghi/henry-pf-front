@@ -67,12 +67,15 @@ export default function Form(){
                 })
                 fetchData(dispatch)
             }).catch(err => {
-                if(err.response.data === "SequelizeUniqueConstraintError: llave duplicada viola restricción de unicidad «items_pkey»")mySwal.fire({
-                    html: <strong>There is a motorcycle registered with the Chassis Number you are providing, please check the data</strong>,
+                if(err.response.data === `SequelizeUniqueConstraintError: llave duplicada viola restricción de unicidad «items_pkey»`)mySwal.fire({
+                    html: <strong>There is already a motorcycle registered with that chassis number</strong>,
                     icon: "error",
                 })
                 else {
-                    console.log(err);
+                    mySwal.fire({
+                        html: <strong>{err.response.data}</strong>,
+                        icon: "error",
+                    })
                 }
             })
         }
