@@ -52,7 +52,6 @@ export default function Motorcycles() {
       setCurrentPage((prevPage) => prevPage + 1);
     }
 
-
   return (
     <div className={styles.motorcyclesPage}>
       <FilterBar>

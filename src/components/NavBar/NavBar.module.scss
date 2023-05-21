@@ -20,6 +20,7 @@
   .logo {
     height: 50px;
     object-fit: contain;
+    cursor: pointer;
   }
 }
 
@@ -31,6 +32,7 @@
 
   .icon-container {
     position: relative;
+    white-space: nowrap;
 
     &:hover {
       .txtBtnIcons {
