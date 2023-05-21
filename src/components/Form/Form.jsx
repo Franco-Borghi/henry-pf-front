@@ -1,11 +1,14 @@
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import styles from "./Form.module.css"
 import { useDispatch, useSelector } from "react-redux"
 import validate from "./validate"
 import { fetchData, postMotorcycle } from "../../redux/actions"
 import { Link } from "react-router-dom"
+import Swal from "sweetalert2"
+import withReactContent from 'sweetalert2-react-content'
 
 export default function Form(){
+    const mySwal= withReactContent(Swal)
     const [categories, setCategories] = useState([])
     const motorcyclesData = useSelector(state => state.motos)
     motorcyclesData?.forEach(m => {if(!categories.includes(m.category)) setCategories(categories.concat(m.category))})
@@ -55,12 +58,17 @@ export default function Form(){
                 catRef.current.value = ""
                 manualRadio.current.checked = false
                 autoRadio.current.checked = false
-                alert("Moto creada exitosamente")
+                mySwal.fire({
+                    html: <strong>The motorcycle has been successfully created</strong>,
+                    icon: "success",
+                })
                 fetchData(dispatch)
             }).catch(err => {
-                if(err.response.data === "SequelizeUniqueConstraintError: llave duplicada viola restricción de unicidad «items_pkey»") alert("La moto ya se encuentra registrada, chequee los datos")
+                if(err.response.data === "SequelizeUniqueConstraintError: llave duplicada viola restricción de unicidad «items_pkey»")mySwal.fire({
+                    html: <strong>There is a motorcycle registered with the Chassis Number you are providing, please check the data</strong>,
+                    icon: "error",
+                })
                 else {
-                    alert(err)
                     console.log(err);
                 }
             })
