@@ -59,13 +59,13 @@ export default function Form(){
                 manualRadio.current.checked = false
                 autoRadio.current.checked = false
                 mySwal.fire({
-                    title: <strong>The motorcycle has been successfully created</strong>,
+                    html: <strong>The motorcycle has been successfully created</strong>,
                     icon: "success",
                 })
                 fetchData(dispatch)
             }).catch(err => {
                 if(err.response.data === "SequelizeUniqueConstraintError: llave duplicada viola restricción de unicidad «items_pkey»")mySwal.fire({
-                    html: <p>There is a motorcycle registered with the Chassis Number you are providing, please check the data</p>,
+                    html: <strong>There is a motorcycle registered with the Chassis Number you are providing, please check the data</strong>,
                     icon: "error",
                 })
                 else {
