@@ -33,6 +33,10 @@ export const fetchDataByName = (dispatch,value) => {
     .catch(err => console.log(err))
 }
 
+export const postMotorcycle = async (data) => {
+    return await axios.post("http://localhost:3001/motorcycles", data)
+}
+
 export const getMotoById = (id) => {
 }
 
