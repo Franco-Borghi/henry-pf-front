@@ -42,6 +42,7 @@ export default function Detail() {
       <h2>Color options: {colors?.map(c => <p>{c}</p>)}</h2>
       <h4>Description: {motorcycle.description}</h4>
       <img src={motorcycle.image} alt={motorcycle.brand} />
+      <button>Add to cart</button>
       <Footer></Footer>
     </div>
   );
