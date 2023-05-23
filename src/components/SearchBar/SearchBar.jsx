@@ -21,9 +21,9 @@ export default function SearchBar(){
           placeholder="Search"
           ref={searchInput}
         />
-      <button type="submit" className={styles.btnIconSearch} onClick={() => searchMoto(searchInput.current.value)}>
-        <ion-icon style={{ color: '#fff' }} size="small" name="search-outline"></ion-icon>
-      </button>
-    </form>
+        <button type="submit" className={styles.btnIconSearch} onClick={() => searchMoto(searchInput.current.value)}>
+          <ion-icon style={{ color: '#fff' }} size="small" name="search-outline"></ion-icon>
+        </button>
+      </form>
     )
 }
