@@ -14,14 +14,16 @@ export default function SearchBar(){
         navigate('/');
     }
 
-    return <div className={styles.ctnInput}>
-    <input
-      className={styles.inputSearch}
-      placeholder="Search"
-      ref={searchInput}
-    />
-    <button className={styles.btnIconSearch} onClick={() => searchMoto(searchInput.current.value)}>
-      <ion-icon style={{ color: '#fff' }} size="small" name="search-outline"></ion-icon>
-    </button>
-  </div>
+    return (
+      <form onSubmit={(e) => e.preventDefault()} className={styles.ctnInput}>
+        <input
+          className={styles.inputSearch}
+          placeholder="Search"
+          ref={searchInput}
+        />
+        <button type="submit" className={styles.btnIconSearch} onClick={() => searchMoto(searchInput.current.value)}>
+          <ion-icon style={{ color: '#fff' }} size="small" name="search-outline"></ion-icon>
+        </button>
+      </form>
+    )
 }
