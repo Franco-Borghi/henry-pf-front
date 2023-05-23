@@ -168,7 +168,7 @@ export default function Form(){
                                     {categories?.map(c => <option>{c}</option>)}
                                 </select>
                             
-                                <input className={styles[`${errors.category ? 'error' : ''}`]} type="text" id="category" name="category" placeholder="Other?"onChange={handleChange} value={inputs.category}/>
+                                <input className={styles[`${errors.category ? 'error' : ''}`]} type="text" id="category" name="category" placeholder="Other"onChange={handleChange} value={inputs.category}/>
                                 <p>{errors.category}</p>
                             </div>
                         </div>

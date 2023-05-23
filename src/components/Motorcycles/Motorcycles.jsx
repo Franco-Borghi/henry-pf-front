@@ -10,12 +10,11 @@ import styles from './Motorcycles.module.css'
 export default function Motorcycles() {
     // const [motorcyclesData, setMotorcyclesData] = useState([]); // Cuando este el back se cambia a la llamada al back para obtener los datos
     const motorcyclesData = useSelector(state => state.motos)
-
-    const ascendingBtn = useRef(null)
-    const descendingBtn = useRef(null)
     
     const categoriesFilter = useSelector(state => state.filterCategory)
     const brandsFilter = useSelector(state => state.filterBrand)
+    const orderAscending = useSelector(state => state.orderAsc)
+    const orderDescending = useSelector(state => state.orderDesc)
     const [displayedMotorcycles, setDisplayedMotorcycles] = useState([])
 
   //#region Data for pagination component
@@ -28,17 +27,22 @@ export default function Motorcycles() {
   //#endregion
     
     useEffect(() =>{
+      let motorcyclesAux = [];
       if(categoriesFilter.length >0 && brandsFilter.length > 0){
-        setDisplayedMotorcycles(motorcyclesData.filter(motorcycle => categoriesFilter.includes(motorcycle.category) && brandsFilter.includes(motorcycle.brand)))
+        motorcyclesAux = motorcyclesData.filter(motorcycle => categoriesFilter.includes(motorcycle.category) && brandsFilter.includes(motorcycle.brand))
       } else if(categoriesFilter.length >0){
-        setDisplayedMotorcycles(motorcyclesData.filter(m => categoriesFilter.includes(m.category)))
+        motorcyclesAux = motorcyclesData.filter(m => categoriesFilter.includes(m.category))
       } else if(brandsFilter.length >0){
-        setDisplayedMotorcycles(motorcyclesData.filter(m => brandsFilter.includes(m.brand)))
-      }else setDisplayedMotorcycles(motorcyclesData)
-      ascendingBtn.current.checked = false
-      descendingBtn.current.checked = false
+        motorcyclesAux = (motorcyclesData.filter(m => brandsFilter.includes(m.brand)))
+      }else motorcyclesAux = motorcyclesData
+
+      if(orderAscending) motorcyclesAux = [...[...motorcyclesAux].sort((a, b) => a.price - b.price)]
+      if(orderDescending) motorcyclesAux = [...[...motorcyclesAux].sort((a, b) => b.price - a.price)]
+
+      setDisplayedMotorcycles(motorcyclesAux)
       setCurrentPage(1)
-  }, [motorcyclesData, categoriesFilter, brandsFilter])
+
+  }, [motorcyclesData, categoriesFilter, brandsFilter, orderAscending, orderDescending])
 
     const goToPage = (pageNumber) => {
       setCurrentPage(pageNumber);
@@ -57,7 +61,7 @@ export default function Motorcycles() {
       <FilterBar>
         <div className={styles.filterOrderSection}>
             <Filter displayedMotorcycles={displayedMotorcycles}/>
-            <Order displayedMotorcycles={displayedMotorcycles} setDisplayedMotorcycles={setDisplayedMotorcycles} refAsc={ascendingBtn} refDesc={descendingBtn}></Order>
+            <Order displayedMotorcycles={displayedMotorcycles} setDisplayedMotorcycles={setDisplayedMotorcycles}></Order>
         </div>
 
       </FilterBar>
