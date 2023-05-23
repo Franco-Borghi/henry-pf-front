@@ -15,10 +15,16 @@ export default function Pagination({
   }
 
   return (
-    <div className={styles.pagination}>
-      <button className={styles.paginationButton} onClick={onPreviousPage} disabled={currentPage === 1}>
+    <div className={styles.pagination}>{
+      totalPages < 1 
+      ? <button style={{display:"none"}}>
+      Previous
+        </button>
+      : <button className={styles.paginationButton} onClick={onPreviousPage} disabled={currentPage === 1}>
         Previous
       </button>
+    }
+      
       {pageNumbers.map((pageNumber) => (
         <button
           className={styles.paginationButton}
@@ -28,10 +34,15 @@ export default function Pagination({
         >
           {pageNumber}
         </button>
-      ))}
-      <button className={styles.paginationButton} onClick={onNextPage} disabled={currentPage === totalPages}>
-        Next
-      </button>
+      ))}{
+        totalPages < currentPage
+        ? <button style={{display:"none"}}>
+          Next
+          </button>
+
+        : <button className={styles.paginationButton} onClick={onNextPage} disabled={currentPage === totalPages}>
+          Next
+         </button>}
     </div>
   );
 }
