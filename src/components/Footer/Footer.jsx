@@ -16,13 +16,13 @@ export default function Footer(){
                 </div>
                 
                 <div className={styles['links']}>
-                    <Link to="/">Home</Link>
-                    <a href="https://www.dinamotos.mx/wp-content/uploads/2016/08/terminos-y-condiciones-DINAMO.pdf">Conditions of use</a>
-                    <a href="https://www.dinamotos.mx/wp-content/uploads/2016/08/aviso-privacidad-DINAMO.pdf">Privacy Notice</a>
+                    <Link to="/"><p>Home</p></Link>
+                    <a href="https://www.dinamotos.mx/wp-content/uploads/2016/08/terminos-y-condiciones-DINAMO.pdf"><p>Conditions of use</p></a>
+                    <a href="https://www.dinamotos.mx/wp-content/uploads/2016/08/aviso-privacidad-DINAMO.pdf"><p>Privacy Notice </p></a>
                 </div>
             
                 <div className={styles['contact-us']}>
-                    <a>Contact us</a>
+                    <a><p>Contact us</p></a>
                         <div className={styles.icons}>
                             <a href="https://www.facebook.com/dinamotocicletas/">
                                 <svg className={styles.facebook}  viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
