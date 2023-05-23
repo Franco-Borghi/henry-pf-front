@@ -1,9 +1,11 @@
-import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID } from "./actions";
+import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID, ORDER_ASC, ORDER_DESC } from "./actions";
 
 const initialState = {
     motos: [],
     filterCategory: [],
     filterBrand: [],
+    orderAsc : false,
+    orderDesc : false,
 }
 
 export const reducer = (state = initialState, action) => {
@@ -25,6 +27,20 @@ export const reducer = (state = initialState, action) => {
         case GET_MOTO_BY_ID:
             return {
                 ...state,
+            }
+
+        case ORDER_ASC:
+            return {
+                ...state,
+                orderAsc: action.payload,
+                orderDesc : false,
+            }
+        
+        case ORDER_DESC:
+            return {
+                ...state,
+                orderAsc: false,
+                orderDesc : action.payload,
             }
 
         case CHANGE_FILTER_CATEGORY:

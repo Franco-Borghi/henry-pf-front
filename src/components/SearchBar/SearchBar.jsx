@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import styles from "./SearchBar.module.scss";
 import { useDispatch } from "react-redux";
 import { fetchDataByName } from "../../redux/actions";
@@ -7,8 +6,7 @@ import { useSelector } from "react-redux";
 import { changeFilterBrand, changeFilterCategory } from "../../redux/actions";
 
 
-export default function SearchBar(){
-    const searchInput = useRef(null)
+export default function SearchBar(props){
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const categoriesFilter = useSelector(state => state.filterCategory)
@@ -26,9 +24,9 @@ export default function SearchBar(){
         <input
           className={styles.inputSearch}
           placeholder="Search"
-          ref={searchInput}
+          ref={props.searchInput}
         />
-        <button type="submit" className={styles.btnIconSearch} onClick={() => searchMoto(searchInput.current.value)}>
+        <button type="submit" className={styles.btnIconSearch} onClick={() => searchMoto(props.searchInput.current.value)}>
           <ion-icon style={{ color: '#fff' }} size="small" name="search-outline"></ion-icon>
         </button>
       </form>

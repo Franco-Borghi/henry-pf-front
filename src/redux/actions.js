@@ -5,7 +5,8 @@ export const GET_MOTOS_BY_NAME = "GET_MOTOS_BY_NAME"
 export const GET_MOTO_BY_ID = "GET_MOTO_BY_ID"
 export const CHANGE_FILTER_CATEGORY = "CHANGE_FILTER_CATEGORY"
 export const CHANGE_FILTER_BRAND = "CHANGE_FILTER_BRAND"
-
+export const ORDER_ASC = "ORDER_ASC"
+export const ORDER_DESC = "ORDER_DESC"
 
 export const fetchData = (dispatch) => {
     axios.get("http://localhost:3001/motorcycles")
@@ -46,6 +47,21 @@ export const changeFilterCategory = (category) => {
         payload: category
     }
 }
+
+export const orderAscending =  (value) => {
+return {
+        type: ORDER_ASC,
+        payload: value
+    }
+}
+
+
+export const orderDescending =  (value) => {
+    return {
+            type: ORDER_DESC,
+            payload: value
+        }
+    }
 
 export const changeFilterBrand = (brand) => {
     return {
