@@ -2,8 +2,8 @@ import SearchBar from "../SearchBar/SearchBar";
 import styles from "./NavBar.module.scss";
 import logo from '../Footer/dinamo.png'
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { fetchDataByName } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { changeFilterBrand, changeFilterCategory, fetchDataByName } from "../../redux/actions";
 import { useRef } from "react";
 
 export default function NavBar(props) {
@@ -11,11 +11,15 @@ export default function NavBar(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const searchInput = useRef(null);
+  const categoriesFilter = useSelector(state => state.filterCategory)
+  const brandsFilter = useSelector(state => state.filterBrand)
 
   function onClickLogo (){
     navigate('/')
     fetchDataByName(dispatch, "");
-    searchInput.current.value = ""
+    searchInput.current.value = "";
+    categoriesFilter.forEach(c => dispatch(changeFilterCategory(c)))
+    brandsFilter.forEach(b => dispatch(changeFilterBrand(b)))
   }
 
   return (
