@@ -29,10 +29,13 @@ export default function Filter(props){
         brandsFilter.forEach(b => dispatch(changeFilterBrand(b)))
     }
 
+    const areFiltersSelected = categoriesFilter.length > 0 || brandsFilter.length > 0;
+
     return (
         <div className={styles['filters']}>
         <h1 style={{ marginBottom: '10px'}}>Filters</h1>
-        <button className={styles.buttonReset} onClick={resetFilters}>Reset Filters</button>
+        {areFiltersSelected && (
+        <button className={styles.buttonReset} onClick={resetFilters}>Reset</button>)}
         <div className={styles['filterSection']}>
             <h3>Category</h3>
             {categories.map(c => 

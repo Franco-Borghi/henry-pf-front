@@ -3,15 +3,22 @@ import styles from "./SearchBar.module.scss";
 import { useDispatch } from "react-redux";
 import { fetchDataByName } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { changeFilterBrand, changeFilterCategory } from "../../redux/actions";
+
 
 export default function SearchBar(){
     const searchInput = useRef(null)
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const categoriesFilter = useSelector(state => state.filterCategory)
+    const brandsFilter = useSelector(state => state.filterBrand)
 
     function searchMoto(value){
         fetchDataByName(dispatch, value);
         navigate('/');
+        categoriesFilter.forEach(c => dispatch(changeFilterCategory(c)))
+        brandsFilter.forEach(b => dispatch(changeFilterBrand(b)))
     }
 
     return (
