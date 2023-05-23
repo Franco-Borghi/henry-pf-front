@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
+import {useNavigate} from "react-router-dom"
+import styles from "./Detail.module.css"
 
 export default function Detail() {
   const [motorcycle, setMotorcycle] = useState(null);
@@ -25,9 +27,12 @@ export default function Detail() {
     fetchMotorcycle();
   }, [id]);
 
+  const navigate = useNavigate();
+
   if (!motorcycle) {
     return <div>Searching...</div>;
   }
+
 
   return (
     <div>
@@ -42,6 +47,7 @@ export default function Detail() {
       <h2>Color options: {colors?.map(c => <p>{c}</p>)}</h2>
       <h4>Description: {motorcycle.description}</h4>
       <img src={motorcycle.image} alt={motorcycle.brand} />
+      <button className={styles.hoverButton} onClick={() => navigate('/')}>Home</button>
       <Footer></Footer>
     </div>
   );
