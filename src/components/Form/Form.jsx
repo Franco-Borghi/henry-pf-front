@@ -61,22 +61,17 @@ export default function Form(){
                 catRef.current.value = ""
                 manualRadio.current.checked = false
                 autoRadio.current.checked = false
+                setErrors({})
                 mySwal.fire({
                     html: <strong>The motorcycle has been successfully created</strong>,
                     icon: "success",
                 })
                 fetchData(dispatch)
             }).catch(err => {
-                if(err.response?.data === `SequelizeUniqueConstraintError: llave duplicada viola restricción de unicidad «items_pkey»`)mySwal.fire({
-                    html: <strong>There is already a motorcycle registered with that chassis number</strong>,
+                if(err.response?.data) mySwal.fire({
+                    html: <strong>{err.response.data}</strong>,
                     icon: "error",
                 })
-                else {
-                    mySwal.fire({
-                        html: <strong>{err.response.data}</strong>,
-                        icon: "error",
-                    })
-                }
             })
         }
         else setErrors(errorsAux)
@@ -85,7 +80,6 @@ export default function Form(){
     function handleChange(e){
         let inputsAux = {...inputs, [e.target.name]: e.target.value}
         setInputs(inputsAux);
-        // setErrors(validate(inputsAux, categories))
     }
 
     return (
