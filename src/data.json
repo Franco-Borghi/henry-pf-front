@@ -1,0 +1,165 @@
+{
+    "motorcycles": [
+      {
+        "id": "1",
+        "brand": "Honda",
+        "model": "CBR1000RR",
+        "category": "Sport",
+        "price": 15000,
+        "image": "https://example.com/images/cbr1000rr.jpg"
+      },
+      {
+        "id": "2",
+        "brand": "Yamaha",
+        "model": "YZF-R6",
+        "category": "Sport",
+        "price": 12000,
+        "image": "https://example.com/images/yzf-r6.jpg"
+      },
+      {
+        "id": "3",
+        "brand": "Kawasaki",
+        "model": "Ninja 650",
+        "category": "Sport",
+        "price": 8000,
+        "image": "https://example.com/images/ninja650.jpg"
+      },
+      {
+        "id": "4",
+        "brand": "Harley-Davidson",
+        "model": "Iron 883",
+        "category": "Cruiser",
+        "price": 9000,
+        "image": "https://example.com/images/iron883.jpg"
+      },
+      {
+        "id": "5",
+        "brand": "BMW",
+        "model": "S1000RR",
+        "category": "Sport",
+        "price": 17000,
+        "image": "https://example.com/images/s1000rr.jpg"
+      },
+      {
+        "id": "6",
+        "brand": "Ducati",
+        "model": "Monster 821",
+        "category": "Naked",
+        "price": 11000,
+        "image": "https://example.com/images/monster821.jpg"
+      },
+      {
+        "id": "7",
+        "brand": "Suzuki",
+        "model": "GSX-R750",
+        "category": "Sport",
+        "price": 10000,
+        "image": "https://example.com/images/gsx-r750.jpg"
+      },
+      {
+        "id": "8",
+        "brand": "Triumph",
+        "model": "Street Triple",
+        "category": "Naked",
+        "price": 9500,
+        "image": "https://example.com/images/streettriple.jpg"
+      },
+      {
+        "id": "9",
+        "brand": "KTM",
+        "model": "Duke 390",
+        "category": "Naked",
+        "price": 6000,
+        "image": "https://example.com/images/duke390.jpg"
+      },
+      {
+        "id": "10",
+        "brand": "Aprilia",
+        "model": "Tuono V4 1100",
+        "category": "Naked",
+        "price": 14000,
+        "image": "https://example.com/images/tuonov4.jpg"
+      },
+      {
+        "id": "11",
+        "brand": "Harley-Davidson",
+        "model": "Street Glide",
+        "category": "Touring",
+        "price": 20000,
+        "image": "https://example.com/images/streetglide.jpg"
+      },
+      {
+        "id": "12",
+        "brand": "Indian",
+        "model": "Chieftain",
+        "category": "Cruiser",
+        "price": 18000,
+        "image": "https://example.com/images/chieftain.jpg"
+      },
+      {
+        "id": "13",
+        "brand": "Victory",
+        "model": "Cross Country",
+        "category": "Touring",
+        "price": 15000,
+        "image": "https://example.com/images/crosscountry.jpg"
+      },
+      {
+        "id": "14",
+        "brand": "Moto Guzzi",
+        "model": "V7 III",
+        "category": "Cruiser",
+        "price": 8500,
+        "image": "https://example.com/images/v7iii.jpg"
+      },
+      {
+        "id": "15",
+        "brand": "Kawasaki",
+        "model": "Z900",
+        "category": "Naked",
+        "price": 9500,
+        "image": "https://example.com/images/z900.jpg"
+      },
+      {
+        "id": "16",
+        "brand": "Yamaha",
+        "model": "MT-07",
+        "category": "Naked",
+        "price": 8000,
+        "image": "https://example.com/images/mt07.jpg"
+      },
+      {
+        "id": "17",
+        "brand": "BMW",
+        "model": "R1250GS",
+        "category": "Adventure",
+        "price": 22000,
+        "image": "https://example.com/images/r1250gs.jpg"
+      },
+      {
+        "id": "18",
+        "brand": "Honda",
+        "model": "Africa Twin",
+        "category": "Adventure",
+        "price": 16000,
+        "image": "https://example.com/images/africatwin.jpg"
+      },
+      {
+        "id": "19",
+        "brand": "Ducati",
+        "model": "Panigale V4",
+        "category": "Sport",
+        "price": 25000,
+        "image": "https://example.com/images/panigalev4.jpg"
+      },
+      {
+        "id": "20",
+        "brand": "Suzuki",
+        "model": "Hayabusa",
+        "category": "Sport",
+        "price": 18000,
+        "image": "https://example.com/images/hayabusa.jpg"
+      }
+    ]
+  }
+  

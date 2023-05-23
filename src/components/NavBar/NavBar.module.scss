@@ -1,0 +1,72 @@
+.nav-bar-container {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  // background-color: rgb(227, 218, 218);
+  background-color: #282828;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.ctnNavBar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1440px;
+  padding: 10px 25px; 
+
+  .logo {
+    height: 50px;
+    object-fit: contain;
+    cursor: pointer;
+  }
+}
+
+
+
+.ctnIcons {
+  display: flex;
+  gap: 16px;
+
+  .icon-container {
+    position: relative;
+    white-space: nowrap;
+
+    &:hover {
+      .txtBtnIcons {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.btnIcon {
+  height: 40px;
+  width: 45px;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  background-color: rgb(68,68,68);
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+}
+
+.txtBtnIcons {
+  background-color: rgb(68,68,68);
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 5px;
+  right: 0;
+  opacity: 0;
+  position: absolute;
+  bottom: -35px;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

@@ -1,0 +1,27 @@
+.card-detail-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: 100px 40px 80px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.main-div {
+  position: relative;
+
+  .return-to-home-button {
+    z-index: 1;
+    position: absolute;
+    top: 40px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    cursor: pointer;
+  }
+}

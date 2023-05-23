@@ -1,0 +1,16 @@
+.filter-bar-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  padding: 40px 20px 40px;
+  width: 250px;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  & .sticky {
+    position: sticky;
+    top: 110px;
+    overflow: auto;
+  }
+}

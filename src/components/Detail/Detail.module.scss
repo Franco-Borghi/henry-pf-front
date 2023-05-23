@@ -1,0 +1,114 @@
+.detail-container {
+  user-select: none;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1200px;
+  min-height: 550px;
+  border-radius: 15px;
+  display: flex;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;  
+  background-color: #fff;
+  color: #282828;
+  position: relative; 
+
+  .img-container {
+    width: 65%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      object-fit: contain;
+      object-position: center;
+    }
+  }
+
+  .detail {
+    background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
+    position: relative;
+    z-index: 1;
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 25px;
+
+    .separator {
+      height: 1px;
+      background-color: #3e3f3e;
+    }
+    .title-container {
+      margin-bottom: 20px;
+    }
+
+    .price-container {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-container {
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 10px 20px;
+      border-radius: 5px;
+      background-color: #3e3f3e;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        background-color: #3e3f3ebb;
+        transform: scale(1.05);
+      }
+    }
+
+    .selector-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 45%;
+      gap: 25px;
+
+      .selector {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        border-bottom: 1px solid #3e3f3e;
+
+        > h4 {
+          cursor: pointer;
+          font-weight: 700;
+          color: #3e3f3e;
+          transition: all 0.3s ease-in-out;
+          padding-bottom: 10px;
+
+          &:hover,
+          &.true {
+            color: #282828;
+          }
+
+          &.true {
+            border-bottom: 1px solid #282828;
+          }
+        }
+      }
+
+      .selector-content {
+        display: none;
+        transition: opacity 0.3s ease-in-out;
+
+        &[data-visible="true"] {
+          display: block;
+        }
+      }
+    }
+  }
+}
