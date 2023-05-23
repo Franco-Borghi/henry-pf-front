@@ -7,6 +7,7 @@ export const CHANGE_FILTER_CATEGORY = "CHANGE_FILTER_CATEGORY"
 export const CHANGE_FILTER_BRAND = "CHANGE_FILTER_BRAND"
 export const ORDER_ASC = "ORDER_ASC"
 export const ORDER_DESC = "ORDER_DESC"
+export const SET_ACTIVE_SEARCH = "SET_ACTIVE_SEARCH"
 
 export const fetchData = (dispatch) => {
     axios.get("http://localhost:3001/motorcycles")
@@ -28,9 +29,19 @@ const getMotosByName = (motos) => {
     }
 }
 
+const setActiveSearch = (value) => {
+    return {
+        type: SET_ACTIVE_SEARCH,
+        payload: value
+    }
+}
+
 export const fetchDataByName = (dispatch,value) => {
     axios.get(`http://localhost:3001/motorcycles?name=${value}`)
-    .then(d => dispatch(getMotosByName(d.data)))
+    .then(d => {
+        dispatch(getMotosByName(d.data));
+        dispatch(setActiveSearch(value));
+    })
     .catch(err => console.log(err))
 }
 

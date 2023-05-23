@@ -1,3 +1,4 @@
+import React from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import styles from "./NavBar.module.scss";
 import logo from '../Footer/dinamo.png'
@@ -13,6 +14,7 @@ export default function NavBar(props) {
   const searchInput = useRef(null);
   const categoriesFilter = useSelector(state => state.filterCategory)
   const brandsFilter = useSelector(state => state.filterBrand)
+  const activeSearch = useSelector(state => state.activeSearch)
 
   function onClickLogo (){
     navigate('/')
@@ -21,6 +23,12 @@ export default function NavBar(props) {
     categoriesFilter.forEach(c => dispatch(changeFilterCategory(c)))
     brandsFilter.forEach(b => dispatch(changeFilterBrand(b)))
   }
+
+  React.useEffect(() => {
+    if (activeSearch) {
+      document.getElementById('searchbar-input').value = activeSearch;
+    }
+  }, [])
 
   return (
     <nav className={styles['nav-bar-container']}>

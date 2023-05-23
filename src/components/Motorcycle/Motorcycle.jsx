@@ -9,7 +9,7 @@ export default function Motorcycle(props) {
       <div className={styles.path}></div>
       <Link to={`/${id}`}>
         <div className={styles.imageContainer}>
-          <img className={styles.motorcyleImage} src={image} alt={brand} />
+          <img className={styles.motorcyleImage} src={image} alt={brand} loading='lazy' />
         </div>
         <div className={styles.motorcycleInfo}>
           <div className={styles.info}>

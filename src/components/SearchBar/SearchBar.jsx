@@ -22,6 +22,7 @@ export default function SearchBar(props){
     return (
       <form onSubmit={(e) => e.preventDefault()} className={styles.ctnInput}>
         <input
+          id="searchbar-input"
           className={styles.inputSearch}
           placeholder="Search"
           ref={props.searchInput}
