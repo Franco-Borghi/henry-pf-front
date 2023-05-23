@@ -20,7 +20,7 @@ export default function Motorcycles() {
 
   //#region Data for pagination component
     const [currentPage, setCurrentPage] = useState(1);
-    const motorcyclesPerPage = 2;
+    const motorcyclesPerPage = 4;
     const totalPages = Math.ceil(displayedMotorcycles.length / motorcyclesPerPage);
     const indexOfLastMotorcycle = currentPage * motorcyclesPerPage;
     const indexOfFirstMotorcycle = indexOfLastMotorcycle - motorcyclesPerPage;
@@ -61,7 +61,7 @@ export default function Motorcycles() {
         </div>
 
       </FilterBar>
-    <div className={styles.MotorcycleList}>
+    <div className={styles.motorcycleList}>
         {currentMotorcycles.length > 0 ? currentMotorcycles.map((motorcycle) => (
             <div className={styles.motorcycleItem} key={motorcycle.id}>
                 <Motorcycle info={motorcycle} />
