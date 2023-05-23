@@ -1,10 +1,28 @@
-import './App.css';
+import "./App.scss";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./components/Home/Home"
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { fetchData } from "./redux/actions";
+import { CreateMotorcycle } from "./containers/CreateMotorcycle/CreateMotorcycle";
+import { ItemDetail } from "./containers/ItemDetail/ItemDetail";
 
 function App() {
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    fetchData(dispatch)
+  }, [])
   return (
     <>
-      <h1>Hola Mundo</h1>
-      <p>Im a subtitle</p>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}/>
+          <Route path="/create" element={<CreateMotorcycle/>}/>
+          <Route path="/:id" element={<ItemDetail/>}/>
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

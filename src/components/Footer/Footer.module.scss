@@ -1,0 +1,104 @@
+footer {
+  overflow: hidden;
+  width: 100%;
+  max-height: 300px;
+  background-color: #282828;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  > section {
+    overflow: hidden;
+
+    &:nth-child(1) {
+      padding: 50px 40px;
+      width: 100%;
+      max-width: 1440px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    
+    &:nth-child(2) {
+      padding: 0 40px;
+      width: 100%;
+      height: 70px;
+      background-color: #444;
+
+      p {
+        max-width: 1440px;
+        text-align: center;
+        margin: 0 auto;
+        line-height: 70px;
+      }
+    }
+
+    .logo-container {
+      height: 100%;
+      display: flex;
+      align-items: center;
+  
+      img {
+        height: 60px;
+      }
+    }
+    
+    .links {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      gap: 10px;
+      color: #fff;
+
+      a {
+        text-decoration: none;
+        color: #fff;
+      }
+    }
+
+    .contact-us {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      overflow: hidden;
+      color: #fff;
+
+      .icons {
+        display: flex;
+        gap: 16px;
+        height: 40px;
+
+        .whatsapp,
+        .facebook,
+        .instagram {
+          width: 40px;
+          height: 40px;
+          cursor: pointer;
+
+          path {
+            transition: all 0.3s ease-in-out;
+            fill: #fff;
+          }
+        }
+
+        .whatsapp:hover {
+          path {
+            fill: #71dd37;
+          }
+        }
+
+        .facebook:hover {
+          path {
+            fill: #3b559f;
+          }
+        }
+
+        .instagram:hover {
+          path {
+            fill: #c837ab;
+          }
+        }
+      }
+    }
+  }
+}
