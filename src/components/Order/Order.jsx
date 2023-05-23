@@ -14,7 +14,7 @@ export default function Order(props){
 
     return (
         <div className={styles.order}>
-    <h4>Order by price</h4>
+    <h3>Order by price</h3>
     <div>
     <input type="radio" value="ascending" name="order" id="ascending" onClick={handleClick} ref={props.refAsc}/> <label htmlFor="ascending">Ascending</label>
     </div>
