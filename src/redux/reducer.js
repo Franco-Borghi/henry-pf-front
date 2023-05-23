@@ -1,4 +1,4 @@
-import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID, ORDER_ASC, ORDER_DESC } from "./actions";
+import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID, ORDER_ASC, ORDER_DESC, SET_ACTIVE_SEARCH } from "./actions";
 
 const initialState = {
     motos: [],
@@ -6,6 +6,7 @@ const initialState = {
     filterBrand: [],
     orderAsc : false,
     orderDesc : false,
+    activeSearch: '',
 }
 
 export const reducer = (state = initialState, action) => {
@@ -27,6 +28,12 @@ export const reducer = (state = initialState, action) => {
         case GET_MOTO_BY_ID:
             return {
                 ...state,
+            }
+
+        case SET_ACTIVE_SEARCH:
+            return {
+                ...state,
+                activeSearch: action.payload
             }
 
         case ORDER_ASC:
