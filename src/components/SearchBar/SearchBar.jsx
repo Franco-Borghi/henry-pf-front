@@ -1,6 +1,6 @@
 import styles from "./SearchBar.module.scss";
 import { useDispatch } from "react-redux";
-import { fetchDataByName } from "../../redux/actions";
+import { fetchDataByName} from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { changeFilterBrand, changeFilterCategory } from "../../redux/actions";
