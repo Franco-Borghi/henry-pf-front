@@ -26,7 +26,7 @@ export default function NavBar(props) {
             </Link>
           
 
-        {/* <div className={styles.ctnIcons}>
+         <div className={styles.ctnIcons}>
           <div className={styles['icon-container']} >
             <button className={styles.btnIcon}>
               <ion-icon style={{ color: "#fff"}} className='svg' size="small" name="person-outline"></ion-icon>
@@ -46,9 +46,14 @@ export default function NavBar(props) {
               <ion-icon style={{ color: "#fff"}} className='svg' size="small" name="person-outline"></ion-icon>
             </button>
             <p className={styles.txtBtnIcons}>Admin</p>
-          </div> */}
+
+          </div> 
+
         </div>
+
+      </div>
       </div>
     </nav>
   );
 }
+

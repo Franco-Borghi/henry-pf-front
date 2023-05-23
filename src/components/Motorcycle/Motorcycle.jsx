@@ -20,7 +20,7 @@ export default function Motorcycle(props) {
           </div>
           <div className={styles.buttonContainer}>
             <h4>${price}</h4>
-            <Link>Details</Link>
+            <Link to={`/${id}`}>Details</Link>
           </div>
         </div>
       </Link>
