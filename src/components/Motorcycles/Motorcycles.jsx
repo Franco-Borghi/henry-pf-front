@@ -6,6 +6,8 @@ import Order from '../Order/Order';
 import { useSelector } from 'react-redux';
 import FilterBar from '../FilterBar/FilterBar';
 import styles from './Motorcycles.module.css'
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 export default function Motorcycles() {
     // const [motorcyclesData, setMotorcyclesData] = useState([]); // Cuando este el back se cambia a la llamada al back para obtener los datos
@@ -60,7 +62,25 @@ export default function Motorcycles() {
             <Order displayedMotorcycles={displayedMotorcycles} setDisplayedMotorcycles={setDisplayedMotorcycles} refAsc={ascendingBtn} refDesc={descendingBtn}></Order>
         </div>
 
+        
+
       </FilterBar>
+      <div className={styles.carouselImage}>
+          <Carousel showThumbs={false} autoPlay={true} interval={2000}>
+            <div>
+              <img src='/carousel/clasica.jpg' alt='clasica'></img>
+            </div>
+            <div>
+              <img src='/carousel/deportiva.jpg' alt='deportiva'></img>
+            </div>
+            <div>
+            <img src='/carousel/scooter.jpg' alt='scooter' />
+            </div>
+            <div>
+            <img src='/carousel/trabajo.jpg' alt='trabajo' />
+            </div>
+          </Carousel>
+        </div>
     <div className={styles.MotorcycleList}>
         {currentMotorcycles.length > 0 ? currentMotorcycles.map((motorcycle) => (
             <div className={styles.motorcycleItem} key={motorcycle.id}>

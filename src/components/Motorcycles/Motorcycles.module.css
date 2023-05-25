@@ -50,3 +50,10 @@
     font-size: 30px;
 
 }
+
+.carouselImage {
+    max-width: 100%;
+    height: auto;
+    align-self: center;
+    margin-top: -40px;
+  }
