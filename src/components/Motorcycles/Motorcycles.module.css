@@ -17,20 +17,29 @@
     grid-row: 1 / 3;
 }
 
-.motorcyclesPage .motorcycle-list {
+.motorcyclesPage .motorcycleList {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     grid-column: 2;
-    grid-row: 1 / 2;
+    grid-row: 1/2;
+  
+    
 }
 
+
 .motorcycleItem {
-    /* flex-basis: calc(100% / 4 - 20px); 
-    margin: 10px; */
+    flex-basis: calc(48% - 5px);
+    margin: 2px;
     width: fit-content;
-    margin: 0 auto;
-}
+    grid-column: 2; 
+    margin: 5px;
+   
+  }
+
+  .motorcycleItem:nth-child(even) {
+    margin-right: 40px; 
+  }
 
 .pagination {
     text-align: center;
