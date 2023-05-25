@@ -6,6 +6,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { changeFilterBrand, changeFilterCategory, fetchDataByName } from "../../redux/actions";
 import { useRef } from "react";
+import { LogginBtn } from "../LogginBtn/LogginBtn";
+import { LogoutBtn } from "../LogoutBtn/LogoutBtn";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function NavBar(props) {
 
@@ -15,6 +18,7 @@ export default function NavBar(props) {
   const categoriesFilter = useSelector(state => state.filterCategory)
   const brandsFilter = useSelector(state => state.filterBrand)
   const activeSearch = useSelector(state => state.activeSearch)
+  const { isAuthenticated, user } = useAuth0();
 
   function onClickLogo (){
     navigate('/')
@@ -25,10 +29,10 @@ export default function NavBar(props) {
   }
 
   React.useEffect(() => {
-    if (activeSearch) {
-      document.getElementById('searchbar-input').value = activeSearch;
+    if (isAuthenticated) {
+      console.log(user);
     }
-  }, [])
+  }, [isAuthenticated])
 
   return (
     <nav className={styles['nav-bar-container']}>
@@ -50,12 +54,6 @@ export default function NavBar(props) {
           
 
          <div className={styles.ctnIcons}>
-          <div className={styles['icon-container']} >
-            <button className={styles.btnIcon}>
-              <ion-icon style={{ color: "#fff"}} className='svg' size="small" name="person-outline"></ion-icon>
-            </button>
-            <p className={styles.txtBtnIcons}>Profile</p>
-          </div>
 
           <div className={styles['icon-container']} >
             <button className={styles.btnIcon}>
@@ -70,6 +68,28 @@ export default function NavBar(props) {
             </button>
             <p className={styles.txtBtnIcons}>Admin</p>
 
+          </div> 
+
+          <div className={styles['icon-container']} >
+            {/* <button className={styles.btnIcon}>
+              <ion-icon style={{ color: "#fff"}} className='svg' size="small" name="person-outline"></ion-icon>
+            </button> */}
+            {
+              isAuthenticated
+              ? <img style={{height: '40px', width: '40px', borderRadius: '50%', cursor: 'pointer'}} src={user.picture} alt="User Image" />
+              : <div style={{height: '40px', width: '40px'}} />
+            }
+            <p className={styles.txtBtnIcons}>Profile</p>
+          </div>
+
+          <div className={styles['icon-container']} >
+            <button className={styles.btnIcon} style={{ width: 'fit-content', paddingLeft: '10px', paddingRight: '10px', color: '#fff'}}>
+              {
+                isAuthenticated
+                ? <LogoutBtn />
+                : <LogginBtn />
+              }
+            </button>
           </div> 
 
         </div>
