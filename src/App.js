@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { fetchData } from "./redux/actions";
 import { CreateMotorcycle } from "./containers/CreateMotorcycle/CreateMotorcycle";
 import { ItemDetail } from "./containers/ItemDetail/ItemDetail";
-import { Checkout } from "./components/Checkout/Checkout";
+import { CheckoutPage } from "./components/CheckoutPage/CheckoutPage";
 
 function App() {
 
@@ -22,7 +22,7 @@ function App() {
           <Route path="/" element={<Home />}/>
           <Route path="/create" element={<CreateMotorcycle/>}/>
           <Route path="/:id" element={<ItemDetail/>}/>
-          <Route path="/checkout" element={<Checkout/>}/>
+          <Route path="/checkout" element={<CheckoutPage/>}/>
         </Routes>
       </BrowserRouter>
     </>
