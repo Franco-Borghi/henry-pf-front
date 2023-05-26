@@ -17,8 +17,9 @@ export default function NavBar(props) {
   const searchInput = useRef(null);
   const categoriesFilter = useSelector(state => state.filterCategory)
   const brandsFilter = useSelector(state => state.filterBrand)
-  const activeSearch = useSelector(state => state.activeSearch)
+  const shoppingChart = useSelector(state => state.shoppingChart)
   const { isAuthenticated, user } = useAuth0();
+  const [cartItems, setCartItems] = React.useState(0)
 
   function onClickLogo (){
     navigate('/')
@@ -27,6 +28,16 @@ export default function NavBar(props) {
     categoriesFilter.forEach(c => dispatch(changeFilterCategory(c)))
     brandsFilter.forEach(b => dispatch(changeFilterBrand(b)))
   }
+
+  React.useEffect(() => {
+    if (shoppingChart.length) {
+      let counter = 0;
+      shoppingChart.forEach(el => {
+        counter = counter + el.cuantity
+      });
+      setCartItems(counter);
+    }
+  }, [shoppingChart])
 
   React.useEffect(() => {
     if (isAuthenticated) {
@@ -56,6 +67,11 @@ export default function NavBar(props) {
          <div className={styles.ctnIcons}>
          <Link to="/shopping-chart">
             <div className={styles['icon-container']} >
+              {
+                shoppingChart.length
+                ? <div className={styles.itemsNumber}>{cartItems}</div>
+                : null
+              }
               <button className={styles.btnIcon}>
                 <ion-icon style={{ color: "#fff"}} className='svg' size="small" name="cart-outline"></ion-icon>
               </button>
