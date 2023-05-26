@@ -1,7 +1,9 @@
-import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID, ORDER_ASC, ORDER_DESC, SET_ACTIVE_SEARCH } from "./actions";
+import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID, ORDER_ASC, ORDER_DESC, SET_ACTIVE_SEARCH, ADD_ITEM_TO_CHART, DELETE_ITEM_FROM_CHART, UPDATE_CHART_ITEM_CUANTITY } from "./actions";
 
 const initialState = {
     motos: [],
+    allMotorcycles: [],
+    shoppingChart: [],
     filterCategory: [],
     filterBrand: [],
     orderAsc : false,
@@ -16,7 +18,8 @@ export const reducer = (state = initialState, action) => {
         case GET_ALL_MOTOS:
             return {
                 ...state,
-                motos: [...action.payload]
+                motos: [...action.payload],
+                allMotorcycles: [...action.payload]
             }
 
         case GET_MOTOS_BY_NAME:
@@ -75,6 +78,50 @@ export const reducer = (state = initialState, action) => {
                     filterBrand: [...state.filterBrand.concat(action.payload)]
                 }
             }
+
+        case ADD_ITEM_TO_CHART:
+            if (Array.isArray(action.payload)) {
+                return {
+                    ...state,
+                    shoppingChart: [...action.payload]
+                }
+            } else {
+                console.log(`shoppingChart${action.payload.userId}`);
+                localStorage.setItem(`shoppingChart${action.payload.userId}`, JSON.stringify([...state.shoppingChart, action.payload]));
+                return {
+                    ...state,
+                    shoppingChart: [...state.shoppingChart, action.payload],
+                }
+            }
+            
+
+        case DELETE_ITEM_FROM_CHART:
+            const itemToRemove = state.shoppingChart.indexOf(action.payload);
+
+            if (itemToRemove > -1) {
+                const newState = state.shoppingChart;
+                newState.splice(itemToRemove, 1)
+                localStorage.setItem(`shoppingChart${action.payload.userId}`, JSON.stringify([...newState]));
+                return {
+                    ...state,
+                    shoppingChart: [...newState],
+                }
+            }
+
+        case UPDATE_CHART_ITEM_CUANTITY:
+            const chart = state.shoppingChart;
+            const index = chart.findIndex(obj => obj.id === action.payload.id);
+
+            if (index > -1) {
+                chart[index].cuantity = chart[index].cuantity + action.payload.cuantity;
+                localStorage.setItem(`shoppingChart${action.payload.userId}`, JSON.stringify([...chart]));
+
+                return {
+                    ...state,
+                    shoppingChart: [...chart],
+                }
+            }
+
         default:
             return state
     }

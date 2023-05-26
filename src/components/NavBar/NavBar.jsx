@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { changeFilterBrand, changeFilterCategory, fetchDataByName } from "../../redux/actions";
 import { useRef } from "react";
-import { LogginBtn } from "../LogginBtn/LogginBtn";
+import { LoginBtn } from "../LoginBtn/LoginBtn";
 import { LogoutBtn } from "../LogoutBtn/LogoutBtn";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -54,13 +54,14 @@ export default function NavBar(props) {
           
 
          <div className={styles.ctnIcons}>
-
-          <div className={styles['icon-container']} >
-            <button className={styles.btnIcon}>
-              <ion-icon style={{ color: "#fff"}} className='svg' size="small" name="cart-outline"></ion-icon>
-            </button>
-            <p className={styles.txtBtnIcons}>Cart</p>
-          </div>
+         <Link to="/shopping-chart">
+            <div className={styles['icon-container']} >
+              <button className={styles.btnIcon}>
+                <ion-icon style={{ color: "#fff"}} className='svg' size="small" name="cart-outline"></ion-icon>
+              </button>
+              <p className={styles.txtBtnIcons}>Cart</p>
+            </div>
+         </Link>
 
           <div className={styles['icon-container']} >
             <button className={styles.btnIcon}>
@@ -87,7 +88,7 @@ export default function NavBar(props) {
               {
                 isAuthenticated
                 ? <LogoutBtn />
-                : <LogginBtn />
+                : <LoginBtn />
               }
             </button>
           </div> 

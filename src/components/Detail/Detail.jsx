@@ -3,6 +3,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from './Detail.module.scss';
+import { useDispatch, useSelector } from "react-redux";
+import { addItemToChart } from "../../redux/actions";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Detail() {
   const [motorcycle, setMotorcycle] = useState(null);
@@ -10,6 +13,8 @@ export default function Detail() {
   const { id } = useParams();
   const [description, setDescription] = React.useState(true);
   const [details, setDetails] = React.useState(false);
+  const [shoppingChartButton, setShoppingChartButton] = React.useState(false);
+  const { isAuthenticated, user } = useAuth0();
 
   const handleDescription = () => {
     setDetails(false);
@@ -21,6 +26,17 @@ export default function Detail() {
     setDetails(true);
   }
 
+  const dispatch = useDispatch();
+  const shoppingChart = useSelector(state => state.shoppingChart);
+  const allMotorcycles = useSelector(state => state.allMotorcycles);
+
+  React.useEffect(() => {
+
+    if (motorcycle && shoppingChart.some(el => el.id === motorcycle.id)) {
+      setShoppingChartButton(false);
+    } else setShoppingChartButton(true);
+
+  }, [shoppingChart, motorcycle])
 
   useEffect(() => {
     const fetchMotorcycle = async () => {
@@ -62,7 +78,7 @@ export default function Detail() {
             </div>
 
             <div>
-              <label className={styles['cart-container']}>
+              <label onClick={() => motorcycle && motorcycle.stock > 0 && shoppingChartButton && isAuthenticated && user && dispatch(addItemToChart({id: motorcycle.id, cuantity: 1, userId: user.email}))} className={shoppingChartButton && motorcycle.stock && isAuthenticated > 0 ? styles['cart-container'] : styles['cart-container-disabled']}>
                 Add to cart 
                 <ion-icon style={{ color: "#fff "}} className='svg' size="small" name="cart-outline"></ion-icon>
               </label>
