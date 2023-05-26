@@ -29,7 +29,16 @@ export  function Checkout({amount}) {
                     .catch((error) => {
                         console.error("Order creation error:", error);
                     });
-            }} />
+                    
+                 }} 
+
+            onApprove={function (data, actions) {
+                return actions.order.capture().then(function () {
+                    // Your code here after capture the order
+                    // Aca hay que poner que hacer cuando se aprueba la transaccion
+                });
+            }}
+            />
         </PayPalScriptProvider>
     </div>
   )
