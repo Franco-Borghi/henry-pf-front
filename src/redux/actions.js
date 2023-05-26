@@ -10,7 +10,7 @@ export const ORDER_DESC = "ORDER_DESC"
 export const SET_ACTIVE_SEARCH = "SET_ACTIVE_SEARCH"
 export const ADD_ITEM_TO_CHART ='ADD_ITEM_TO_CHART';
 export const DELETE_ITEM_FROM_CHART ='DELETE_ITEM_FROM_CHART';
-export const UPDATE_CHART_ITEM_CUANTITY = 'UPDATE_CHART_ITEM_CUANTITY';
+export const UPDATE_CHART_ITEM_QUANTITY = 'UPDATE_CHART_ITEM_QUANTITY';
 
 export const fetchData = (dispatch) => {
     axios.get("http://localhost:3001/motorcycles")
@@ -104,11 +104,11 @@ export const deleteItemFromChart = (data) => {
     }
 }
 
-export const updateChartItemCuantity = (data) => {
+export const updateChartItemQuantity = (data) => {
     return function(dispatch) {
 
         dispatch({
-            type: UPDATE_CHART_ITEM_CUANTITY,
+            type: UPDATE_CHART_ITEM_QUANTITY,
             payload: data,
           })
     }
