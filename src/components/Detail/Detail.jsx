@@ -78,7 +78,7 @@ export default function Detail() {
             </div>
 
             <div>
-              <label onClick={() => motorcycle && motorcycle.stock > 0 && shoppingChartButton && isAuthenticated && user && dispatch(addItemToChart({id: motorcycle.id, cuantity: 1, userId: user.email}))} className={shoppingChartButton && motorcycle.stock && isAuthenticated > 0 ? styles['cart-container'] : styles['cart-container-disabled']}>
+              <label onClick={() => motorcycle && motorcycle.stock > 0 && shoppingChartButton && isAuthenticated && user && dispatch(addItemToChart({id: motorcycle.id, quantity: 1, userId: user.email}))} className={shoppingChartButton && motorcycle.stock && isAuthenticated > 0 ? styles['cart-container'] : styles['cart-container-disabled']}>
                 Add to cart 
                 <ion-icon style={{ color: "#fff "}} className='svg' size="small" name="cart-outline"></ion-icon>
               </label>
