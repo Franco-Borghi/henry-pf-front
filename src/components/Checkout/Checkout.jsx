@@ -3,11 +3,11 @@ import { PayPalScriptProvider, PayPalButtons, FUNDING } from "@paypal/react-payp
 
 
 
+
 export  function Checkout({amount}) {
   return (
     <div>
-        <PayPalScriptProvider options={{ "client-id": "AcTCep24viqXlaUug9XShWiauoDS3p6hvTmv5t3pQrOaahWVDdblCE7sq7orCcb_U295vTzA5zwJq3gY" }}>
-            {/* TODO: To move the client id to a .env file soon */}
+        <PayPalScriptProvider options={{ "client-id": process.env.REACT_APP_CLIENT_ID_SANDBOX }}>
             <PayPalButtons
             fundingSource= {FUNDING.PAYPAL}
             createOrder={(data, actions) => {
@@ -17,13 +17,14 @@ export  function Checkout({amount}) {
                             {
                                 amount: {
                                     currency_code: "USD",
-                                    value: amount, // TODO: to replace with "amount" when we pass it through props
+                                    value: amount, 
                                 },
                             },
                         ],
                     })
                     .then((orderId) => {
                         // Your code here after create the order
+                        console.log(orderId)
                         return orderId
                     })
                     .catch((error) => {
