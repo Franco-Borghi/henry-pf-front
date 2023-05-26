@@ -6,7 +6,7 @@ export function CheckoutPage() {
     <div>
         <h1>Checkout Page</h1>
         <br/>
-        <Checkout amount={0.01}/>
+        <Checkout amount={50}/>
     </div>
   )
 }

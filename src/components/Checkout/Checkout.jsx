@@ -2,8 +2,6 @@ import React from 'react'
 import { PayPalScriptProvider, PayPalButtons, FUNDING } from "@paypal/react-paypal-js";
 
 
-
-
 export  function Checkout({amount}) {
   return (
     <div>
@@ -24,7 +22,6 @@ export  function Checkout({amount}) {
                     })
                     .then((orderId) => {
                         // Your code here after create the order
-                        console.log(orderId)
                         return orderId
                     })
                     .catch((error) => {
