@@ -35,6 +35,21 @@
     position: relative;
     white-space: nowrap;
 
+    .itemsNumber {
+      position: absolute;
+      border-radius: 50%;
+      background-color: #ff3300;
+      color: #282828;
+      width: 16px;
+      height: 16px;
+      line-height: 16px;
+      font-size: 12px;
+      text-align: center;
+      top: -8px;
+      right: -8px;
+      z-index: 1;
+    }
+
     &:hover {
       .txtBtnIcons {
         opacity: 1;

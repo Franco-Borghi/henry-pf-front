@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from "axios";
 
 export const GET_ALL_MOTOS = "GET_ALL_MOTOS"
 export const GET_MOTOS_BY_NAME = "GET_MOTOS_BY_NAME"
@@ -8,6 +8,9 @@ export const CHANGE_FILTER_BRAND = "CHANGE_FILTER_BRAND"
 export const ORDER_ASC = "ORDER_ASC"
 export const ORDER_DESC = "ORDER_DESC"
 export const SET_ACTIVE_SEARCH = "SET_ACTIVE_SEARCH"
+export const ADD_ITEM_TO_CHART ='ADD_ITEM_TO_CHART';
+export const DELETE_ITEM_FROM_CHART ='DELETE_ITEM_FROM_CHART';
+export const UPDATE_CHART_ITEM_CUANTITY = 'UPDATE_CHART_ITEM_CUANTITY';
 
 export const fetchData = (dispatch) => {
     axios.get("http://localhost:3001/motorcycles")
@@ -80,3 +83,34 @@ export const changeFilterBrand = (brand) => {
         payload: brand
     }
 }
+
+export const addItemToChart = (data) => {
+    return function(dispatch) {
+
+        dispatch({
+            type: ADD_ITEM_TO_CHART,
+            payload: data,
+          })
+    }
+}
+
+export const deleteItemFromChart = (data) => {
+    return function(dispatch) {
+
+        dispatch({
+            type: DELETE_ITEM_FROM_CHART,
+            payload: data,
+          })
+    }
+}
+
+export const updateChartItemCuantity = (data) => {
+    return function(dispatch) {
+
+        dispatch({
+            type: UPDATE_CHART_ITEM_CUANTITY,
+            payload: data,
+          })
+    }
+}
+
