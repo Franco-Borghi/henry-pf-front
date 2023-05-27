@@ -8,9 +8,9 @@ export const CHANGE_FILTER_BRAND = "CHANGE_FILTER_BRAND"
 export const ORDER_ASC = "ORDER_ASC"
 export const ORDER_DESC = "ORDER_DESC"
 export const SET_ACTIVE_SEARCH = "SET_ACTIVE_SEARCH"
-export const ADD_ITEM_TO_CHART ='ADD_ITEM_TO_CHART';
-export const DELETE_ITEM_FROM_CHART ='DELETE_ITEM_FROM_CHART';
-export const UPDATE_CHART_ITEM_QUANTITY = 'UPDATE_CHART_ITEM_QUANTITY';
+export const ADD_ITEM_TO_CART ='ADD_ITEM_TO_CART';
+export const DELETE_ITEM_FROM_CART ='DELETE_ITEM_FROM_CART';
+export const UPDATE_CART_ITEM_QUANTITY = 'UPDATE_CART_ITEM_QUANTITY';
 
 export const fetchData = (dispatch) => {
     axios.get("http://localhost:3001/motorcycles")
@@ -84,31 +84,31 @@ export const changeFilterBrand = (brand) => {
     }
 }
 
-export const addItemToChart = (data) => {
+export const addItemToCart = (data) => {
     return function(dispatch) {
 
         dispatch({
-            type: ADD_ITEM_TO_CHART,
+            type: ADD_ITEM_TO_CART,
             payload: data,
           })
     }
 }
 
-export const deleteItemFromChart = (data) => {
+export const deleteItemFromCart = (data) => {
     return function(dispatch) {
 
         dispatch({
-            type: DELETE_ITEM_FROM_CHART,
+            type: DELETE_ITEM_FROM_CART,
             payload: data,
           })
     }
 }
 
-export const updateChartItemQuantity = (data) => {
+export const updateCartItemQuantity = (data) => {
     return function(dispatch) {
 
         dispatch({
-            type: UPDATE_CHART_ITEM_QUANTITY,
+            type: UPDATE_CART_ITEM_QUANTITY,
             payload: data,
           })
     }

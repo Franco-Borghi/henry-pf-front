@@ -17,7 +17,7 @@ export default function NavBar(props) {
   const searchInput = useRef(null);
   const categoriesFilter = useSelector(state => state.filterCategory)
   const brandsFilter = useSelector(state => state.filterBrand)
-  const shoppingChart = useSelector(state => state.shoppingChart)
+  const shoppingCart = useSelector(state => state.shoppingCart)
   const { isAuthenticated, user } = useAuth0();
   const [cartItems, setCartItems] = React.useState(0)
 
@@ -30,14 +30,14 @@ export default function NavBar(props) {
   }
 
   React.useEffect(() => {
-    if (shoppingChart.length) {
+    if (shoppingCart.length) {
       let counter = 0;
-      shoppingChart.forEach(el => {
+      shoppingCart.forEach(el => {
         counter = counter + el.quantity
       });
       setCartItems(counter);
     }
-  }, [shoppingChart])
+  }, [shoppingCart])
 
   React.useEffect(() => {
     if (isAuthenticated) {
@@ -65,10 +65,10 @@ export default function NavBar(props) {
           
 
          <div className={styles.ctnIcons}>
-         <Link to="/shopping-chart">
+         <Link to="/shopping-cart">
             <div className={styles['icon-container']} >
               {
-                shoppingChart.length
+                shoppingCart.length
                 ? <div className={styles.itemsNumber}>{cartItems}</div>
                 : null
               }
@@ -88,15 +88,14 @@ export default function NavBar(props) {
           </div> 
 
           <div className={styles['icon-container']} >
-            {/* <button className={styles.btnIcon}>
-              <ion-icon style={{ color: "#fff"}} className='svg' size="small" name="person-outline"></ion-icon>
-            </button> */}
             {
               isAuthenticated
-              ? <img style={{height: '40px', width: '40px', borderRadius: '50%', cursor: 'pointer'}} src={user.picture} alt="User Image" />
+              ? <>
+                  <img style={{height: '40px', width: '40px', borderRadius: '50%', cursor: 'pointer'}} src={user.picture} alt="User Image" />
+                  <p className={styles.txtBtnIcons}>Profile</p>
+                </>
               : <div style={{height: '40px', width: '40px'}} />
             }
-            <p className={styles.txtBtnIcons}>Profile</p>
           </div>
 
           <div className={styles['icon-container']} >

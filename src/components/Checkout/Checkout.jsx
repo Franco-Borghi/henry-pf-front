@@ -10,7 +10,7 @@ export  function Checkout() {
     const { user } = useAuth0();
     console.log("user", user)
 
-    const items = useSelector(state => state.shoppingChart).map(item => item.id)
+    const items = useSelector(state => state.shoppingCart).map(item => item.id)
 
     const allMotorcycles = useSelector(state => state.allMotorcycles);
     console.log("items:", items)

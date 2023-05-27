@@ -52,6 +52,16 @@
       align-items: center;
     }
 
+    .color-container {
+      margin-top: 20px;
+      
+      .color {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+      }
+    }
+
     .cart-container {
       color: #fff;
       display: flex;
