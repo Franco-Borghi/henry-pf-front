@@ -86,8 +86,8 @@ export const reducer = (state = initialState, action) => {
                     shoppingCart: [...action.payload]
                 }
             } else {
-                console.log(`shoppingCart${action.payload.userId}`);
-                localStorage.setItem(`shoppingCart${action.payload.userId}`, JSON.stringify([...state.shoppingCart, action.payload]));
+                console.log(`shoppingCart${action.payload.userEmail}`);
+                localStorage.setItem(`shoppingCart${action.payload.userEmail}`, JSON.stringify([...state.shoppingCart, action.payload]));
                 return {
                     ...state,
                     shoppingCart: [...state.shoppingCart, action.payload],
@@ -101,7 +101,7 @@ export const reducer = (state = initialState, action) => {
             if (itemToRemove > -1) {
                 const newState = state.shoppingCart;
                 newState.splice(itemToRemove, 1)
-                localStorage.setItem(`shoppingCart${action.payload.userId}`, JSON.stringify([...newState]));
+                localStorage.setItem(`shoppingCart${action.payload.userEmail}`, JSON.stringify([...newState]));
                 return {
                     ...state,
                     shoppingCart: [...newState],
@@ -110,11 +110,11 @@ export const reducer = (state = initialState, action) => {
 
         case UPDATE_CART_ITEM_QUANTITY:
             const cart = state.shoppingCart;
-            const index = cart.findIndex(obj => obj.id === action.payload.id);
+            const index = cart.findIndex(obj => obj.id === action.payload.id && obj.color === action.payload.color);
 
             if (index > -1) {
                 cart[index].quantity = cart[index].quantity + action.payload.quantity;
-                localStorage.setItem(`shoppingCart${action.payload.userId}`, JSON.stringify([...cart]));
+                localStorage.setItem(`shoppingCart${action.payload.userEmail}`, JSON.stringify([...cart]));
 
                 return {
                     ...state,
