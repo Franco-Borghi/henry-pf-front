@@ -1,9 +1,9 @@
-import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID, ORDER_ASC, ORDER_DESC, SET_ACTIVE_SEARCH, ADD_ITEM_TO_CHART, DELETE_ITEM_FROM_CHART, UPDATE_CHART_ITEM_QUANTITY } from "./actions";
+import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID, ORDER_ASC, ORDER_DESC, SET_ACTIVE_SEARCH, ADD_ITEM_TO_CART, DELETE_ITEM_FROM_CART, UPDATE_CART_ITEM_QUANTITY } from "./actions";
 
 const initialState = {
     motos: [],
     allMotorcycles: [],
-    shoppingChart: [],
+    shoppingCart: [],
     filterCategory: [],
     filterBrand: [],
     orderAsc : false,
@@ -79,46 +79,46 @@ export const reducer = (state = initialState, action) => {
                 }
             }
 
-        case ADD_ITEM_TO_CHART:
+        case ADD_ITEM_TO_CART:
             if (Array.isArray(action.payload)) {
                 return {
                     ...state,
-                    shoppingChart: [...action.payload]
+                    shoppingCart: [...action.payload]
                 }
             } else {
-                console.log(`shoppingChart${action.payload.userId}`);
-                localStorage.setItem(`shoppingChart${action.payload.userId}`, JSON.stringify([...state.shoppingChart, action.payload]));
+                console.log(`shoppingCart${action.payload.userId}`);
+                localStorage.setItem(`shoppingCart${action.payload.userId}`, JSON.stringify([...state.shoppingCart, action.payload]));
                 return {
                     ...state,
-                    shoppingChart: [...state.shoppingChart, action.payload],
+                    shoppingCart: [...state.shoppingCart, action.payload],
                 }
             }
             
 
-        case DELETE_ITEM_FROM_CHART:
-            const itemToRemove = state.shoppingChart.indexOf(action.payload);
+        case DELETE_ITEM_FROM_CART:
+            const itemToRemove = state.shoppingCart.indexOf(action.payload);
 
             if (itemToRemove > -1) {
-                const newState = state.shoppingChart;
+                const newState = state.shoppingCart;
                 newState.splice(itemToRemove, 1)
-                localStorage.setItem(`shoppingChart${action.payload.userId}`, JSON.stringify([...newState]));
+                localStorage.setItem(`shoppingCart${action.payload.userId}`, JSON.stringify([...newState]));
                 return {
                     ...state,
-                    shoppingChart: [...newState],
+                    shoppingCart: [...newState],
                 }
             }
 
-        case UPDATE_CHART_ITEM_QUANTITY:
-            const chart = state.shoppingChart;
-            const index = chart.findIndex(obj => obj.id === action.payload.id);
+        case UPDATE_CART_ITEM_QUANTITY:
+            const cart = state.shoppingCart;
+            const index = cart.findIndex(obj => obj.id === action.payload.id);
 
             if (index > -1) {
-                chart[index].quantity = chart[index].quantity + action.payload.quantity;
-                localStorage.setItem(`shoppingChart${action.payload.userId}`, JSON.stringify([...chart]));
+                cart[index].quantity = cart[index].quantity + action.payload.quantity;
+                localStorage.setItem(`shoppingCart${action.payload.userId}`, JSON.stringify([...cart]));
 
                 return {
                     ...state,
-                    shoppingChart: [...chart],
+                    shoppingCart: [...cart],
                 }
             }
 

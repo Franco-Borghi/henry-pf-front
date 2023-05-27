@@ -4,16 +4,17 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from './Detail.module.scss';
 import { useDispatch, useSelector } from "react-redux";
-import { addItemToChart } from "../../redux/actions";
+import { addItemToCart } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Detail() {
   const [motorcycle, setMotorcycle] = useState(null);
-  const [colors, setColors] = useState([])
+  const [colors, setColors] = useState([]);
+  const [pickedColor, setPickedColor] = useState(null);
   const { id } = useParams();
   const [description, setDescription] = React.useState(true);
   const [details, setDetails] = React.useState(false);
-  const [shoppingChartButton, setShoppingChartButton] = React.useState(false);
+  const [shoppingCartButton, setShoppingCartButton] = React.useState(false);
   const { isAuthenticated, user } = useAuth0();
 
   const handleDescription = () => {
@@ -27,16 +28,16 @@ export default function Detail() {
   }
 
   const dispatch = useDispatch();
-  const shoppingChart = useSelector(state => state.shoppingChart);
+  const shoppingCart = useSelector(state => state.shoppingCart);
   const allMotorcycles = useSelector(state => state.allMotorcycles);
 
   React.useEffect(() => {
 
-    if (motorcycle && shoppingChart.some(el => el.id === motorcycle.id)) {
-      setShoppingChartButton(false);
-    } else setShoppingChartButton(true);
+    if (motorcycle && shoppingCart.some(el => el.id === motorcycle.id && el.color === pickedColor)) {
+      setShoppingCartButton(false);
+    } else setShoppingCartButton(true);
 
-  }, [shoppingChart, motorcycle])
+  }, [shoppingCart, motorcycle, pickedColor])
 
   useEffect(() => {
     const fetchMotorcycle = async () => {
@@ -73,15 +74,25 @@ export default function Detail() {
           <div className={styles['separator']}></div>
           <div className={styles['price-container']}>
             <div>
-              <div style={{ fontWeight: '700'}}>Price:</div>
+              <p style={{ fontWeight: '700'}}>Price:</p>
               <h4>${motorcycle.price}</h4>
             </div>
 
             <div>
-              <label onClick={() => motorcycle && motorcycle.stock > 0 && shoppingChartButton && isAuthenticated && user && dispatch(addItemToChart({id: motorcycle.id, quantity: 1, userId: user.email}))} className={shoppingChartButton && motorcycle.stock && isAuthenticated > 0 ? styles['cart-container'] : styles['cart-container-disabled']}>
+              <label onClick={() => motorcycle && motorcycle.stock > 0 && shoppingCartButton && isAuthenticated && user && pickedColor && dispatch(addItemToCart({id: motorcycle.id, quantity: 1, color: pickedColor, userId: user.email}))} className={shoppingCartButton && motorcycle.stock > 0 && isAuthenticated && pickedColor ? styles['cart-container'] : styles['cart-container-disabled']}>
                 Add to cart 
                 <ion-icon style={{ color: "#fff "}} className='svg' size="small" name="cart-outline"></ion-icon>
               </label>
+            </div>
+          </div>
+          <div className={styles['color-container']}>
+            <div className={styles['color']} >
+              <p style={{ fontWeight: '700'}}>Pick a color:</p>
+              {
+                colors.map(el => (
+                  <div onClick={() => setPickedColor(el.toLowerCase())} style={{ width: '20px', height: '20px', background: `${el.toLowerCase()}`, cursor: 'pointer', boxShadow: pickedColor === el.toLowerCase() ? 'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset' : ''}}></div>
+                ))
+              }
             </div>
           </div>
         </div>
@@ -96,7 +107,7 @@ export default function Detail() {
           <div data-visible={`${details}`} className={styles[`selector-content`]}>
             <p>Transmission: {motorcycle.transmission}</p>
             <p>CC: {motorcycle.cc}</p>
-            <p>Color options: {colors?.map(c => <p>{c}</p>)}</p>
+            {/* <p>Color options: {colors?.map(c => <p>{c}</p>)}</p> */}
           </div>
         </div>
       </div>
