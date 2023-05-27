@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 export  function Checkout() {
 
     const { user } = useAuth0();
-    // console.log('user.sub:', user.sub)
+    console.log("user", user)
 
     const items = useSelector(state => state.shoppingChart).map(item => item.id)
 
