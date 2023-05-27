@@ -1,126 +1,124 @@
-import React from 'react'
-import { PayPalScriptProvider, PayPalButtons, FUNDING } from "@paypal/react-paypal-js";
+import React from "react";
+import { PayPalScriptProvider,PayPalButtons,FUNDING,} from "@paypal/react-paypal-js";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import swal from 'sweetalert2';
-import { addItemToCart } from '../../redux/actions';
-import { useDispatch } from 'react-redux';
+import { useSelector } from "react-redux";
+import swal from "sweetalert2";
+import { addItemToCart } from "../../redux/actions";
+import { useDispatch } from "react-redux";
+
+export function CheckoutButton() {
+  const { user } = useAuth0();
+  const dispatch = useDispatch();
+
+  function capitalizeString(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  const shoppingCart = useSelector((state) => state.shoppingCart);
+  console.log("shoppingCart", shoppingCart);
+
+  const itemsToPost = shoppingCart.map((el) => {
+    if (el.quantity > 1) {
+        const array = [];
+        for (let i = 0; i < el.quantity; i++) {
+            array.push({
+            id: el.id,
+            color: capitalizeString(el.color),
+            });
+        }
+        return array;
+    }
+
+    return {
+        id: el.id,
+        color: capitalizeString(el.color),
+    }
+    }).flat();
+
+    console.log("itemsToPost", itemsToPost)
 
 
-
-export  function CheckoutButton() {
-
-    const { user } = useAuth0();
-    const dispatch = useDispatch();
-    
-    const shoppingCart = useSelector(state => state.shoppingCart);
-    console.log("shoppingCart", shoppingCart)
-    
-    
-    function handleSubmit() {
-
-        return shoppingCart.reduce((acc, el) => acc + (el.unitPrice * el.quantity), 0)
-}
-    
+  function handleSubmit() {
+    return shoppingCart.reduce(
+      (acc, el) => acc + (el.unitPrice * el.quantity), 0);
+  }
 
   return (
-
     <div>
-        <PayPalScriptProvider options={{ "client-id": process.env.REACT_APP_CLIENT_ID_SANDBOX }}>
-            <PayPalButtons
-            fundingSource= {FUNDING.PAYPAL}
-            createOrder={(data, actions) => {
-                return actions.order
-                .create({
-                    purchase_units: [
-                        {
-                            amount: {
-                                currency_code: "USD",
-                                value: handleSubmit(), 
-                            },
-                        },
-                    ],
-                })
-                .then((orderId) => {
-                    console.log("Order ID:", orderId);
-                    
-                    // fetch('http://localhost:3001/orders', {
-                        //     method: 'POST',
-                        //     headers: {
-                            //         'Content-Type': 'application/json'
-                            //     },
-                            //     body: JSON.stringify({
-                                //         orderNumber: orderId,
-                                //         amountPaid: total,
-                                //         userId: user.sub,
-                                //         items,
-                                //         orderStatus: "Pending"
-                                //     })
-                                // })
-                                // .then(response => response.json())
-                                // .then(data => {
-                                    //     console.log('Success:', data);
-                                    // })
-                                    // .catch((error) => {
-                                        //     console.error('Error:', error);
-                                        // });
-                                        
-                                        return orderId
-                                    })
-                                    .catch((error) => {
-                                        console.error("Order creation error:", error);
-                                    });
-                                    
-                                }} 
-                                
-                                onApprove={function (data, actions) {
-                                    return actions.order.capture().then(function (details) {
-                        
-                                        new swal({
-                                            title: "Success",
-                                            text: "Transaction completed successfully",
-                                            icon: "success",
-                                            buttons: true,
-                                          })
+      <PayPalScriptProvider
+        options={{ "client-id": process.env.REACT_APP_CLIENT_ID_SANDBOX }}
+      >
+        <PayPalButtons
+          fundingSource={FUNDING.PAYPAL}
+          createOrder={(data, actions) => {
+            return actions.order
+              .create({
+                purchase_units: [
+                  {
+                    amount: {
+                      currency_code: "USD",
+                      value: handleSubmit(),
+                    },
+                  },
+                ],
+              })
+              .then((orderId) => {
+                console.log("Order ID:", orderId);
 
-                                          dispatch(addItemToCart([]));
-                                          localStorage.setItem(`shoppingCart${user.email}`, JSON.stringify([]));
+                return orderId;
+              })
+              .catch((error) => {
+                console.error("Order creation error:", error);
+              });
+          }}
+          onApprove={function (data, actions) {
+            return actions.order.capture().then(function (details) {
+              new swal({
+                title: "Success",
+                text: "Transaction completed successfully",
+                icon: "success",
+                buttons: true,
+              });
 
-                                        console.log('Order Details:');
-                                        console.log('ID:', details.id);
-                                        console.log('Intent:', details.intent);
-                                        console.log('Status:', details.status);
-                                        console.log('Purchase Units:', details.purchase_units);
-                                        console.log('Amount:', details.amount);
-                                        console.log('Create Time:', details.create_time);
-                                        console.log('Update Time:', details.update_time);
-                                        console.log('Links:', details.links);
-                                        // Esto es lo que me logueo:
-                                        /* Order Details:
-                                        Checkout.jsx:39 ID: 2MW783865U251822S
-                                        Checkout.jsx:40 Intent: CAPTURE
-                                        Checkout.jsx:41 Status: COMPLETED
-                                        Checkout.jsx:42 Purchase Units: Array(1)0: amount: {
-                                            currency_code: 'USD', 
-                                            value: '0.01'
-                                        }
-                                        payee: {
-                                            email_address: 'sb-vsu9e26092046@business.example.com', 
-                                            merchant_id: 'M2LBLWX83TAEE'}
-                                            payments: {captures: Array(1)}
-                                            reference_id: "default"
-                                            shipping: {name: {…}, address: {…}}
-                                            soft_descriptor: "PAYPAL *TEST STORE"}
-                                            Checkout.jsx:43 Amount: undefined
-                                            Checkout.jsx:44 Create Time: 2023-05-26T03:33:19Z
-                                            Checkout.jsx:45 Update Time: 2023-05-26T03:34:11Z
-                                            Checkout.jsx:46 Links:  */
-                                        });
-                                    }}
-                                    />
-        </PayPalScriptProvider>
+              dispatch(addItemToCart([]));
+              localStorage.setItem(
+                `shoppingCart${user.email}`,
+                JSON.stringify([])
+              );
+
+              fetch('http://localhost:3001/orders', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                      orderNumber: details.id,
+                      amountPaid: details.purchase_units[0].amount.value || handleSubmit(),
+                      userId: user.sub,
+                      items: itemsToPost,
+                      orderStatus: "Completed"
+                  })
+              })
+              .then(response => response.json())
+              .then(data => {
+                console.log("orderNumber",details.id)
+                console.log("amountPaid",details.purchase_units[0].amount.value || handleSubmit())
+                console.log("userId",user.sub)
+                console.log("items",itemsToPost)
+                console.log("orderStatus","Completed")
+                  console.log('Success:', data);
+              })
+              .catch((error) => {
+                  console.error('Error:', error);
+              });
+
+              console.log("Order Details:");
+              console.log(details)
+
+            });
+          }}
+        />
+      </PayPalScriptProvider>
     </div>
-
-  )
+  );
 }
