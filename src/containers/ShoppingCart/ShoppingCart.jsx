@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Navigate, Link } from 'react-router-dom';
 import { ShoppingCartCard } from './ShoppingCartCard';
+import { Checkout } from '../../components/CheckoutPage/Checkout';
 
 export function ShoppingCart() {
 
@@ -25,7 +26,7 @@ export function ShoppingCart() {
         )).reverse()
       }
 
-      <Link style={{ margin: '50px auto', display: 'block', width: 'fit-content', cursor: 'pointer' }} to ='/checkout'>
+      {/* <Link style={{ margin: '50px auto', display: 'block', width: 'fit-content', cursor: 'pointer' }} to ='/checkout'>
         <button style={{
           background: '#484848',
           color: '#fff',
@@ -33,7 +34,8 @@ export function ShoppingCart() {
           borderRadius: '4px',
           cursor: 'pointer'
         }}>Finalizar Compra</button>
-      </Link>
+      </Link> */}
+      <Checkout />
     </div>
   )
 }

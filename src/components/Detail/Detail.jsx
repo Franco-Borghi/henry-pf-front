@@ -48,7 +48,7 @@ export default function Detail() {
       })
     }
 
-    dispatch(addItemToCart({id: motorcycle.id, quantity: 1, color: pickedColor, userId: user.email}));
+    dispatch(addItemToCart({id: motorcycle.id, quantity: 1, color: pickedColor, userEmail: user.email, unitPrice: motorcycle.price}));
     return new swal({
       title: "Success",
       text: "You have added the motorcycle to your shopping cart",
