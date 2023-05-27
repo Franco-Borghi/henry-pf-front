@@ -22,7 +22,7 @@ export function ShoppingCart() {
       {
         shoppingCart.map(element => (
           <ShoppingCartCard el={element}/>
-        ))
+        )).reverse()
       }
 
       <Link style={{ margin: '50px auto', display: 'block', width: 'fit-content', cursor: 'pointer' }} to ='/checkout'>

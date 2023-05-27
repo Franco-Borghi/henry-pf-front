@@ -4,6 +4,8 @@ import { deleteItemFromCart, updateCartItemQuantity } from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useNavigate } from 'react-router-dom';
+import swal from 'sweetalert2';
+
 
 export function ShoppingCartCard({el}) {
 
@@ -21,7 +23,16 @@ export function ShoppingCartCard({el}) {
         colorStock++;
       }
     });
-    alert(`It is not possible to add more units of this product`);
+
+    if (!(colorStock > number)) {
+      new swal({
+        title: "Stock limit reached",
+        text: "It is not possible to add more units of this product",
+        icon: "warning",
+        buttons: true,
+      })
+    }
+
     return colorStock > number;
   }
 
