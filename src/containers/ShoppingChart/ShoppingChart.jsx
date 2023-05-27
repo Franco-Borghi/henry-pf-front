@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './ShoppingChart.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToChart, deleteItemFromChart, updateChartItemQuantity } from '../../redux/actions';
-import { Navigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Navigate, Link } from 'react-router-dom';
 
