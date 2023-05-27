@@ -10,6 +10,7 @@ import { Layout } from "./components/Layout/Layout";
 import { ShoppingCart } from "./containers/ShoppingCart/ShoppingCart";
 import { useAuth0 } from "@auth0/auth0-react";
 import { CheckoutPage } from "./components/CheckoutPage/Checkout";
+import ProfileForm from "./components/ProfileForm/ProfileForm";
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
             <Route path="/create" element={<CreateMotorcycle/>}/>
             <Route path="/:id" element={<ItemDetail/>}/>
             <Route path="/shopping-cart" element={<ShoppingCart />} />
+            <Route path="/profile" element={< ProfileForm/>} />
             {/* <Route path="/checkout" element={<CheckoutPage/>} /> */}
           </Route>
         </Routes>

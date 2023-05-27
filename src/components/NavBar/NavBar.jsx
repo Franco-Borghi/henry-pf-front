@@ -10,6 +10,7 @@ import { LoginBtn } from "../LoginBtn/LoginBtn";
 import { LogoutBtn } from "../LogoutBtn/LogoutBtn";
 import { useAuth0 } from "@auth0/auth0-react";
 
+
 export default function NavBar(props) {
 
   const navigate = useNavigate();
@@ -91,8 +92,10 @@ export default function NavBar(props) {
             {
               isAuthenticated
               ? <>
+               <Link to={`/profile`}>
                   <img style={{height: '40px', width: '40px', borderRadius: '50%', cursor: 'pointer'}} src={user.picture} alt="User Image" />
                   <p className={styles.txtBtnIcons}>Profile</p>
+                  </Link>
                 </>
               : <div style={{height: '40px', width: '40px'}} />
             }
