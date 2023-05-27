@@ -40,11 +40,11 @@ export default function NavBar(props) {
     }
   }, [shoppingCart])
 
-  React.useEffect(() => {
-    if (isAuthenticated) {
-      console.log(user);
-    }
-  }, [isAuthenticated])
+  // React.useEffect(() => {
+  //   if (isAuthenticated) {
+  //     console.log(user);
+  //   }
+  // }, [isAuthenticated])
 
   return (
     <nav className={styles['nav-bar-container']}>

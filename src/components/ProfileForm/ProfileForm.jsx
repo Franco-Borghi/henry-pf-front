@@ -1,20 +1,27 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import React from 'react'
 import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
+import Swal from "sweetalert2";
+import withReactContent from 'sweetalert2-react-content';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function ProfileForm() {
    const [editMode, setEditMode] = useState(false);
    const [profileData, setProfileData] = useState();
-   const {user} = useAuth0();
+   const {user, isAuthenticated} = useAuth0();
+   const navigate = useNavigate()
+   const mySwal= withReactContent(Swal);
 
    useEffect(() => {
-    axios.get(`http://localhost:3001/users/${user.sub}`)
+    if(!isAuthenticated) navigate("/")
+    else{axios.get(`http://localhost:3001/users/${user?.sub}`)
     .then(res => {
       setProfileData(res.data)
-      console.log(res.data)
-   }) })
+   }) 
+   .catch(err => console.log("ERROR", err))
+  }
+  }, [user?.sub])
 
 
     const handleInputChange = (event) => {
@@ -28,40 +35,59 @@ export default function ProfileForm() {
 
    const handleSaveClick = () => {
      setEditMode(false);
-   };
+     console.log(profileData);
+     if(profileData.idNumber === "") profileData.idNumber = null
+     axios.put(`http://localhost:3001/users/${user?.sub}`, {...profileData})
+     .then(d => {
+      setProfileData(d.data)
+      mySwal.fire({
+        html: <strong>The info has been updated</strong>,
+        icon: "success",
+    })
+    }).catch(err => console.log("ERROR", err))
+  }
    
-   
-
   return (
+
     <div>
       <h1>Profile Account</h1>
       <div>
+      <label>
+          Email:
+            <input
+              type="text"
+              disabled
+              value={profileData?.email}
+            />
+        </label>
+      </div>
+      <div>
         <label>
-          Name:
+        First Name:
           {editMode ? (
             <input
               type="text"
-              name="name"
-              value={profileData.firstName}
+              name="firstName"
+              value={profileData?.firstName}
               onChange={handleInputChange}
             />
           ) : (
-            <span>{profileData.firstName}</span>
+            <span>{profileData?.firstName}</span>
           )}
         </label>
       </div>
       <div>
         <label>
-          Lastname:
+          Last Name:
           {editMode ? (
             <input
-              type="email"
-              name="email"
-              value={profileData.lastName}
+              type="text"
+              name="lastName"
+              value={profileData?.lastName}
               onChange={handleInputChange}
             />
           ) : (
-            <span>{profileData.lastName}</span>
+            <span>{profileData?.lastName}</span>
           )}
         </label>
       </div>
@@ -71,38 +97,40 @@ export default function ProfileForm() {
           {editMode ? (
             <input
               type="tel"
-              name="phone"
-              value={profileData.phoneNumber}
+              name="phoneNumber"
+              value={profileData?.phoneNumber}
               onChange={handleInputChange}
             />
           ) : (
-            <span>{profileData.phoneNumber}</span>
+            <span>{profileData?.phoneNumber}</span>
           )}
         </label>
       </div>
-      {/* <div>
+      <div>
         <label>
-          Id Number:
+          ID Number:
           {editMode ? (
             <input
               type="text"
-              name="address"
-              value={profileData.idNumber}
+              name="idNumber"
+              value={profileData?.idNumber}
               onChange={handleInputChange}
             />
           ) : (
-            <span>{profileData.idNumber}</span>
+            <span>{profileData?.idNumber}</span>
           )}
         </label>
-      </div> */}
+      </div>
       
       
       <div>
         {editMode ? (
-          <button onClick={handleSaveClick}>Guardar</button>
+          <button onClick={handleSaveClick}>Save</button>
         ) : (
-          <button onClick={handleEditClick}>Editar</button>
+          <button onClick={handleEditClick}>Edit</button>
         )}
+
+<Link to="/" ><button>Home</button></Link>
       </div>
     </div>
   );
