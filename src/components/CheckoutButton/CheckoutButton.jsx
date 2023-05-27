@@ -18,6 +18,7 @@ export function CheckoutButton() {
   console.log("shoppingCart", shoppingCart);
 
   const itemsToPost = shoppingCart.map((el) => {
+    
     if (el.quantity > 1) {
         const array = [];
         for (let i = 0; i < el.quantity; i++) {
@@ -27,7 +28,7 @@ export function CheckoutButton() {
             });
         }
         return array;
-    }
+    } //TODO: test with a new motorcycle added to see the quantity part
 
     return {
         id: el.id,
@@ -101,11 +102,6 @@ export function CheckoutButton() {
               })
               .then(response => response.json())
               .then(data => {
-                console.log("orderNumber",details.id)
-                console.log("amountPaid",details.purchase_units[0].amount.value || handleSubmit())
-                console.log("userId",user.sub)
-                console.log("items",itemsToPost)
-                console.log("orderStatus","Completed")
                   console.log('Success:', data);
               })
               .catch((error) => {
