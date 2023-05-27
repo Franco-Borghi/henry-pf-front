@@ -1,8 +1,26 @@
 import React from 'react'
 import { PayPalScriptProvider, PayPalButtons, FUNDING } from "@paypal/react-paypal-js";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useSelector } from 'react-redux';
 
 
-export  function Checkout({amount}) {
+
+export  function Checkout() {
+
+    const { user } = useAuth0();
+    // console.log('user.sub:', user.sub)
+
+    const items = useSelector(state => state.shoppingChart).map(item => item.id)
+
+    const allMotorcycles = useSelector(state => state.allMotorcycles);
+    console.log("items:", items)
+    
+    const cart = allMotorcycles.filter(motorcycle => items.includes(motorcycle.id))
+    console.log("Cart", cart)
+
+    const total = cart.reduce((acc, el) => acc + el.price, 0)
+    console.log("Total", total)
+
   return (
     <div>
         <PayPalScriptProvider options={{ "client-id": process.env.REACT_APP_CLIENT_ID_SANDBOX }}>
@@ -15,13 +33,35 @@ export  function Checkout({amount}) {
                             {
                                 amount: {
                                     currency_code: "USD",
-                                    value: amount, 
+                                    value: total, 
                                 },
                             },
                         ],
                     })
                     .then((orderId) => {
-                        // Your code here after create the order
+                        console.log("Order ID:", orderId);
+
+                        // fetch('http://localhost:3001/orders', {
+                        //     method: 'POST',
+                        //     headers: {
+                        //         'Content-Type': 'application/json'
+                        //     },
+                        //     body: JSON.stringify({
+                        //         orderNumber: orderId,
+                        //         amountPaid: total,
+                        //         userId: user.sub,
+                        //         items,
+                        //         orderStatus: "Pending"
+                        //     })
+                        // })
+                        // .then(response => response.json())
+                        // .then(data => {
+                        //     console.log('Success:', data);
+                        // })
+                        // .catch((error) => {
+                        //     console.error('Error:', error);
+                        // });
+
                         return orderId
                     })
                     .catch((error) => {

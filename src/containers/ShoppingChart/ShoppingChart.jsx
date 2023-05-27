@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addItemToChart, deleteItemFromChart, updateChartItemQuantity } from '../../redux/actions';
 import { Navigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
+import { Navigate, Link } from 'react-router-dom';
 
 export function ShoppingChart() {
 
@@ -16,6 +17,7 @@ export function ShoppingChart() {
       <Navigate replace to='/' />
     )
   }
+
 
   return (
     <div className={styles['shopping-chart-container']}>
@@ -31,6 +33,10 @@ export function ShoppingChart() {
           </div>
         ))
       }
+
+      <Link to ='/checkout'>
+        <button>Checkout</button>
+      </Link>
     </div>
   )
 }
