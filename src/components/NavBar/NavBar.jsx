@@ -33,7 +33,7 @@ export default function NavBar(props) {
     if (shoppingChart.length) {
       let counter = 0;
       shoppingChart.forEach(el => {
-        counter = counter + el.cuantity
+        counter = counter + el.quantity
       });
       setCartItems(counter);
     }

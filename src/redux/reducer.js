@@ -1,4 +1,4 @@
-import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID, ORDER_ASC, ORDER_DESC, SET_ACTIVE_SEARCH, ADD_ITEM_TO_CHART, DELETE_ITEM_FROM_CHART, UPDATE_CHART_ITEM_CUANTITY } from "./actions";
+import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID, ORDER_ASC, ORDER_DESC, SET_ACTIVE_SEARCH, ADD_ITEM_TO_CHART, DELETE_ITEM_FROM_CHART, UPDATE_CHART_ITEM_QUANTITY } from "./actions";
 
 const initialState = {
     motos: [],
@@ -108,12 +108,12 @@ export const reducer = (state = initialState, action) => {
                 }
             }
 
-        case UPDATE_CHART_ITEM_CUANTITY:
+        case UPDATE_CHART_ITEM_QUANTITY:
             const chart = state.shoppingChart;
             const index = chart.findIndex(obj => obj.id === action.payload.id);
 
             if (index > -1) {
-                chart[index].cuantity = chart[index].cuantity + action.payload.cuantity;
+                chart[index].quantity = chart[index].quantity + action.payload.quantity;
                 localStorage.setItem(`shoppingChart${action.payload.userId}`, JSON.stringify([...chart]));
 
                 return {
