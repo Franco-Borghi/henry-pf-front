@@ -6,6 +6,7 @@ import styles from './Detail.module.scss';
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
+import swal from 'sweetalert2';
 
 export default function Detail() {
   const [motorcycle, setMotorcycle] = useState(null);
@@ -29,7 +30,32 @@ export default function Detail() {
 
   const dispatch = useDispatch();
   const shoppingCart = useSelector(state => state.shoppingCart);
-  const allMotorcycles = useSelector(state => state.allMotorcycles);
+
+  const handleDispatch = () => {
+    if (!pickedColor) {
+      return new swal({
+        title: "Color missing",
+        text: "Pick a color to continue",
+        icon: "warning",
+        buttons: true,
+      })
+    } else if (motorcycle && shoppingCart.some(el => el.id === motorcycle.id && el.color === pickedColor)) {
+      return new swal({
+        title: "Warning",
+        text: "The motorcycle is already in yout shopping cart",
+        icon: "warning",
+        buttons: true,
+      })
+    }
+
+    dispatch(addItemToCart({id: motorcycle.id, quantity: 1, color: pickedColor, userId: user.email}));
+    return new swal({
+      title: "Success",
+      text: "You have added the motorcycle to your shopping cart",
+      icon: "success",
+      buttons: true,
+    })
+  }
 
   React.useEffect(() => {
 
@@ -79,7 +105,7 @@ export default function Detail() {
             </div>
 
             <div>
-              <label onClick={() => motorcycle && motorcycle.stock > 0 && shoppingCartButton && isAuthenticated && user && pickedColor && dispatch(addItemToCart({id: motorcycle.id, quantity: 1, color: pickedColor, userId: user.email}))} className={shoppingCartButton && motorcycle.stock > 0 && isAuthenticated && pickedColor ? styles['cart-container'] : styles['cart-container-disabled']}>
+              <label onClick={() => motorcycle && motorcycle.stock > 0 && isAuthenticated && user && handleDispatch()} className={shoppingCartButton && motorcycle.stock > 0 && isAuthenticated && pickedColor ? styles['cart-container'] : styles['cart-container-disabled']}>
                 Add to cart 
                 <ion-icon style={{ color: "#fff "}} className='svg' size="small" name="cart-outline"></ion-icon>
               </label>
