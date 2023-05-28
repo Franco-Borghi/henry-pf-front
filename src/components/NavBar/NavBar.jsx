@@ -80,6 +80,8 @@ export default function NavBar(props) {
             </div>
          </Link>
 
+          {/* //!link dashAdmin */}
+          <Link to={"/list"}>
           <div className={styles['icon-container']} >
             <button className={styles.btnIcon}>
               <ion-icon style={{ color: "#fff"}} className='svg' size="small" name="person-outline"></ion-icon>
@@ -87,6 +89,7 @@ export default function NavBar(props) {
             <p className={styles.txtBtnIcons}>Admin</p>
 
           </div> 
+          </Link>
 
           <div className={styles['icon-container']} >
             {
@@ -110,7 +113,7 @@ export default function NavBar(props) {
               }
             </button>
           </div> 
-
+              
         </div>
 
       </div>
