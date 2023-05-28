@@ -11,6 +11,8 @@ import { ShoppingCart } from "./containers/ShoppingCart/ShoppingCart";
 import { useAuth0 } from "@auth0/auth0-react";
 import { CheckoutPage } from "./components/CheckoutPage/Checkout";
 import ProfileForm from "./components/ProfileForm/ProfileForm";
+import DashAdmin from "./components/DashAdmin/DashAdmin"; // Cambia la importación de dashAdmin a DashAdmin
+
 
 function App() {
 
@@ -44,6 +46,8 @@ function App() {
             <Route path="/profile" element={< ProfileForm/>} />
             {/* <Route path="/checkout" element={<CheckoutPage/>} /> */}
           </Route>
+          {/* //!ruta dashAdmin */}
+          <Route path="/list" element={<DashAdmin />} />
         </Routes>
       </BrowserRouter>
     </>
