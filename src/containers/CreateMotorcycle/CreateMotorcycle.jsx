@@ -12,7 +12,6 @@ function CreateMotorcycle() {
 
   return (
     <>
-      <NavBar />
       <div className={styles['create-motorcycle-container']}>
         <FilterBar>
           <div className={styles['return-to-home-button']} onClick={() => navigate('/')}>
@@ -29,7 +28,6 @@ function CreateMotorcycle() {
           <Form />
         </div>
       </div>
-      <Footer />
     </>
   )
 }

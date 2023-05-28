@@ -52,6 +52,16 @@
       align-items: center;
     }
 
+    .color-container {
+      margin-top: 20px;
+      
+      .color {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+      }
+    }
+
     .cart-container {
       color: #fff;
       display: flex;
@@ -64,10 +74,25 @@
       background-color: #3e3f3e;
       transition: all 0.3s ease-in-out;
 
+
       &:hover {
         background-color: #3e3f3ebb;
         transform: scale(1.05);
       }
+    }
+
+    .cart-container-disabled {
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 10px 20px;
+      border-radius: 5px;
+      background-color: #3e3f3ebb;
+      // pointer-events: none;
+      cursor: not-allowed;
     }
 
     .selector-container {
