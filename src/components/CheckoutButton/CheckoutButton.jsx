@@ -14,6 +14,8 @@ export function CheckoutButton() {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  console.log(process.env.REACT_APP_CLIENT_ID_SANDBOX);
+
   const shoppingCart = useSelector((state) => state.shoppingCart);
   console.log("shoppingCart", shoppingCart);
 

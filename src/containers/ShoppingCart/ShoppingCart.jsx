@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Navigate, Link } from 'react-router-dom';
 import { ShoppingCartCard } from './ShoppingCartCard';
-import { Checkout } from '../../components/CheckoutPage/Checkout';
+import { CheckoutButton } from '../../components/CheckoutButton/CheckoutButton';
 
 export function ShoppingCart() {
 
@@ -35,7 +35,7 @@ export function ShoppingCart() {
           cursor: 'pointer'
         }}>Finalizar Compra</button>
       </Link> */}
-      <Checkout />
+      <CheckoutButton />
     </div>
   )
 }

@@ -10,6 +10,7 @@ import swal from 'sweetalert2';
 
 export default function Detail() {
   const [motorcycle, setMotorcycle] = useState(null);
+  const allMotorcycles = useSelector(state => state.allMotorcycles);
   const [colors, setColors] = useState([]);
   const [pickedColor, setPickedColor] = useState(null);
   const { id } = useParams();
@@ -17,6 +18,7 @@ export default function Detail() {
   const [details, setDetails] = React.useState(false);
   const [shoppingCartButton, setShoppingCartButton] = React.useState(false);
   const { isAuthenticated, user } = useAuth0();
+  const [stock, setStock] = React.useState(false);
 
   const handleDescription = () => {
     setDetails(false);
@@ -32,6 +34,10 @@ export default function Detail() {
   const shoppingCart = useSelector(state => state.shoppingCart);
 
   const handleDispatch = () => {
+    if (!stock) {
+      return false;
+    }
+
     if (!pickedColor) {
       return new swal({
         title: "Color missing",
@@ -74,6 +80,7 @@ export default function Detail() {
         response.data.items.forEach(i => {if(!auxColors.includes(i.color)) auxColors.push(i.color)
         setColors(auxColors)
         })
+        setStock(allMotorcycles.some(moto => moto.id === response.data.id && moto.items.some(item => item.sold === false)))
       } catch (error) {
         console.log(error);
       }
@@ -86,6 +93,7 @@ export default function Detail() {
   }
 
   return (
+    <>
     <article className={styles['detail-container']}>
       <div className={styles['img-container']}>
         <img src={motorcycle.image} alt='product-image' />
@@ -113,10 +121,17 @@ export default function Detail() {
           </div>
           <div className={styles['color-container']}>
             <div className={styles['color']} >
-              <p style={{ fontWeight: '700'}}>Pick a color:</p>
+              {
+                stock
+                ? <p style={{ fontWeight: '700'}}>Pick a color:</p>
+                : <p style={{ fontWeight: '700'}}>Item out of stock</p>
+              }
+
               {
                 colors.map(el => (
-                  <div onClick={() => setPickedColor(el.toLowerCase())} style={{ width: '20px', height: '20px', background: `${el.toLowerCase()}`, cursor: 'pointer', boxShadow: pickedColor === el.toLowerCase() ? 'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset' : ''}}></div>
+                  allMotorcycles.some(moto => moto.id === motorcycle.id && moto.items.some(item => item.sold === false && item.color === el ))
+                  ? <div onClick={() => setPickedColor(el.toLowerCase())} style={{ width: '20px', height: '20px', background: `${el.toLowerCase()}`, cursor: 'pointer', boxShadow: pickedColor === el.toLowerCase() ? 'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset' : ''}}></div>
+                  :  null
                 ))
               }
             </div>
@@ -138,5 +153,6 @@ export default function Detail() {
         </div>
       </div>
     </article>
+    </>
   );
 }
