@@ -68,7 +68,7 @@ export default function Detail() {
   useEffect(() => {
     const fetchMotorcycle = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/motorcycles/${id}`);
+        const response = await axios.get(`${process.env.REACT_APP_HOST_NAME}/motorcycles/${id}`);
         setMotorcycle(response.data);
         let auxColors = []
         response.data.items.forEach(i => {if(!auxColors.includes(i.color)) auxColors.push(i.color)

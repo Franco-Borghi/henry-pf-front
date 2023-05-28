@@ -7,7 +7,7 @@ export default function Table() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/motorcycles")
+      .get(`${process.env.REACT_APP_HOST_NAME}/motorcycles`)
       .then((response) => {
         setMotorcyclesData(response.data);
         console.log(response.data);

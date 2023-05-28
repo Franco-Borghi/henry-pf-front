@@ -87,7 +87,7 @@ export function CheckoutButton() {
                 JSON.stringify([])
               );
 
-              fetch('http://localhost:3001/orders', {
+              fetch(`${process.env.REACT_APP_HOST_NAME}/orders`, {
                   method: 'POST',
                   headers: {
                       'Content-Type': 'application/json'
