@@ -17,7 +17,7 @@ export default function Motorcycles() {
   const orderDescending = useSelector(state => state.orderDesc);
   const [displayedMotorcycles, setDisplayedMotorcycles] = useState([]);
 
-  const motorcyclesPerPage = 4;
+  const motorcyclesPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -90,9 +90,9 @@ export default function Motorcycles() {
       <div className={styles.motorcycleList}>
         {currentMotorcycles.length > 0 ? (
           currentMotorcycles.map(motorcycle => (
-            <div className={styles.motorcycleItem} key={motorcycle.id}>
-              <Motorcycle info={motorcycle} />
-            </div>
+            // <div className={styles.motorcycleItem} key={motorcycle.id}>
+              <Motorcycle key={motorcycle.id} info={motorcycle} />
+            // </div>
           ))
         ) : (
           <p className={styles.paragraph}>No motorcycles available</p>

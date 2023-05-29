@@ -18,7 +18,7 @@ export default function Detail() {
   const [details, setDetails] = React.useState(false);
   const [shoppingCartButton, setShoppingCartButton] = React.useState(false);
   const { isAuthenticated, user } = useAuth0();
-  const [stock, setStock] = React.useState(false);
+  const [stock, setStock] = React.useState(true);
 
   const handleDescription = () => {
     setDetails(false);
@@ -63,6 +63,30 @@ export default function Detail() {
     })
   }
 
+  function convertirNumero(numero) {
+    // Convertir el número a string
+    let numeroString = numero.toString();
+  
+    // Verificar si el número tiene parte decimal
+    if (numeroString.includes('.')) {
+      // Dividir el número en parte entera y parte decimal
+      let partes = numeroString.split('.');
+      
+      // Formatear la parte entera
+      let parteEntera = partes[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  
+      // Combinar la parte entera formateada con la parte decimal
+      let resultado = parteEntera + ',' + partes[1];
+      
+      return resultado;
+    } else {
+      // Formatear el número entero
+      let numeroFormateado = numeroString.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  
+      return numeroFormateado;
+    }
+  }
+
   React.useEffect(() => {
 
     if (motorcycle && shoppingCart.some(el => el.id === motorcycle.id && el.color === pickedColor)) {
@@ -74,19 +98,24 @@ export default function Detail() {
   useEffect(() => {
     const fetchMotorcycle = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/motorcycles/${id}`);
+        const response = await axios.get(`${process.env.REACT_APP_HOST_NAME}/motorcycles/${id}`);
         setMotorcycle(response.data);
         let auxColors = []
         response.data.items.forEach(i => {if(!auxColors.includes(i.color)) auxColors.push(i.color)
         setColors(auxColors)
         })
-        setStock(allMotorcycles.some(moto => moto.id === response.data.id && moto.items.some(item => item.sold === false)))
       } catch (error) {
         console.log(error);
       }
     };
     fetchMotorcycle();
   }, [id]);
+
+  React.useEffect(() => {
+    if (motorcycle) {
+      setStock(allMotorcycles.some(moto => moto.id === motorcycle.id && moto.items.some(item => item.sold === false)))
+    }
+  }, [motorcycle])
 
   if (!motorcycle) {
     return <div>Searching...</div>;
@@ -95,10 +124,15 @@ export default function Detail() {
   return (
     <>
     <article className={styles['detail-container']}>
-      <div className={styles['img-container']}>
+      {
+        !stock
+        ? <h1>Item out of stock</h1>
+        : null
+      }
+      <div style={{ opacity: stock ? '1' : '0.5'}} className={styles['img-container']}>
         <img src={motorcycle.image} alt='product-image' />
       </div>
-      <div className={styles['detail']}>
+      <div style={{ opacity: stock ? '1' : '0.5'}} className={styles['detail']}>
         <div>
           <div className={styles['title-container']}>
             <p>{motorcycle.category}</p>
@@ -109,13 +143,13 @@ export default function Detail() {
           <div className={styles['price-container']}>
             <div>
               <p style={{ fontWeight: '700'}}>Price:</p>
-              <h4>${motorcycle.price}</h4>
+              <h4>$USD {convertirNumero(motorcycle.price)}</h4>
             </div>
 
             <div>
               <label onClick={() => motorcycle && motorcycle.stock > 0 && isAuthenticated && user && handleDispatch()} className={shoppingCartButton && motorcycle.stock > 0 && isAuthenticated && pickedColor ? styles['cart-container'] : styles['cart-container-disabled']}>
                 Add to cart 
-                <ion-icon style={{ color: "#fff "}} className='svg' size="small" name="cart-outline"></ion-icon>
+                <ion-icon style={{ color: "#000 "}} className='svg' size="small" name="cart-outline"></ion-icon>
               </label>
             </div>
           </div>
@@ -130,7 +164,7 @@ export default function Detail() {
               {
                 colors.map(el => (
                   allMotorcycles.some(moto => moto.id === motorcycle.id && moto.items.some(item => item.sold === false && item.color === el ))
-                  ? <div onClick={() => setPickedColor(el.toLowerCase())} style={{ width: '20px', height: '20px', background: `${el.toLowerCase()}`, cursor: 'pointer', boxShadow: pickedColor === el.toLowerCase() ? 'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset' : ''}}></div>
+                  ? <div onClick={() => setPickedColor(el.toLowerCase())} style={{ width: '20px', height: '20px', background: `${el.toLowerCase()}`, cursor: 'pointer', boxShadow: pickedColor === el.toLowerCase() ? 'rgba(255, 255, 255, 1) 0px 0px 0px 2px, rgba(255, 255, 255, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset' : ''}}></div>
                   :  null
                 ))
               }

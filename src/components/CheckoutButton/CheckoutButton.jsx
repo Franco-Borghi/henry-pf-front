@@ -3,7 +3,7 @@ import { PayPalScriptProvider,PayPalButtons,FUNDING,} from "@paypal/react-paypal
 import { useAuth0 } from "@auth0/auth0-react";
 import { useSelector } from "react-redux";
 import swal from "sweetalert2";
-import { addItemToCart } from "../../redux/actions";
+import { addItemToCart, fetchData } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
 export function CheckoutButton() {
@@ -89,7 +89,7 @@ export function CheckoutButton() {
                 JSON.stringify([])
               );
 
-              fetch('http://localhost:3001/orders', {
+              fetch(`${process.env.REACT_APP_HOST_NAME}/orders`, {
                   method: 'POST',
                   headers: {
                       'Content-Type': 'application/json'
@@ -105,6 +105,7 @@ export function CheckoutButton() {
               .then(response => response.json())
               .then(data => {
                   console.log('Success:', data);
+                  fetchData(dispatch);
               })
               .catch((error) => {
                   console.error('Error:', error);
