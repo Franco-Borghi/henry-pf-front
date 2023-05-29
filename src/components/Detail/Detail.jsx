@@ -3,13 +3,22 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from './Detail.module.scss';
+import { useDispatch, useSelector } from "react-redux";
+import { addItemToCart } from "../../redux/actions";
+import { useAuth0 } from "@auth0/auth0-react";
+import swal from 'sweetalert2';
 
 export default function Detail() {
   const [motorcycle, setMotorcycle] = useState(null);
-  const [colors, setColors] = useState([])
+  const allMotorcycles = useSelector(state => state.allMotorcycles);
+  const [colors, setColors] = useState([]);
+  const [pickedColor, setPickedColor] = useState(null);
   const { id } = useParams();
   const [description, setDescription] = React.useState(true);
   const [details, setDetails] = React.useState(false);
+  const [shoppingCartButton, setShoppingCartButton] = React.useState(false);
+  const { isAuthenticated, user } = useAuth0();
+  const [stock, setStock] = React.useState(true);
 
   const handleDescription = () => {
     setDetails(false);
@@ -21,11 +30,75 @@ export default function Detail() {
     setDetails(true);
   }
 
+  const dispatch = useDispatch();
+  const shoppingCart = useSelector(state => state.shoppingCart);
+
+  const handleDispatch = () => {
+    if (!stock) {
+      return false;
+    }
+
+    if (!pickedColor) {
+      return new swal({
+        title: "Color missing",
+        text: "Pick a color to continue",
+        icon: "warning",
+        buttons: true,
+      })
+    } else if (motorcycle && shoppingCart.some(el => el.id === motorcycle.id && el.color === pickedColor)) {
+      return new swal({
+        title: "Warning",
+        text: "The motorcycle is already in yout shopping cart",
+        icon: "warning",
+        buttons: true,
+      })
+    }
+
+    dispatch(addItemToCart({id: motorcycle.id, quantity: 1, color: pickedColor, userEmail: user.email, unitPrice: motorcycle.price}));
+    return new swal({
+      title: "Success",
+      text: "You have added the motorcycle to your shopping cart",
+      icon: "success",
+      buttons: true,
+    })
+  }
+
+  function convertirNumero(numero) {
+    // Convertir el número a string
+    let numeroString = numero.toString();
+  
+    // Verificar si el número tiene parte decimal
+    if (numeroString.includes('.')) {
+      // Dividir el número en parte entera y parte decimal
+      let partes = numeroString.split('.');
+      
+      // Formatear la parte entera
+      let parteEntera = partes[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  
+      // Combinar la parte entera formateada con la parte decimal
+      let resultado = parteEntera + ',' + partes[1];
+      
+      return resultado;
+    } else {
+      // Formatear el número entero
+      let numeroFormateado = numeroString.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  
+      return numeroFormateado;
+    }
+  }
+
+  React.useEffect(() => {
+
+    if (motorcycle && shoppingCart.some(el => el.id === motorcycle.id && el.color === pickedColor)) {
+      setShoppingCartButton(false);
+    } else setShoppingCartButton(true);
+
+  }, [shoppingCart, motorcycle, pickedColor])
 
   useEffect(() => {
     const fetchMotorcycle = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/motorcycles/${id}`);
+        const response = await axios.get(`${process.env.REACT_APP_HOST_NAME}/motorcycles/${id}`);
         setMotorcycle(response.data);
         let auxColors = []
         response.data.items.forEach(i => {if(!auxColors.includes(i.color)) auxColors.push(i.color)
@@ -38,16 +111,28 @@ export default function Detail() {
     fetchMotorcycle();
   }, [id]);
 
+  React.useEffect(() => {
+    if (motorcycle) {
+      setStock(allMotorcycles.some(moto => moto.id === motorcycle.id && moto.items.some(item => item.sold === false)))
+    }
+  }, [motorcycle])
+
   if (!motorcycle) {
     return <div>Searching...</div>;
   }
 
   return (
+    <>
     <article className={styles['detail-container']}>
-      <div className={styles['img-container']}>
+      {
+        !stock
+        ? <h1>Item out of stock</h1>
+        : null
+      }
+      <div style={{ opacity: stock ? '1' : '0.5'}} className={styles['img-container']}>
         <img src={motorcycle.image} alt='product-image' />
       </div>
-      <div className={styles['detail']}>
+      <div style={{ opacity: stock ? '1' : '0.5'}} className={styles['detail']}>
         <div>
           <div className={styles['title-container']}>
             <p>{motorcycle.category}</p>
@@ -57,15 +142,32 @@ export default function Detail() {
           <div className={styles['separator']}></div>
           <div className={styles['price-container']}>
             <div>
-              <div style={{ fontWeight: '700'}}>Price:</div>
-              <h4>${motorcycle.price}</h4>
+              <p style={{ fontWeight: '700'}}>Price:</p>
+              <h4>$USD {convertirNumero(motorcycle.price)}</h4>
             </div>
 
             <div>
-              <label className={styles['cart-container']}>
+              <label onClick={() => motorcycle && motorcycle.stock > 0 && isAuthenticated && user && handleDispatch()} className={shoppingCartButton && motorcycle.stock > 0 && isAuthenticated && pickedColor ? styles['cart-container'] : styles['cart-container-disabled']}>
                 Add to cart 
-                <ion-icon style={{ color: "#fff "}} className='svg' size="small" name="cart-outline"></ion-icon>
+                <ion-icon style={{ color: "#000 "}} className='svg' size="small" name="cart-outline"></ion-icon>
               </label>
+            </div>
+          </div>
+          <div className={styles['color-container']}>
+            <div className={styles['color']} >
+              {
+                stock
+                ? <p style={{ fontWeight: '700'}}>Pick a color:</p>
+                : <p style={{ fontWeight: '700'}}>Item out of stock</p>
+              }
+
+              {
+                colors.map(el => (
+                  allMotorcycles.some(moto => moto.id === motorcycle.id && moto.items.some(item => item.sold === false && item.color === el ))
+                  ? <div onClick={() => setPickedColor(el.toLowerCase())} style={{ width: '20px', height: '20px', background: `${el.toLowerCase()}`, cursor: 'pointer', boxShadow: pickedColor === el.toLowerCase() ? 'rgba(255, 255, 255, 1) 0px 0px 0px 2px, rgba(255, 255, 255, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset' : ''}}></div>
+                  :  null
+                ))
+              }
             </div>
           </div>
         </div>
@@ -80,10 +182,11 @@ export default function Detail() {
           <div data-visible={`${details}`} className={styles[`selector-content`]}>
             <p>Transmission: {motorcycle.transmission}</p>
             <p>CC: {motorcycle.cc}</p>
-            <p>Color options: {colors?.map(c => <p>{c}</p>)}</p>
+            {/* <p>Color options: {colors?.map(c => <p>{c}</p>)}</p> */}
           </div>
         </div>
       </div>
     </article>
+    </>
   );
 }

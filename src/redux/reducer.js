@@ -1,7 +1,9 @@
-import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID, ORDER_ASC, ORDER_DESC, SET_ACTIVE_SEARCH } from "./actions";
+import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID, ORDER_ASC, ORDER_DESC, SET_ACTIVE_SEARCH, ADD_ITEM_TO_CART, DELETE_ITEM_FROM_CART, UPDATE_CART_ITEM_QUANTITY } from "./actions";
 
 const initialState = {
     motos: [],
+    allMotorcycles: [],
+    shoppingCart: [],
     filterCategory: [],
     filterBrand: [],
     orderAsc : false,
@@ -16,7 +18,8 @@ export const reducer = (state = initialState, action) => {
         case GET_ALL_MOTOS:
             return {
                 ...state,
-                motos: [...action.payload]
+                motos: [...action.payload],
+                allMotorcycles: [...action.payload]
             }
 
         case GET_MOTOS_BY_NAME:
@@ -75,6 +78,50 @@ export const reducer = (state = initialState, action) => {
                     filterBrand: [...state.filterBrand.concat(action.payload)]
                 }
             }
+
+        case ADD_ITEM_TO_CART:
+            if (Array.isArray(action.payload)) {
+                return {
+                    ...state,
+                    shoppingCart: [...action.payload]
+                }
+            } else {
+                console.log(`shoppingCart${action.payload.userEmail}`);
+                localStorage.setItem(`shoppingCart${action.payload.userEmail}`, JSON.stringify([...state.shoppingCart, action.payload]));
+                return {
+                    ...state,
+                    shoppingCart: [...state.shoppingCart, action.payload],
+                }
+            }
+            
+
+        case DELETE_ITEM_FROM_CART:
+            const itemToRemove = state.shoppingCart.indexOf(action.payload);
+
+            if (itemToRemove > -1) {
+                const newState = state.shoppingCart;
+                newState.splice(itemToRemove, 1)
+                localStorage.setItem(`shoppingCart${action.payload.userEmail}`, JSON.stringify([...newState]));
+                return {
+                    ...state,
+                    shoppingCart: [...newState],
+                }
+            }
+
+        case UPDATE_CART_ITEM_QUANTITY:
+            const cart = state.shoppingCart;
+            const index = cart.findIndex(obj => obj.id === action.payload.id && obj.color === action.payload.color);
+
+            if (index > -1) {
+                cart[index].quantity = cart[index].quantity + action.payload.quantity;
+                localStorage.setItem(`shoppingCart${action.payload.userEmail}`, JSON.stringify([...cart]));
+
+                return {
+                    ...state,
+                    shoppingCart: [...cart],
+                }
+            }
+
         default:
             return state
     }

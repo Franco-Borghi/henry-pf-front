@@ -16,10 +16,8 @@ export default function Pagination({
 
   return (
     <div className={styles.pagination}>{
-      totalPages < 1 
-      ? <button style={{display:"none"}}>
-      Previous
-        </button>
+      !totalPages
+      ? null
       : <button className={styles.paginationButton} onClick={onPreviousPage} disabled={currentPage === 1}>
         Previous
       </button>
@@ -35,11 +33,8 @@ export default function Pagination({
           {pageNumber}
         </button>
       ))}{
-        totalPages < currentPage
-        ? <button style={{display:"none"}}>
-          Next
-          </button>
-
+        !totalPages 
+        ? null
         : <button className={styles.paginationButton} onClick={onNextPage} disabled={currentPage === totalPages}>
           Next
          </button>}
