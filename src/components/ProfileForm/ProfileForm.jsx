@@ -14,6 +14,7 @@ export default function ProfileForm() {
   const navigate = useNavigate()
   const mySwal = withReactContent(Swal);
 
+
   useEffect(() => {
     if (!isAuthenticated) navigate("/")
     else {
@@ -23,6 +24,7 @@ export default function ProfileForm() {
         })
         .catch(err => console.log("ERROR", err))
     }
+
   }, [user?.sub])
 
 
@@ -35,6 +37,7 @@ export default function ProfileForm() {
     e.preventDefault()
     setEditMode(true);
   };
+
 
   const handleSaveClick = (e) => {
     e.preventDefault()
