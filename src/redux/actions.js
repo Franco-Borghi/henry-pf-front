@@ -13,7 +13,7 @@ export const DELETE_ITEM_FROM_CART ='DELETE_ITEM_FROM_CART';
 export const UPDATE_CART_ITEM_QUANTITY = 'UPDATE_CART_ITEM_QUANTITY';
 
 export const fetchData = (dispatch) => {
-    axios.get("http://localhost:3001/motorcycles")
+    axios.get(`${process.env.REACT_APP_HOST_NAME}/motorcycles`)
     .then(d => dispatch(getAllMotos(d.data)))
     .catch(err => console.log(err))
 }
@@ -40,7 +40,7 @@ const setActiveSearch = (value) => {
 }
 
 export const fetchDataByName = (dispatch,value) => {
-    axios.get(`http://localhost:3001/motorcycles?name=${value}`)
+    axios.get(`${process.env.REACT_APP_HOST_NAME}/motorcycles?name=${value}`)
     .then(d => {
         dispatch(getMotosByName(d.data));
         dispatch(setActiveSearch(value));
@@ -49,7 +49,7 @@ export const fetchDataByName = (dispatch,value) => {
 }
 
 export const postMotorcycle = async (data) => {
-    return await axios.post("http://localhost:3001/motorcycles", data)
+    return await axios.post(`${process.env.REACT_APP_HOST_NAME}/motorcycles`, data)
 }
 
 export const getMotoById = (id) => {

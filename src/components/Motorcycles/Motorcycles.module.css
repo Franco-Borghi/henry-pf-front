@@ -20,11 +20,9 @@
 .motorcyclesPage .motorcycleList {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    grid-column: 2;
-    grid-row: 1/2;
-  
-    
+    padding: 40px;
+    gap: 40px;
+    justify-content: center;
 }
 
 

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Navigate, Link } from 'react-router-dom';
 import { ShoppingCartCard } from './ShoppingCartCard';
-import { Checkout } from '../../components/CheckoutPage/Checkout';
+import { CheckoutButton } from '../../components/CheckoutButton/CheckoutButton';
 
 export function ShoppingCart() {
 
@@ -19,23 +19,23 @@ export function ShoppingCart() {
 
 
   return (
-    <div className={styles['shopping-cart-container']}>
+    <div style={{ display: !shoppingCart.length && 'flex', flexDirection: !shoppingCart.length && 'column', justifyContent: !shoppingCart.length && 'center' }} className={styles['shopping-cart-container']}>
       {
-        shoppingCart.map(element => (
-          <ShoppingCartCard el={element}/>
-        )).reverse()
-      }
+        shoppingCart.length
+        ? <>
+            {
+              shoppingCart.map(element => (
+                <ShoppingCartCard el={element}/>
+              )).reverse()
+            }
 
-      {/* <Link style={{ margin: '50px auto', display: 'block', width: 'fit-content', cursor: 'pointer' }} to ='/checkout'>
-        <button style={{
-          background: '#484848',
-          color: '#fff',
-          padding: '10px 15px',
-          borderRadius: '4px',
-          cursor: 'pointer'
-        }}>Finalizar Compra</button>
-      </Link> */}
-      <Checkout />
+            <CheckoutButton />
+          </>
+        : <div>
+            <h1 style={{textAlign: 'center'}}>Your shopping cart is empty</h1>
+            <h4 style={{textAlign: 'center'}}>Add a product to the shopping cart to view it on this page</h4>
+          </div>
+      }
     </div>
   )
 }

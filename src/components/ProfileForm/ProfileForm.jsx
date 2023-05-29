@@ -15,7 +15,7 @@ export default function ProfileForm() {
 
    useEffect(() => {
     if(!isAuthenticated) navigate("/")
-    else{axios.get(`http://localhost:3001/users/${user?.sub}`)
+    else{axios.get(`${process.env.REACT_APP_HOST_NAME}/users/${user?.sub}`)
     .then(res => {
       setProfileData(res.data)
    }) 
@@ -37,7 +37,7 @@ export default function ProfileForm() {
      setEditMode(false);
      console.log(profileData);
      if(profileData.idNumber === "") profileData.idNumber = null
-     axios.put(`http://localhost:3001/users/${user?.sub}`, {...profileData})
+     axios.put(`${process.env.REACT_APP_HOST_NAME}/users/${user?.sub}`, {...profileData})
      .then(d => {
       setProfileData(d.data)
       mySwal.fire({
