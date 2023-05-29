@@ -14,17 +14,14 @@ export default function ProfileForm() {
   const navigate = useNavigate()
   const mySwal = withReactContent(Swal);
 
-
-  useEffect(() => {
-    if (!isAuthenticated) navigate("/")
-    else {
-      axios.get(`${process.env.REACT_APP_HOST_NAME}/users/${user?.sub}`)
-        .then(res => {
-          setProfileData(res.data)
-        })
-        .catch(err => console.log("ERROR", err))
-    }
-
+   useEffect(() => {
+    if(!isAuthenticated) navigate("/")
+    else{axios.get(`${process.env.REACT_APP_HOST_NAME}/users/${user?.sub}`)
+    .then(res => {
+      setProfileData(res.data)
+   }) 
+   .catch(err => console.log("ERROR", err))
+  }
   }, [user?.sub])
 
 
