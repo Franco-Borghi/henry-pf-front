@@ -14,15 +14,16 @@ export default function ProfileForm() {
   const navigate = useNavigate()
   const mySwal = withReactContent(Swal);
 
-  useEffect(() => {
-    if (!isAuthenticated) navigate("/")
-    else {
-      axios.get(`${process.env.REACT_APP_HOST_NAME}/users/${user?.sub}`)
-        .then(res => {
-          setProfileData(res.data)
-        })
-        .catch(err => console.log("ERROR", err))
-    }
+   useEffect(() => {
+    if(!isAuthenticated) navigate("/")
+    else{
+      
+      axios.get(`http://localhost:3001/users/${user?.sub}`)
+    .then(res => {
+      setProfileData(res.data)
+   }) 
+   .catch(err => console.log("ERROR", err))
+  }
   }, [user?.sub])
 
 
@@ -36,19 +37,18 @@ export default function ProfileForm() {
     setEditMode(true);
   };
 
-  const handleSaveClick = (e) => {
-    e.preventDefault()
-    setEditMode(false);
-    console.log(profileData);
-    if (profileData.idNumber === "") profileData.idNumber = null
-    axios.put(`${process.env.REACT_APP_HOST_NAME}/users/${user?.sub}`, { ...profileData })
-      .then(d => {
-        setProfileData(d.data)
-        mySwal.fire({
-          html: <strong>The info has been updated</strong>,
-          icon: "success",
-        })
-      }).catch(err => console.log("ERROR", err))
+   const handleSaveClick = () => {
+     setEditMode(false);
+     console.log(profileData);
+     if(profileData.idNumber === "") profileData.idNumber = null
+     axios.put(`http://localhost:3001/users/${user?.sub}`, {...profileData})
+     .then(d => {
+      setProfileData(d.data)
+      mySwal.fire({
+        html: <strong>The info has been updated</strong>,
+        icon: "success",
+    })
+    }).catch(err => console.log("ERROR", err))
   }
 
   return (
