@@ -38,7 +38,7 @@ export default function Motorcycle(props) {
   }, [])
 
   return (
-    <div className={styles.motorcycle}>
+    <div style={{ transform: !stock ? 'none' : ''}} className={styles.motorcycle}>
       {
         stock
         ? null
