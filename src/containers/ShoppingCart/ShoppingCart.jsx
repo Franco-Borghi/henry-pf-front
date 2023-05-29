@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Navigate, Link } from 'react-router-dom';
 import { ShoppingCartCard } from './ShoppingCartCard';
-import { CheckoutButton } from '../../components/CheckoutButton/CheckoutButton';
+import { Checkout } from '../../components/CheckoutPage/Checkout';
 
 export function ShoppingCart() {
 
@@ -28,8 +28,8 @@ export function ShoppingCart() {
                 <ShoppingCartCard el={element}/>
               )).reverse()
             }
+            <Checkout/>
 
-            <CheckoutButton />
           </>
         : <div>
             <h1 style={{textAlign: 'center'}}>Your shopping cart is empty</h1>
