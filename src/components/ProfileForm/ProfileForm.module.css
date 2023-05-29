@@ -1,5 +1,5 @@
 .ProfileForm {
-    width: 100%;
+    width: 40%;
     max-width: 90%;
     padding: 0 40px;
     margin: auto ;
@@ -28,7 +28,6 @@
   
   .ProfileForm label {
     color: #fff;
-    /* margin-bottom: 8px; */
     font-weight: bold;
     
  

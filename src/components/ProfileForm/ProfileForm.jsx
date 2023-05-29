@@ -31,11 +31,13 @@ export default function ProfileForm() {
     setProfileData({ ...profileData, [name]: value });
   };
 
-  const handleEditClick = () => {
+  const handleEditClick = (e) => {
+    e.preventDefault()
     setEditMode(true);
   };
 
-  const handleSaveClick = () => {
+  const handleSaveClick = (e) => {
+    e.preventDefault()
     setEditMode(false);
     console.log(profileData);
     if (profileData.idNumber === "") profileData.idNumber = null
