@@ -14,10 +14,10 @@ export function CheckoutButton() {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  console.log(process.env.REACT_APP_CLIENT_ID_SANDBOX);
+ 
 
   const shoppingCart = useSelector((state) => state.shoppingCart);
-  console.log("shoppingCart", shoppingCart);
+  
 
   const itemsToPost = shoppingCart.map((el) => {
     
@@ -30,7 +30,7 @@ export function CheckoutButton() {
             });
         }
         return array;
-    } //TODO: test with a new motorcycle added to see the quantity part
+    } 
 
     return {
         id: el.id,
@@ -38,7 +38,7 @@ export function CheckoutButton() {
     }
     }).flat();
 
-    console.log("itemsToPost", itemsToPost)
+    
 
 
   function handleSubmit() {
@@ -66,7 +66,7 @@ export function CheckoutButton() {
                 ],
               })
               .then((orderId) => {
-                console.log("Order ID:", orderId);
+               
 
                 return orderId;
               })
@@ -85,7 +85,7 @@ export function CheckoutButton() {
 
               dispatch(addItemToCart([]));
               localStorage.setItem(
-                `shoppingCart${user.email}`,
+                `shoppingCart${user?.email}`,
                 JSON.stringify([])
               );
 
@@ -97,23 +97,18 @@ export function CheckoutButton() {
                   body: JSON.stringify({
                       orderNumber: details.id,
                       amountPaid: details.purchase_units[0].amount.value || handleSubmit(),
-                      userId: user.sub,
+                      userId: user?.sub,
                       items: itemsToPost,
                       orderStatus: "Completed"
                   })
               })
               .then(response => response.json())
               .then(data => {
-                  console.log('Success:', data);
                   fetchData(dispatch);
               })
               .catch((error) => {
                   console.error('Error:', error);
               });
-
-              console.log("Order Details:");
-              console.log(details)
-
             });
           }}
         />
