@@ -5,7 +5,7 @@ import Filter from "../Filter/Filter";
 import Order from '../Order/Order';
 import { useSelector } from 'react-redux';
 import FilterBar from '../FilterBar/FilterBar';
-import styles from './Motorcycles.module.css';
+import styles from './Motorcycles.module.scss';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
@@ -62,52 +62,48 @@ export default function Motorcycles() {
   }
 
   return (
-    <div className={styles.motorcyclesPage}>
-      <FilterBar>
-        <div className={styles.filterOrderSection}>
-          <Filter displayedMotorcycles={displayedMotorcycles} />
-          <Order displayedMotorcycles={displayedMotorcycles} setDisplayedMotorcycles={setDisplayedMotorcycles} />
-        </div>
-      </FilterBar>
-
+    <>
       <div className={styles.carouselImage}>
-        <Carousel showThumbs={false} autoPlay={true} interval={2000}>
-          <div>
-            <img src='/carousel/clasica.jpg' alt='clasica' />
-          </div>
-          <div>
-            <img src='/carousel/deportiva.jpg' alt='deportiva' />
-          </div>
-          <div>
-            <img src='/carousel/scooter.jpg' alt='scooter' />
-          </div>
-          <div>
-            <img src='/carousel/trabajo.jpg' alt='trabajo' />
-          </div>
+        <Carousel showThumbs={false} autoPlay={true} interval={5000}>
+            <img style={{ objectPosition: 'center'}} src='/carousel/image1.jpeg' alt='clasica' />
+            <img src='/carousel/image2.jpeg' alt='deportiva' />
+            <img src='/carousel/image3.jpeg' alt='scooter' />
+            <img src='/carousel/image4.jpeg' alt='trabajo' />
         </Carousel>
       </div>
 
-      <div className={styles.motorcycleList}>
-        {currentMotorcycles.length > 0 ? (
-          currentMotorcycles.map(motorcycle => (
-            // <div className={styles.motorcycleItem} key={motorcycle.id}>
-              <Motorcycle key={motorcycle.id} info={motorcycle} />
-            // </div>
-          ))
-        ) : (
-          <p className={styles.paragraph}>No motorcycles available</p>
-        )}
-      </div>
+      <div className={styles.motorcyclesPage}>
 
-      <div className={styles.pagination}>
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={goToPage}
-          onPreviousPage={goToPreviousPage}
-          onNextPage={goToNextPage}
-        />
+        <FilterBar>
+          <div className={styles.filterOrderSection}>
+            <Filter displayedMotorcycles={displayedMotorcycles} />
+            <Order displayedMotorcycles={displayedMotorcycles} setDisplayedMotorcycles={setDisplayedMotorcycles} />
+          </div>
+        </FilterBar>
+
+        <div className={styles.motorcycleList}>
+          {currentMotorcycles.length > 0 ? (
+            currentMotorcycles.map(motorcycle => (
+              // <div className={styles.motorcycleItem} key={motorcycle.id}>
+                <Motorcycle key={motorcycle.id} info={motorcycle} />
+              // </div>
+            ))
+          ) : (
+            <p className={styles.paragraph}>No motorcycles available</p>
+          )}
+        </div>
+
+        <div className={styles.pagination}>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={goToPage}
+            onPreviousPage={goToPreviousPage}
+            onNextPage={goToNextPage}
+          />
+        </div>
       </div>
-    </div>
+    </>
+
   );
 }

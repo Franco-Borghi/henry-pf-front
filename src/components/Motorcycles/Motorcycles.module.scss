@@ -60,7 +60,15 @@
 
 .carouselImage {
     max-width: 100%;
-    height: auto;
+    height: 350px;
     align-self: center;
-    margin-top: -40px;
-  }
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    position: relative;
+    z-index: 3;
+
+    img {
+        height: 350px;
+        object-fit: cover;
+        object-position: center;
+    }
+}
