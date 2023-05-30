@@ -3,7 +3,7 @@ import styles from './ShoppingCart.module.scss';
 import { useSelector } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Navigate, Link } from 'react-router-dom';
-import { ShoppingCartCard } from './ShoppingCartCard';
+import { ShoppingCartCard } from '../../components/ShoppingCartCard/ShoppingCartCard';
 import { Checkout } from '../../components/CheckoutPage/Checkout';
 
 export function ShoppingCart() {
@@ -19,17 +19,21 @@ export function ShoppingCart() {
 
 
   return (
-    <div style={{ display: !shoppingCart.length && 'flex', flexDirection: !shoppingCart.length && 'column', justifyContent: !shoppingCart.length && 'center' }} className={styles['shopping-cart-container']}>
+    <div style={{ gap: !shoppingCart.length && '0', flexDirection: !shoppingCart.length && 'column', justifyContent: !shoppingCart.length && 'center' }} className={styles['shopping-cart-container']}>
       {
         shoppingCart.length
         ? <>
-            {
-              shoppingCart.map(element => (
-                <ShoppingCartCard el={element}/>
-              )).reverse()
-            }
-            <Checkout/>
+            <div className={styles['body-container']}>
+              {
+                shoppingCart.map(element => (
+                  <ShoppingCartCard el={element}/>
+                )).reverse()
+              }
+            </div>
 
+            <div className={styles['checkout-container']}>
+              <Checkout/>
+            </div>
           </>
         : <div>
             <h1 style={{textAlign: 'center'}}>Your shopping cart is empty</h1>
