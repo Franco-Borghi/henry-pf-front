@@ -7,17 +7,16 @@ import { addItemToCart, fetchData } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
 export function CheckoutButton() {
+
   const { user } = useAuth0();
   const dispatch = useDispatch();
+  const [isProcessing, setIsProcessing] = React.useState(false);
 
   function capitalizeString(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
- 
-
-  const shoppingCart = useSelector((state) => state.shoppingCart);
-  
+  const shoppingCart = useSelector((state) => state.shoppingCart); 
 
   const itemsToPost = shoppingCart.map((el) => {
     
@@ -38,89 +37,109 @@ export function CheckoutButton() {
     }
     }).flat();
 
-    
-
-
   function handleSubmit() {
     return shoppingCart.reduce(
       (acc, el) => acc + (el.unitPrice * el.quantity), 0);
   }
 
+  const handleOrderCreate = (data, actions) => {
+    return actions.order
+      .create({
+        purchase_units: [
+          {
+            amount: {
+              currency_code: "USD",
+              value: handleSubmit(),
+            },
+          },
+        ],
+      })
+      .then((orderId) => {
+        return orderId;
+      })
+      .catch((error) => {
+        console.error("Order creation error:", error);
+      });
+  };
+
+  const handleOrderCapture = (data, actions) => {
+    setIsProcessing(true);
+
+    return actions.order
+      .capture()
+      .then((details) => {
+        new swal({
+          title: "Success",
+          text: "Transaction completed successfully",
+          icon: "success",
+          buttons: true,
+        });
+  
+        dispatch(addItemToCart([]));
+        localStorage.setItem(`shoppingCart${user?.email}`, JSON.stringify([]));
+  
+        const postData = {
+          orderNumber: details.id,
+          amountPaid: details.purchase_units[0].amount.value || handleSubmit(),
+          userId: user?.sub,
+          items: itemsToPost,
+          orderStatus: "Completed",
+        };
+  
+        fetch(`${process.env.REACT_APP_HOST_NAME}/orders`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(postData),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            fetchData(dispatch);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+        
+        setIsProcessing(false);
+      })
+      .catch((error) => {
+        setIsProcessing(false);
+        if (error.message === "Can not send postrobot_method. Target window is closed") {
+          console.error("La ventana emergente se cerró antes de completar la captura de la orden.");
+        } else {
+          console.error("Capture order error:", error);
+        }
+      });
+  };
+
+  React.useEffect(() => {
+    const paypalPopup = document.querySelector('.paypal-checkout-sandbox');
+    if (isProcessing && paypalPopup) {
+      setTimeout(() => {
+        paypalPopup.style.display = 'none';
+      }, 50);
+    } else if (!isProcessing && paypalPopup) {
+      paypalPopup.style.display = 'block';
+    }
+  }, [isProcessing])
+
   return (
-    <div>
-      <PayPalScriptProvider
-        options={{ "client-id": process.env.REACT_APP_CLIENT_ID_SANDBOX }}
-      >
-        <PayPalButtons
-          fundingSource={FUNDING.PAYPAL}
-          createOrder={(data, actions) => {
-            return actions.order
-              .create({
-                purchase_units: [
-                  {
-                    amount: {
-                      currency_code: "USD",
-                      value: handleSubmit(),
-                    },
-                  },
-                ],
-              })
-              .then((orderId) => {
-               
-
-                return orderId;
-              })
-              .catch((error) => {
-                console.error("Order creation error:", error);
-              });
-          }}
-          
-          onApprove={(data, actions) => {
-            return actions.order
-            .capture()
-            .then((details) => {
-              // Se capturó el pago con éxito, realizar acciones adicionales
-              new swal({
-                title: "Success",
-                text: "Transaction completed successfully",
-                icon: "success",
-                buttons: true,
-              });
-      
-              fetch(`${process.env.REACT_APP_HOST_NAME}/orders`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                  orderNumber: details.id,
-                  amountPaid: details.purchase_units[0].amount.value || handleSubmit(),
-                  userId: user?.sub,
-                  items: itemsToPost,
-                  orderStatus: "Completed"
-                })
-              })
-                .then(response => response.json())
-                .then(data => {
-                  fetchData(dispatch);
-                })
-                .catch((error) => {
-                  console.error('Error:', error);
-                });
-            })
-            .catch((error) => {
-              console.error('Capture payment error:', error);
-
-              new swal({
-                title: "Error",
-                text: "Payment capture failed. The PayPal window was closed.",
-                icon: "error",
-                buttons: true,
-              });
-            });
-          }}
-        />
-      </PayPalScriptProvider>
-    </div>
+    <>
+      <div>
+        <PayPalScriptProvider options={{ "client-id": process.env.REACT_APP_CLIENT_ID_SANDBOX }} >
+          <PayPalButtons
+            fundingSource="paypal"
+            createOrder={handleOrderCreate}
+            onApprove={handleOrderCapture}
+            onError={
+              function(error) {
+                console.log(error);                      
+              } 
+            }
+          />
+        </PayPalScriptProvider>
+      </div>
+    </>
   );
 }
