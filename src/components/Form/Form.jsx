@@ -7,6 +7,7 @@ import validate from "./validate";
 import { fetchData, postMotorcycle } from "../../redux/actions";
 import Swal from "sweetalert2";
 import withReactContent from 'sweetalert2-react-content';
+import CloudinaryUploadWidget from "../CloudinaryUploadWidget/CloudinaryUploadWidget";
 
 export default function Form(){
     const navigate = useNavigate();
@@ -33,6 +34,10 @@ export default function Form(){
     const catRef = useRef()
     const manualRadio = useRef()
     const autoRadio = useRef()
+    const imageRef = useRef()
+   
+
+    console.log(inputs)
 
     async function handleSumbitMotorcycle(e){
         e.preventDefault()
@@ -62,6 +67,7 @@ export default function Form(){
                 manualRadio.current.checked = false
                 autoRadio.current.checked = false
                 setErrors({})
+                imageRef.current.src = ""
                 mySwal.fire({
                     html: <strong>The motorcycle has been successfully created</strong>,
                     icon: "success",
@@ -78,9 +84,13 @@ export default function Form(){
     }
 
     function handleChange(e){
+
+        if (e.target.name !== 'image') {
         let inputsAux = {...inputs, [e.target.name]: e.target.value}
         setInputs(inputsAux);
+        }
     }
+
 
     return (
         <>
@@ -149,9 +159,11 @@ export default function Form(){
                         </div>
 
                         <div>
-                            <label for="image">Image URL:</label>
-                            <input className={styles[`${errors.image ? 'error' : ''}`]} type="text" id="image" name="image" onChange={handleChange} value={inputs.image}/>
+                            <label for="image">Image:</label>
+                            <input className={styles[`${errors.image ? 'error' : ''}`]} type="text" id="image" name="image" onChange={handleChange} value={inputs.image} hidden />
                             <p>{errors.image}</p>
+                            <CloudinaryUploadWidget imageUrl={setInputs} inputs={inputs}/>
+                            <img id="uploadedimage" src="" ref={imageRef}></img>
                         </div>
 
                         <div className={styles.priceCategory}>
