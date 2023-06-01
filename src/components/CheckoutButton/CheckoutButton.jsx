@@ -74,40 +74,48 @@ export function CheckoutButton() {
                 console.error("Order creation error:", error);
               });
           }}
-          onApprove={function (data, actions) {
-            return actions.order.capture().then(function (details) {
+          
+          onApprove={(data, actions) => {
+            return actions.order
+            .capture()
+            .then((details) => {
+              // Se capturó el pago con éxito, realizar acciones adicionales
               new swal({
                 title: "Success",
                 text: "Transaction completed successfully",
                 icon: "success",
                 buttons: true,
               });
-
-              dispatch(addItemToCart([]));
-              localStorage.setItem(
-                `shoppingCart${user?.email}`,
-                JSON.stringify([])
-              );
-
+      
               fetch(`${process.env.REACT_APP_HOST_NAME}/orders`, {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({
-                      orderNumber: details.id,
-                      amountPaid: details.purchase_units[0].amount.value || handleSubmit(),
-                      userId: user?.sub,
-                      items: itemsToPost,
-                      orderStatus: "Completed"
-                  })
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  orderNumber: details.id,
+                  amountPaid: details.purchase_units[0].amount.value || handleSubmit(),
+                  userId: user?.sub,
+                  items: itemsToPost,
+                  orderStatus: "Completed"
+                })
               })
-              .then(response => response.json())
-              .then(data => {
+                .then(response => response.json())
+                .then(data => {
                   fetchData(dispatch);
-              })
-              .catch((error) => {
+                })
+                .catch((error) => {
                   console.error('Error:', error);
+                });
+            })
+            .catch((error) => {
+              console.error('Capture payment error:', error);
+
+              new swal({
+                title: "Error",
+                text: "Payment capture failed. The PayPal window was closed.",
+                icon: "error",
+                buttons: true,
               });
             });
           }}
