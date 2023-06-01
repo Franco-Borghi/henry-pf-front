@@ -141,7 +141,7 @@ export default function Detail() {
               {
                 colors.map(el => (
                   allMotorcycles.some(moto => moto.id === motorcycle.id && moto.items.some(item => item.sold === false && item.color === el ))
-                  ? <div onClick={() => setPickedColor(el.toLowerCase())} style={{ width: '20px', height: '20px', background: `${el.toLowerCase()}`, cursor: 'pointer', boxShadow: pickedColor === el.toLowerCase() ? 'rgba(255, 255, 255, 1) 0px 0px 0px 2px, rgba(255, 255, 255, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset' : ''}}></div>
+                  ? <div onClick={() => setPickedColor(el.toLowerCase())} style={{border: '1px solid #c7c7c7', width: '20px', height: '20px', background: `${el.toLowerCase()}`, cursor: 'pointer', boxShadow: pickedColor === el.toLowerCase() ? 'rgba(255, 255, 255, 1) 0px 0px 0px 1px, rgba(255, 255, 255, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset' : ''}}></div>
                   :  null
                 ))
               }
