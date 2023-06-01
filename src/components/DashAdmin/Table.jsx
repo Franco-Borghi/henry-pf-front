@@ -17,6 +17,25 @@ export default function Table() {
       });
   }, []);
 
+  const handleDelete = (chassisId) => {
+    axios
+      .delete(`${process.env.REACT_APP_HOST_NAME}/motorcycles/${chassisId}`)
+      .then(() => {
+        setMotorcyclesData((prevMotorcyclesData) => {
+          const updatedData = [...prevMotorcyclesData];
+          updatedData.forEach((moto) => {
+            moto.items = moto.items.filter(
+              (item) => item.chassisId !== chassisId
+            );
+          });
+          return updatedData;
+        });
+      })
+      .catch((error) => {
+        console.error("Error deleting item:", error);
+      });
+  };
+
   return (
     <div>
       <h1 className={styles.title}>MOTORCYCLE LIST</h1>
@@ -57,7 +76,7 @@ export default function Table() {
                   <td>{moto.category}</td>
                   <td className={styles.actionsHeader}>
                     <button className={styles.button}>Edit</button>
-                    <button className={styles.button}>Delete</button>
+                    <button onClick={() => handleDelete(item.chassisId)} className={styles.button}>Delete</button>
                   </td>
                 </tr>
               ))
@@ -67,4 +86,4 @@ export default function Table() {
       </table>
     </div>
   );
-}
+} 
