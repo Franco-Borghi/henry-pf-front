@@ -61,7 +61,7 @@ export default function MotorcyclesTable() {
 
   return (
     <div>
-      <h1 className={styles.title}>Motorcycle List</h1>
+      <h1 className={styles.title}>Motorcycle List </h1>
 
     <select onChange={handleFilter}>
       <option value="all">All</option>
