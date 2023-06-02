@@ -3,7 +3,7 @@ import styles from './CreateMotorcycle.module.scss';
 import FilterBar from '../../components/FilterBar/FilterBar';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
-import Form from '../../components/Form/Form';
+import Form from '../../components/AdminDashboard/Form/Form';
 import Footer from '../../components/Footer/Footer';
 
 function CreateMotorcycle() {
