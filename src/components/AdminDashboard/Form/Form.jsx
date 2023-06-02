@@ -1,13 +1,13 @@
 import styles from "./Form.module.scss";
 import { Link, useNavigate } from "react-router-dom";
-import NavBar from "../NavBar/NavBar";
+import NavBar from "../../NavBar/NavBar";
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import validate from "./validate";
-import { fetchData, postMotorcycle } from "../../redux/actions";
+import { fetchData, postMotorcycle } from "../../../redux/actions";
 import Swal from "sweetalert2";
 import withReactContent from 'sweetalert2-react-content';
-import CloudinaryUploadWidget from "../CloudinaryUploadWidget/CloudinaryUploadWidget";
+import CloudinaryUploadWidget from "../../CloudinaryUploadWidget/CloudinaryUploadWidget";
 
 export default function Form(){
     const navigate = useNavigate();

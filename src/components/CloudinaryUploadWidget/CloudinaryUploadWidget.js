@@ -35,9 +35,13 @@ class CloudinaryUploadWidget extends Component {
             ...this.props.inputs,
             image: result.info.secure_url
           });
-          document
+
+          // Se agrego el if para que no se rompa cuando no hay imagen, por ejemplo en el caso de editar
+          if (document.getElementById("uploadedimage") !== null){
+            document
             .getElementById("uploadedimage")
             .setAttribute("src", result.info.secure_url);
+          }
         }
       }
     );

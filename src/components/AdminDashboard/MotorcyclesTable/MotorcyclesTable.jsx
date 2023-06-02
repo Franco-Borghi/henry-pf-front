@@ -1,18 +1,22 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import styles from "./MotorcyclesTable.module.scss";
+import CloudinaryUploadWidget from "../../CloudinaryUploadWidget/CloudinaryUploadWidget";
 
 export default function MotorcyclesTable() {
   const [motorcyclesData, setMotorcyclesData] = useState([]);
   const [filter, setFilter] = useState("all");
+  const [filteredData, setFilteredData] = useState([]); 
   const [editingMotorcycle, setEditingMotorcycle] = useState(null);
   const [newMotorcycle, setNewMotorcycle] = useState({})
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_HOST_NAME}/motorcycles`)
       .then((response) => {
         setMotorcyclesData(response.data);
+        setFilteredData(response.data);
       })
       .catch((error) => {
         console.error("Error retrieving data:", error);
@@ -22,6 +26,8 @@ export default function MotorcyclesTable() {
   function handleFilter(e) {
     const { value } = e.target;
     setFilter(value);
+    if (value === "all") return setFilteredData(motorcyclesData)
+    setFilteredData(motorcyclesData.filter(moto => moto.active === (value === "active")))
   }
 
   const onChangeInput = (e) => {
@@ -45,7 +51,7 @@ export default function MotorcyclesTable() {
         `${process.env.REACT_APP_HOST_NAME}/motorcycles/${motoId}`,newMotorcycle
       )
       .then((response) => {
-        setMotorcyclesData(motorcyclesData.map(moto => moto.id === motoId ? response.data : moto)); 
+        setFilteredData(filteredData.map(moto => moto.id === motoId ? response.data : moto));
         setEditingMotorcycle(null);
         setNewMotorcycle({});
       })
@@ -54,21 +60,63 @@ export default function MotorcyclesTable() {
       });
   };
 
-  let filteredData = motorcyclesData;
-  if (filter !== "all") {
-    filteredData = motorcyclesData.filter(moto => moto.active === (filter === "active"));
+ // SearchBarAdmin
+  const handleSearch = (e) => {
+    const { value } = e.target;
+    setSearchQuery(value);
+  };
+
+  const searchSubmit = (e) => {
+    e.preventDefault();
+    setFilteredData(filteredData.filter(moto => moto.brand.toLowerCase().includes(searchQuery.toLowerCase())));
+    setSearchQuery("");
+  }
+
+  const reset = (e) => {
+    e.preventDefault();
+    setFilteredData(motorcyclesData);
   }
 
   return (
     <div>
-      <h1 className={styles.title}>Motorcycle List</h1>
+      <h1 className={styles.title}>Motorcycle List </h1>
+      
+      {/* SearchBarAdmin */}
+      <div>
+      <form onSubmit={(e) => e.preventDefault()} className={styles.ctnInput}>
+        <input
+          value={searchQuery}
+          className={styles.inputSearch}
+          placeholder="Search"
+          onChange={handleSearch}
+        />
+        <button
+          type="submit"
+          className={styles.btnIconSearch}
+          onClick={searchSubmit}
+        >
+          <ion-icon
+            style={{ color: "#fff" }}
+            size="small"
+            name="search-outline"
+          ></ion-icon>
+        </button>
+        <button
+        type='submit'
+        onClick={reset}>
+          View all
+        </button>
+      </form>
+    </div>
 
+    {/* Filters */}
     <select onChange={handleFilter}>
       <option value="all">All</option>
       <option value="active">Active</option>
       <option value="inactive">Inactive</option>
     </select>
 
+    {/* Table */}
       <table className={styles.table}>
         <thead>
           <tr>
@@ -80,6 +128,7 @@ export default function MotorcyclesTable() {
             <th>Price</th>
             <th>Category</th>
             <th>Description</th>
+            <th>Image</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -159,6 +208,9 @@ export default function MotorcyclesTable() {
                       />
                     </td>
                     <td>
+                    <CloudinaryUploadWidget imageUrl={setNewMotorcycle} inputs={newMotorcycle}/>
+                    </td>
+                    <td>
                       <select
                         name="active"
                         value={newMotorcycle.active ? "active" : "inactive"}
@@ -189,6 +241,7 @@ export default function MotorcyclesTable() {
                     <td>{moto.price}</td>
                     <td>{moto.category}</td>
                     <td>{moto.description}</td>
+                    <td>{moto.image}</td>
                     <td>{moto.active ? "active" : "inactive"}</td>
                     <td className={styles.actionsHeader}>
                       <button
