@@ -55,14 +55,6 @@ export default function NavBar(props) {
 
 
         <div className={styles.ctnIcons}>
-        <Link to="/create">
-          <div className={styles['icon-container']} >
-            <button className={styles.btnIcon}>
-              <ion-icon style={{ color: "#fff"}} className='svg' size="small" name="create-outline"></ion-icon>
-            </button>
-            <p className={styles.txtBtnIcons}>Add Product</p>
-            </div>
-            </Link>
           
 
          <div className={styles.ctnIcons}>
@@ -81,7 +73,7 @@ export default function NavBar(props) {
          </Link>
 
           {/* //!link dashAdmin */}
-          <Link to={"/itemsTable"}>
+          <Link to={"/admin"}>
           <div className={styles['icon-container']} >
             <button className={styles.btnIcon}>
               <ion-icon style={{ color: "#fff"}} className='svg' size="small" name="person-outline"></ion-icon>

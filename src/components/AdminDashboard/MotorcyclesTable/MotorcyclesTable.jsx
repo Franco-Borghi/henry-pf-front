@@ -16,7 +16,7 @@ export default function MotorcyclesTable() {
       .get(`${process.env.REACT_APP_HOST_NAME}/motorcycles`)
       .then((response) => {
         setMotorcyclesData(response.data);
-        setFilteredData(response.data);
+        setFilteredData(response.data)
       })
       .catch((error) => {
         console.error("Error retrieving data:", error);
@@ -26,8 +26,10 @@ export default function MotorcyclesTable() {
   function handleFilter(e) {
     const { value } = e.target;
     setFilter(value);
-    if (value === "all") return setFilteredData(motorcyclesData)
-    setFilteredData(motorcyclesData.filter(moto => moto.active === (value === "active")))
+    let auxMotorcycles = [...motorcyclesData]
+    if(searchQuery !== "") auxMotorcycles = motorcyclesData.filter(moto => (moto.brand.toLowerCase().includes(searchQuery.toLowerCase())) || moto.model.toLowerCase().includes(searchQuery.toLowerCase()))
+    if (value === "all") return setFilteredData(auxMotorcycles)
+    setFilteredData(auxMotorcycles.filter(moto => moto.active === (value === "active")))
   }
 
   const onChangeInput = (e) => {
@@ -51,8 +53,9 @@ export default function MotorcyclesTable() {
         `${process.env.REACT_APP_HOST_NAME}/motorcycles/${motoId}`,newMotorcycle
       )
       .then((response) => {
-        setFilteredData(filteredData.map(moto => moto.id === motoId ? response.data : moto));
-        setEditingMotorcycle(null);
+        // console.log(filteredData?.map(moto => moto.id === motoId ? response.data : moto));
+        setFilteredData([...filteredData.map(moto => moto.id === motoId ? {...response.data} : {...moto})]);
+        setEditingMotorcycle(null); // TODO: Arreglar el bug de que, hasta que se apreta F5, no cambia la moto
         setNewMotorcycle({});
       })
       .catch((error) => {
@@ -68,13 +71,16 @@ export default function MotorcyclesTable() {
 
   const searchSubmit = (e) => {
     e.preventDefault();
-    setFilteredData(filteredData.filter(moto => moto.brand.toLowerCase().includes(searchQuery.toLowerCase())));
-    setSearchQuery("");
+    let auxMotorcycles = [...motorcyclesData]
+    if (filter !== "all") setFilteredData(auxMotorcycles.filter(moto => moto.active === (filter === "active")))
+    setFilteredData(auxMotorcycles.filter(moto => (moto.brand.toLowerCase().includes(searchQuery.toLowerCase())) || moto.model.toLowerCase().includes(searchQuery.toLowerCase())));
+    // setSearchQuery("");
   }
 
   const reset = (e) => {
     e.preventDefault();
     setFilteredData(motorcyclesData);
+    setSearchQuery("");
   }
 
   return (
