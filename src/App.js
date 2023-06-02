@@ -12,6 +12,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 import ProfileForm from "./components/ProfileForm/ProfileForm";
 import Dashboard from "./components/AdminDashboard/Dashboard/Dashboard";
 import MotorcyclesTable from "./components/AdminDashboard/MotorcyclesTable/MotorcyclesTable";
+import ItemsTable from "./components/AdminDashboard/ItemsTable/ItemsTable";
+import Graphs from "./components/AdminDashboard/Graphs/Graphs";
+import Form from "./components/AdminDashboard/Form/Form";
+import User from "./components/AdminDashboard/Users/Users";
+import Orders from "./components/AdminDashboard/Orders/Orders";
 
 
 function App() {
@@ -40,14 +45,19 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />}/>
-            <Route path="/create" element={<CreateMotorcycle/>}/>
             <Route path="/:id" element={<ItemDetail/>}/>
             <Route path="/shopping-cart" element={<ShoppingCart />} />
             <Route path="/profile" element={< ProfileForm/>} />
           </Route>
           {/* //ruta dashAdmin */}
-          <Route path="/itemsTable" element={<Dashboard />} />
-          <Route path="/motorcyclesTable" element={<MotorcyclesTable />} /> {/* A cambiar luego */}
+          <Route path="/admin" element={<Dashboard />} >
+              <Route index element={<Graphs />}/>
+              <Route path="/admin/itemsTable" element={<ItemsTable />} />
+              <Route path="/admin/motorcyclesTable" element={<MotorcyclesTable />} /> {/* A cambiar luego */}
+              <Route path="/admin/create" element={<Form/>}/>
+              <Route path="/admin/users" element={<User/>}/>
+              <Route path="/admin/orders" element={<Orders/>}/>
+          </Route>
         </Routes>
       </BrowserRouter>
     </>

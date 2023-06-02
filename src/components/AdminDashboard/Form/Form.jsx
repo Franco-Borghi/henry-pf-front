@@ -1,5 +1,5 @@
 import styles from "./Form.module.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import NavBar from "../../NavBar/NavBar";
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,9 +35,7 @@ export default function Form(){
     const manualRadio = useRef()
     const autoRadio = useRef()
     const imageRef = useRef()
-   
-
-    console.log(inputs)
+    const [createModel, setCreateModel] = useState(false)
 
     async function handleSumbitMotorcycle(e){
         e.preventDefault()
@@ -51,7 +49,9 @@ export default function Form(){
                 model: inputs.model.charAt(0).toUpperCase() + inputs.model.slice(1),
                 brand: inputs.brand.charAt(0).toUpperCase() + inputs.brand.slice(1),
                 category: inputs.category.charAt(0).toUpperCase() + inputs.category.slice(1).toLowerCase()
-            }).then(() => {setInputs({
+            }).then(() => {
+                console.log("YES");
+                setInputs({
                 chassisId: "",
                 brand: "",
                 model: "",
@@ -91,6 +91,24 @@ export default function Form(){
         }
     }
 
+    const handleSelectModelChange = (e) => {
+        if(e.target.value){
+        const motorcycle = motorcyclesData.find(m => m.id === e.target.value);
+        setInputs({
+            ...inputs,
+                brand: motorcycle.brand,
+                model: motorcycle.model,
+                year: motorcycle.year,
+                cc: motorcycle.cc,
+                transmission: motorcycle.transmission,
+                description: motorcycle.description,
+                image: motorcycle.image,
+                price: motorcycle.price,
+                category: motorcycle.category
+        })
+    }
+    }
+
 
     return (
         <>
@@ -110,8 +128,36 @@ export default function Form(){
                             <input className={styles[`${errors.color ? 'error' : ''}`]} type="text" id="color" name="color" onChange={handleChange} value={inputs.color}/>
                             <p>{errors.color}</p>
                         </div>
-                    </section>
 
+                        <div>
+                            {!createModel ?
+                            <select name="motorcycleModel" id="" onChange={handleSelectModelChange}>
+                                <option></option>
+                                {motorcyclesData?.map(m => <option value={m.id}>{m.brand} {m.model} {m.year} {m.cc}</option>)}
+                            </select>
+                            : null }
+                            { !createModel ? <button onClick={() => {
+                                setCreateModel(true)
+                                setInputs({
+                                    ...inputs,
+                                    brand: "",
+                                    model: "",
+                                    year: "",
+                                    cc: "",
+                                    transmission: "",
+                                    description: "",
+                                    image: "",
+                                    price: "",
+                                    category: ""
+                                })
+                                setErrors({})
+                                }} type="button">Other</button> : <button onClick={() => {
+                                    setCreateModel(false)
+                                    setErrors({})
+                                    }} type="button">Cancel</button> }
+                        </div>
+                    </section>
+                        {createModel ? 
                     <section className={styles['motorcycle-info']}>
                         <h2>Motorcycle Info</h2>
 
@@ -186,7 +232,8 @@ export default function Form(){
                         </div>
 
                     </section>
-
+: null }
+ 
                     <input type="submit" value="Submit"/>
                 </form>
             </section>
