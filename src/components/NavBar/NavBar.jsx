@@ -81,7 +81,7 @@ export default function NavBar(props) {
          </Link>
 
           {/* //!link dashAdmin */}
-          <Link to={"/list"}>
+          <Link to={"/itemsTable"}>
           <div className={styles['icon-container']} >
             <button className={styles.btnIcon}>
               <ion-icon style={{ color: "#fff"}} className='svg' size="small" name="person-outline"></ion-icon>

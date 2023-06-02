@@ -1,12 +1,12 @@
 import React from "react";
-import styles from "./DashAdmin.module.scss"
-import NavBar from "../NavBar/NavBar";
-import FilterBar from "../FilterBar/FilterBar";
+import styles from "./Dashboard.module.scss"
+import NavBar from "../../NavBar/NavBar";
+import FilterBar from "../../FilterBar/FilterBar";
 import { useNavigate } from "react-router-dom";
-import Table from "./Table";
-import Footer from "../Footer/Footer";
+import ItemsTable from "../ItemsTable/ItemsTable";
+import Footer from "../../Footer/Footer";
 
-export default function DashAdmin() {
+export default function Dashboard() {
   const navigate = useNavigate();
 
   return (
@@ -23,7 +23,7 @@ export default function DashAdmin() {
         <h3 style={{ paddingTop: '40px'}}>Admin Bar</h3>
         
       </FilterBar>
-      <Table />
+      <ItemsTable />
       </div>
       <Footer />
     </>

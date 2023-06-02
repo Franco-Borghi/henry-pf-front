@@ -1,17 +1,17 @@
 import "./App.scss";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home/Home"
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 import { addItemToCart, fetchData } from "./redux/actions";
 import { CreateMotorcycle } from "./containers/CreateMotorcycle/CreateMotorcycle";
 import { ItemDetail } from "./containers/ItemDetail/ItemDetail";
 import { Layout } from "./components/Layout/Layout";
 import { ShoppingCart } from "./containers/ShoppingCart/ShoppingCart";
 import { useAuth0 } from "@auth0/auth0-react";
-import { CheckoutPage } from "./components/CheckoutPage/Checkout";
 import ProfileForm from "./components/ProfileForm/ProfileForm";
-import DashAdmin from "./components/DashAdmin/DashAdmin"; // Cambia la importación de dashAdmin a DashAdmin
+import Dashboard from "./components/AdminDashboard/Dashboard/Dashboard";
+import MotorcyclesTable from "./components/AdminDashboard/MotorcyclesTable/MotorcyclesTable";
 
 
 function App() {
@@ -44,10 +44,10 @@ function App() {
             <Route path="/:id" element={<ItemDetail/>}/>
             <Route path="/shopping-cart" element={<ShoppingCart />} />
             <Route path="/profile" element={< ProfileForm/>} />
-            {/* <Route path="/checkout" element={<CheckoutPage/>} /> */}
           </Route>
-          {/* //!ruta dashAdmin */}
-          <Route path="/list" element={<DashAdmin />} />
+          {/* //ruta dashAdmin */}
+          <Route path="/itemsTable" element={<Dashboard />} />
+          <Route path="/motorcyclesTable" element={<MotorcyclesTable />} /> {/* A cambiar luego */}
         </Routes>
       </BrowserRouter>
     </>

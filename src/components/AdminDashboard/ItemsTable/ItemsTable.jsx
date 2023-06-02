@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import styles from "./Table.module.css";
+import styles from "./ItemsTable.module.css";
 
-export default function Table() {
+export default function ItemsTable() {
   const [motorcyclesData, setMotorcyclesData] = useState([]);
 
   useEffect(() => {
@@ -16,6 +16,7 @@ export default function Table() {
         console.error('Error retrieving data:', error);
       });
   }, []);
+
 
   return (
     <div>
