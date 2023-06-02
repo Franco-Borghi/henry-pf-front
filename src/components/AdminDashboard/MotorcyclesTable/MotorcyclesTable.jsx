@@ -2,8 +2,6 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import styles from "./MotorcyclesTable.module.scss";
 import CloudinaryUploadWidget from "../../CloudinaryUploadWidget/CloudinaryUploadWidget";
-import SearchBarAdmin from "../SearchBarAdmin/SearchBarAdmin";
-import { ShoppingCart } from "../../../containers/ShoppingCart/ShoppingCart";
 
 export default function MotorcyclesTable() {
   const [motorcyclesData, setMotorcyclesData] = useState([]);
