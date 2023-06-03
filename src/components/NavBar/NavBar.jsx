@@ -16,11 +16,12 @@ export default function NavBar(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const searchInput = useRef(null);
-  const categoriesFilter = useSelector(state => state.filterCategory)
-  const brandsFilter = useSelector(state => state.filterBrand)
-  const shoppingCart = useSelector(state => state.shoppingCart)
+  const categoriesFilter = useSelector(state => state.filterCategory);
+  const brandsFilter = useSelector(state => state.filterBrand);
+  const shoppingCart = useSelector(state => state.shoppingCart);
+  const reduxUser = useSelector(state => state.user);
   const { isAuthenticated, user } = useAuth0();
-  const [cartItems, setCartItems] = React.useState(0)
+  const [cartItems, setCartItems] = React.useState(0);
 
   function onClickLogo (){
     navigate('/')
@@ -53,62 +54,65 @@ export default function NavBar(props) {
 
         <SearchBar setSearchQuery={props.setSearchQuery} searchInput={searchInput}></SearchBar>
 
-
         <div className={styles.ctnIcons}>
-          
+          <div className={styles.ctnIcons}>
 
-         <div className={styles.ctnIcons}>
-         <Link to="/shopping-cart">
+            {
+              isAuthenticated && reduxUser && reduxUser.role === 'client'
+              &&  <Link to="/shopping-cart">
+                      <div className={styles['icon-container']} >
+                        {
+                          shoppingCart.length
+                          ? <div className={styles.itemsNumber}>{cartItems}</div>
+                          : null
+                        }
+                        <button className={styles.btnIcon}>
+                          <ion-icon style={{ color: "#fff"}} className='svg' size="small" name="cart-outline"></ion-icon>
+                        </button>
+                        <p className={styles.txtBtnIcons}>Cart</p>
+                      </div>
+                  </Link>
+            }
+
+            {
+              isAuthenticated && reduxUser && reduxUser.role === 'admin'
+              &&  <Link to={"/admin"}>
+                    <div className={styles['icon-container']} >
+                      <button className={styles.btnIcon}>
+                        <ion-icon style={{ color: "#fff"}} className='svg' size="small" name="person-outline"></ion-icon>
+                      </button>
+                      <p className={styles.txtBtnIcons}>Admin</p>
+
+                    </div> 
+                  </Link>
+            }
+
             <div className={styles['icon-container']} >
               {
-                shoppingCart.length
-                ? <div className={styles.itemsNumber}>{cartItems}</div>
-                : null
+                isAuthenticated && reduxUser
+                ? <>
+                    <Link to={`/profile`}>
+                      <img style={{height: '40px', width: '40px', borderRadius: '50%', cursor: 'pointer'}} src={user.picture} alt="User Image" />
+                      <p className={styles.txtBtnIcons}>Profile</p>
+                    </Link>
+                  </>
+                : <div style={{height: '40px', width: '40px'}} />
               }
-              <button className={styles.btnIcon}>
-                <ion-icon style={{ color: "#fff"}} className='svg' size="small" name="cart-outline"></ion-icon>
-              </button>
-              <p className={styles.txtBtnIcons}>Cart</p>
             </div>
-         </Link>
 
-          {/* //!link dashAdmin */}
-          <Link to={"/admin"}>
-          <div className={styles['icon-container']} >
-            <button className={styles.btnIcon}>
-              <ion-icon style={{ color: "#fff"}} className='svg' size="small" name="person-outline"></ion-icon>
-            </button>
-            <p className={styles.txtBtnIcons}>Admin</p>
-
-          </div> 
-          </Link>
-
-          <div className={styles['icon-container']} >
-            {
-              isAuthenticated
-              ? <>
-               <Link to={`/profile`}>
-                  <img style={{height: '40px', width: '40px', borderRadius: '50%', cursor: 'pointer'}} src={user.picture} alt="User Image" />
-                  <p className={styles.txtBtnIcons}>Profile</p>
-                  </Link>
-                </>
-              : <div style={{height: '40px', width: '40px'}} />
-            }
+            <div className={styles['icon-container']} >
+              <button className={styles.btnIcon} style={{ width: 'fit-content', paddingLeft: '10px', paddingRight: '10px', color: '#fff'}}>
+                {
+                  isAuthenticated && reduxUser
+                  ? <LogoutBtn />
+                  : <LoginBtn />
+                }
+              </button>
+            </div> 
+                
           </div>
 
-          <div className={styles['icon-container']} >
-            <button className={styles.btnIcon} style={{ width: 'fit-content', paddingLeft: '10px', paddingRight: '10px', color: '#fff'}}>
-              {
-                isAuthenticated
-                ? <LogoutBtn />
-                : <LoginBtn />
-              }
-            </button>
-          </div> 
-              
         </div>
-
-      </div>
       </div>
     </nav>
   );

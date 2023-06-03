@@ -10,8 +10,9 @@ export function ShoppingCart() {
 
   const { isAuthenticated } = useAuth0();
   const shoppingCart = useSelector(state => state.shoppingCart);
+  const reduxUser = useSelector(state => state.user);
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated || isAuthenticated && reduxUser && reduxUser.role !== 'client') {
     return (
       <Navigate replace to='/' />
     )
