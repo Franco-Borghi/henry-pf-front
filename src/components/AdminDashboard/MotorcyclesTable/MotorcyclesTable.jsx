@@ -6,7 +6,6 @@ import CloudinaryUploadWidget from "../../CloudinaryUploadWidget/CloudinaryUploa
 import { fetchData } from "../../../redux/actions"
 
 export default function MotorcyclesTable() {
-  const [motorcyclesData, setMotorcyclesData] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const [filter, setFilter] = useState("all")
   const [newMotorcycle, setNewMotorcycle] = useState({})
@@ -15,16 +14,15 @@ export default function MotorcyclesTable() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    setMotorcyclesData(allMotorcycles)
     setFilteredData(allMotorcycles)
   }, [allMotorcycles])
 
   const handleFilter = (e) => {
     const { value } = e.target
     setFilter(value)
-    let auxMotorcycles = [...motorcyclesData]
+    let auxMotorcycles = [...allMotorcycles]
     if (searchQuery !== "")
-      auxMotorcycles = motorcyclesData.filter(
+      auxMotorcycles = allMotorcycles.filter(
         moto =>
           moto.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
           moto.model.toLowerCase().includes(searchQuery.toLowerCase())
@@ -74,7 +72,7 @@ export default function MotorcyclesTable() {
 
   const searchSubmit = e => {
     e.preventDefault()
-    let auxMotorcycles = [...motorcyclesData]
+    let auxMotorcycles = [...allMotorcycles]
     if (filter !== "all")
       setFilteredData(
         auxMotorcycles.filter(moto => moto.active === (filter === "active"))
@@ -90,7 +88,7 @@ export default function MotorcyclesTable() {
 
   const reset = e => {
     e.preventDefault()
-    setFilteredData(motorcyclesData)
+    setFilteredData(allMotorcycles)
     setSearchQuery("")
   }
 
