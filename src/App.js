@@ -17,6 +17,7 @@ import Graphs from "./components/AdminDashboard/Graphs/Graphs";
 import Form from "./components/AdminDashboard/Form/Form";
 import User from "./components/AdminDashboard/Users/Users";
 import Orders from "./components/AdminDashboard/Orders/Orders";
+import ContactUs from "./components/ContactUs/ContactUs";
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
             <Route path="/:id" element={<ItemDetail/>}/>
             <Route path="/shopping-cart" element={<ShoppingCart />} />
             <Route path="/profile" element={< ProfileForm/>} />
+            <Route path='/contact-us' element={<ContactUs/>}></Route>
           </Route>
           {/* //ruta dashAdmin */}
           <Route path="/admin" element={<Dashboard />} >
