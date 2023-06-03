@@ -1,128 +1,135 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-import styles from "./MotorcyclesTable.module.scss";
-import CloudinaryUploadWidget from "../../CloudinaryUploadWidget/CloudinaryUploadWidget";
+import axios from "axios"
+import React, { useState, useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import styles from "./MotorcyclesTable.module.scss"
+import CloudinaryUploadWidget from "../../CloudinaryUploadWidget/CloudinaryUploadWidget"
+import { fetchData } from "../../../redux/actions"
 
 export default function MotorcyclesTable() {
-  const [motorcyclesData, setMotorcyclesData] = useState([]);
-  const [filter, setFilter] = useState("all");
-  const [filteredData, setFilteredData] = useState([]); 
-  const [editingMotorcycle, setEditingMotorcycle] = useState(null);
+  const [motorcyclesData, setMotorcyclesData] = useState([])
+  const [filteredData, setFilteredData] = useState([])
+  const [filter, setFilter] = useState("all")
   const [newMotorcycle, setNewMotorcycle] = useState({})
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("")
+  const allMotorcycles = useSelector(state => state.allMotorcycles)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_HOST_NAME}/motorcycles`)
-      .then((response) => {
-        setMotorcyclesData(response.data);
-        setFilteredData(response.data)
-      })
-      .catch((error) => {
-        console.error("Error retrieving data:", error);
-      });
-  }, []);
+    setMotorcyclesData(allMotorcycles)
+    setFilteredData(allMotorcycles)
+  }, [allMotorcycles])
 
-  function handleFilter(e) {
-    const { value } = e.target;
-    setFilter(value);
+  const handleFilter = (e) => {
+    const { value } = e.target
+    setFilter(value)
     let auxMotorcycles = [...motorcyclesData]
-    if(searchQuery !== "") auxMotorcycles = motorcyclesData.filter(moto => (moto.brand.toLowerCase().includes(searchQuery.toLowerCase())) || moto.model.toLowerCase().includes(searchQuery.toLowerCase()))
+    if (searchQuery !== "")
+      auxMotorcycles = motorcyclesData.filter(
+        moto =>
+          moto.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          moto.model.toLowerCase().includes(searchQuery.toLowerCase())
+      )
     if (value === "all") return setFilteredData(auxMotorcycles)
-    setFilteredData(auxMotorcycles.filter(moto => moto.active === (value === "active")))
+    setFilteredData(
+      auxMotorcycles.filter(moto => moto.active === (value === "active"))
+    )
   }
 
-  const onChangeInput = (e) => {
-    const { name, value } = e.target;
-    const newValue = name === "active" ? value === "active" : value;
-    setNewMotorcycle(previousData => ({...previousData, [name]: newValue}))
-  };
+  const changeInputFields = e => {
+    const { name, value } = e.target
+    const newValue = name === "active" ? value === "active" : value
+    setNewMotorcycle({ ...newMotorcycle, [name]: newValue })
+  }
 
-  function handleEdit(moto) {
-    setEditingMotorcycle(moto.id);
+  const startEditing = (moto) => {
     setNewMotorcycle(moto)
   }
 
-  function handleCancel() {
-    setEditingMotorcycle(null);
+  const cancelEdit = () => {
+    setNewMotorcycle({})
   }
 
-  const handleSubmit = (motoId) => {
+  const submitUpdatedMotorcycle = motoId => {
     axios
       .put(
-        `${process.env.REACT_APP_HOST_NAME}/motorcycles/${motoId}`,newMotorcycle
+        `${process.env.REACT_APP_HOST_NAME}/motorcycles/${motoId}`,
+        newMotorcycle
       )
-      .then((response) => {
-        // console.log(filteredData?.map(moto => moto.id === motoId ? response.data : moto));
-        setFilteredData([...filteredData.map(moto => moto.id === motoId ? {...response.data} : {...moto})]);
-        setEditingMotorcycle(null); // TODO: Arreglar el bug de que, hasta que se apreta F5, no cambia la moto
-        setNewMotorcycle({});
+      .then(response => {
+
+        fetchData(dispatch)
+        setFilteredData(filteredData.map(moto => (moto.id === motoId ? response.data : moto)))
+        setNewMotorcycle({})
       })
-      .catch((error) => {
-        console.error("Error retrieving data:", error);
-      });
-  };
-
- // SearchBarAdmin
-  const handleSearch = (e) => {
-    const { value } = e.target;
-    setSearchQuery(value);
-  };
-
-  const searchSubmit = (e) => {
-    e.preventDefault();
-    let auxMotorcycles = [...motorcyclesData]
-    if (filter !== "all") setFilteredData(auxMotorcycles.filter(moto => moto.active === (filter === "active")))
-    setFilteredData(auxMotorcycles.filter(moto => (moto.brand.toLowerCase().includes(searchQuery.toLowerCase())) || moto.model.toLowerCase().includes(searchQuery.toLowerCase())));
-    // setSearchQuery("");
+      .catch(error => {
+        console.error("Error retrieving data:", error)
+      })
   }
 
-  const reset = (e) => {
-    e.preventDefault();
-    setFilteredData(motorcyclesData);
-    setSearchQuery("");
+  // SearchBarAdmin
+  const handleSearch = e => {
+    const { value } = e.target
+    setSearchQuery(value)
+  }
+
+  const searchSubmit = e => {
+    e.preventDefault()
+    let auxMotorcycles = [...motorcyclesData]
+    if (filter !== "all")
+      setFilteredData(
+        auxMotorcycles.filter(moto => moto.active === (filter === "active"))
+      )
+    setFilteredData(
+      auxMotorcycles.filter(
+        moto =>
+          moto.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          moto.model.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    )
+  }
+
+  const reset = e => {
+    e.preventDefault()
+    setFilteredData(motorcyclesData)
+    setSearchQuery("")
   }
 
   return (
     <div>
       <h1 className={styles.title}>Motorcycle List </h1>
-      
+
       {/* SearchBarAdmin */}
       <div>
-      <form onSubmit={(e) => e.preventDefault()} className={styles.ctnInput}>
-        <input
-          value={searchQuery}
-          className={styles.inputSearch}
-          placeholder="Search"
-          onChange={handleSearch}
-        />
-        <button
-          type="submit"
-          className={styles.btnIconSearch}
-          onClick={searchSubmit}
-        >
-          <ion-icon
-            style={{ color: "#fff" }}
-            size="small"
-            name="search-outline"
-          ></ion-icon>
-        </button>
-        <button
-        type='submit'
-        onClick={reset}>
-          View all
-        </button>
-      </form>
-    </div>
+        <form onSubmit={e => e.preventDefault()} className={styles.ctnInput}>
+          <input
+            value={searchQuery}
+            className={styles.inputSearch}
+            placeholder="Search"
+            onChange={handleSearch}
+          />
+          <button
+            type="submit"
+            className={styles.btnIconSearch}
+            onClick={searchSubmit}>
+            <ion-icon
+              style={{ color: "#fff" }}
+              size="small"
+              name="search-outline"></ion-icon>
+          </button>
+          <button type="submit" onClick={reset}>
+            View all
+          </button>
+        </form>
+      </div>
 
-    {/* Filters */}
-    <select onChange={handleFilter}>
-      <option value="all">All</option>
-      <option value="active">Active</option>
-      <option value="inactive">Inactive</option>
-    </select>
+      {/* Filters */}
+      <select onChange={handleFilter}>
+        <option value="all">All</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
 
-    {/* Table */}
+      {/* Table */}
       <table className={styles.table}>
         <thead>
           <tr>
@@ -140,21 +147,21 @@ export default function MotorcyclesTable() {
           </tr>
         </thead>
         <tbody className={styles.font}>
-          {filteredData.length === 0 ? (
+          {filteredData?.length === 0 ? (
             <tr>
               <td>No motorcycles found</td>
             </tr>
           ) : (
-            filteredData.map(moto => (
+            filteredData?.map(moto => (
               <tr key={moto.id}>
-                {editingMotorcycle === moto.id ? (
+                {newMotorcycle.id === moto.id ? (
                   <>
                     <td>
                       <input
                         type="text"
                         name="brand"
                         value={newMotorcycle.brand}
-                        onChange={onChangeInput}
+                        onChange={changeInputFields}
                       />
                     </td>
                     <td>
@@ -162,7 +169,7 @@ export default function MotorcyclesTable() {
                         type="text"
                         name="model"
                         value={newMotorcycle.model}
-                        onChange={onChangeInput}
+                        onChange={changeInputFields}
                       />
                     </td>
                     <td>
@@ -170,7 +177,7 @@ export default function MotorcyclesTable() {
                         type="text"
                         name="year"
                         value={newMotorcycle.year}
-                        onChange={onChangeInput}
+                        onChange={changeInputFields}
                       />
                     </td>
                     <td>
@@ -178,7 +185,7 @@ export default function MotorcyclesTable() {
                         type="text"
                         name="cc"
                         value={newMotorcycle.cc}
-                        onChange={onChangeInput}
+                        onChange={changeInputFields}
                       />
                     </td>
                     <td>
@@ -186,7 +193,7 @@ export default function MotorcyclesTable() {
                         type="text"
                         name="transmission"
                         value={newMotorcycle.transmission}
-                        onChange={onChangeInput}
+                        onChange={changeInputFields}
                       />
                     </td>
                     <td>
@@ -194,7 +201,7 @@ export default function MotorcyclesTable() {
                         type="text"
                         name="price"
                         value={newMotorcycle.price}
-                        onChange={onChangeInput}
+                        onChange={changeInputFields}
                       />
                     </td>
                     <td>
@@ -202,7 +209,7 @@ export default function MotorcyclesTable() {
                         type="text"
                         name="category"
                         value={newMotorcycle.category}
-                        onChange={onChangeInput}
+                        onChange={changeInputFields}
                       />
                     </td>
                     <td>
@@ -210,29 +217,31 @@ export default function MotorcyclesTable() {
                         type="text"
                         name="description"
                         value={newMotorcycle.description}
-                        onChange={onChangeInput}
+                        onChange={changeInputFields}
                       />
                     </td>
                     <td>
-                    <CloudinaryUploadWidget imageUrl={setNewMotorcycle} inputs={newMotorcycle}/>
+                      <CloudinaryUploadWidget
+                        imageUrl={setNewMotorcycle}
+                        inputs={newMotorcycle}
+                      />
                     </td>
                     <td>
                       <select
                         name="active"
                         value={newMotorcycle.active ? "active" : "inactive"}
-                        onChange={onChangeInput}>
+                        onChange={changeInputFields}>
                         <option value="active">active</option>
                         <option value="inactive">inactive</option>
-                        </select>
+                      </select>
                     </td>
                     <td className={styles.actionsHeader}>
                       <button
                         className={styles.button}
-                        onClick={() => handleSubmit(moto.id)}
-                      >
+                        onClick={() => submitUpdatedMotorcycle(moto.id)}>
                         Save
                       </button>
-                      <button className={styles.button} onClick={handleCancel}>
+                      <button className={styles.button} onClick={cancelEdit}>
                         Cancel
                       </button>
                     </td>
@@ -252,8 +261,7 @@ export default function MotorcyclesTable() {
                     <td className={styles.actionsHeader}>
                       <button
                         className={styles.button}
-                        onClick={() => handleEdit(moto)}
-                      >
+                        onClick={() => startEditing(moto)}>
                         Edit
                       </button>
                     </td>
@@ -265,5 +273,5 @@ export default function MotorcyclesTable() {
         </tbody>
       </table>
     </div>
-  );
+  )
 }
