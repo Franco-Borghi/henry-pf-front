@@ -104,3 +104,46 @@
   .ProfileForm .homeBtn:hover {
     background: rgba(255,255,255,0.5);
   }
+
+  .selector-container {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 25px;
+  }
+
+  .selector-container .selector {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    border-bottom: 1px solid #b7b7b7;
+  }
+
+  .selector-container .selector > h4 {
+    text-align: center;
+    width: 50%;
+    cursor: pointer;
+    font-weight: 700;
+    color: #b7b7b7;
+    transition: all 0.3s ease-in-out;
+    padding-bottom: 10px;
+  }
+
+  .selector-container .selector > h4:hover,
+  .selector-container .selector > h4.true{
+    color: #fff;
+  }
+
+ .selector-container .selector > h4.true {
+    border-bottom: 1px solid #fff;
+  }
+
+  .selector-container .selector-content {
+    display: none;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .selector-container .selector-content[data-visible="true"] {
+    display: block;
+  }

@@ -139,7 +139,9 @@ export default function Form(){
                             <label for="motorcycleModel">Color:
                             <select name="motorcycleModel" id="" onChange={handleSelectModelChange} ref={motorcycleModelRef}>
                                 <option></option>
-                                {motorcyclesData?.map(m => <option value={m.id}>{m.brand} {m.model} {m.year} {m.cc}</option>)}
+                                {[...motorcyclesData].sort((a,b) => {if(a.brand.localeCompare(b.brand) !== 0) return a.brand.localeCompare(b.brand) 
+                                    else return a.model.localeCompare(b.model)
+                                     }).map(m => <option value={m.id}>{m.brand} {m.model} {m.cc} {m.year}</option>)}
                             </select>
                             </label>
                             : null }
