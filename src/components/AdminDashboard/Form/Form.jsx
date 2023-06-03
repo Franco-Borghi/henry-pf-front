@@ -35,6 +35,7 @@ export default function Form(){
     const manualRadio = useRef()
     const autoRadio = useRef()
     const imageRef = useRef()
+    const motorcycleModelRef = useRef()
     const [createModel, setCreateModel] = useState(false)
 
     async function handleSumbitMotorcycle(e){
@@ -63,11 +64,15 @@ export default function Form(){
                 image: "",
                 price: "",
                 category: ""})
+                if(createModel){
                 catRef.current.value = ""
                 manualRadio.current.checked = false
                 autoRadio.current.checked = false
-                setErrors({})
                 imageRef.current.src = ""
+                }else{
+                    motorcycleModelRef.current.value = ""
+                }
+                setErrors({})
                 mySwal.fire({
                     html: <strong>The motorcycle has been successfully created</strong>,
                     icon: "success",
@@ -131,10 +136,12 @@ export default function Form(){
 
                         <div>
                             {!createModel ?
-                            <select name="motorcycleModel" id="" onChange={handleSelectModelChange}>
+                            <label for="motorcycleModel">Color:
+                            <select name="motorcycleModel" id="" onChange={handleSelectModelChange} ref={motorcycleModelRef}>
                                 <option></option>
                                 {motorcyclesData?.map(m => <option value={m.id}>{m.brand} {m.model} {m.year} {m.cc}</option>)}
                             </select>
+                            </label>
                             : null }
                             { !createModel ? <button onClick={() => {
                                 setCreateModel(true)
