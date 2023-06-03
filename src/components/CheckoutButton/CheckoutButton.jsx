@@ -100,6 +100,20 @@ export function CheckoutButton() {
           .catch((error) => {
             console.error("Error:", error);
           });
+
+          fetch(`${process.env.REACT_APP_HOST_NAME}/email`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              destination: user.email,
+              body: `Hello ${user.name},\n\nThank you for your purchase on our motorcycle sales website! We are excited to inform you that your order was successful.\n\nOrder Number: #${details.id}\n\nPlease keep this order number for future reference. Our team will process your order.\nIf you have any questions or require further assistance, please don't hesitate to contact our customer support team. We are here to help!\nThank you once again for choosing our website for your motorcycle purchase. We appreciate your business.\n\nBest regards,\nDinamo Motorcycles`,
+              title: `Purchase Successful - Order #${details.id}`
+            }),
+          })
+          .then((response) => console.log('E-mail sent'))
+          .catch((error) => console.error("Error:", error));
         
         setIsProcessing(false);
       })
