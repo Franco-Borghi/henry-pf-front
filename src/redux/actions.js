@@ -11,6 +11,7 @@ export const SET_ACTIVE_SEARCH = "SET_ACTIVE_SEARCH"
 export const ADD_ITEM_TO_CART ='ADD_ITEM_TO_CART';
 export const DELETE_ITEM_FROM_CART ='DELETE_ITEM_FROM_CART';
 export const UPDATE_CART_ITEM_QUANTITY = 'UPDATE_CART_ITEM_QUANTITY';
+export const GET_ORDERS = 'GET_ORDERS';
 
 export const fetchData = (dispatch) => {
     axios.get(`${process.env.REACT_APP_HOST_NAME}/motorcycles`)
@@ -114,3 +115,14 @@ export const updateCartItemQuantity = (data) => {
     }
 }
 
+export const getOrders = ()=>{
+    return async function(dispatch){
+        const orderData = await axios.get(`${process.env.REACT_APP_HOST_NAME}/orders`)
+        const orders = orderData.data;
+        dispatch({
+            type: GET_ORDERS, 
+            payload: orders
+        })
+    }
+
+}
