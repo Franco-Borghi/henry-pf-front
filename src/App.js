@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home/Home"
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { addItemToCart, fetchData } from "./redux/actions";
+import { addItemToCart, fetchData, getUserById } from "./redux/actions";
 import { CreateMotorcycle } from "./containers/CreateMotorcycle/CreateMotorcycle";
 import { ItemDetail } from "./containers/ItemDetail/ItemDetail";
 import { Layout } from "./components/Layout/Layout";
@@ -27,11 +27,13 @@ function App() {
   useEffect(() => {
     if (isAuthenticated && user && user.email && localStorage.getItem(`shoppingCart${user.email}`)) {
       const storedShoppingCart = JSON.parse(localStorage.getItem(`shoppingCart${user.email}`));
+      dispatch(getUserById(user.sub));
       if (storedShoppingCart.length) {
         dispatch(addItemToCart(storedShoppingCart));
       }
       console.log(storedShoppingCart);
     } else {
+      dispatch(getUserById(null));
       dispatch(addItemToCart([]));
     }
   }, [isAuthenticated, user])

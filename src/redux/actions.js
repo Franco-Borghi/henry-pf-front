@@ -11,6 +11,7 @@ export const SET_ACTIVE_SEARCH = "SET_ACTIVE_SEARCH"
 export const ADD_ITEM_TO_CART ='ADD_ITEM_TO_CART';
 export const DELETE_ITEM_FROM_CART ='DELETE_ITEM_FROM_CART';
 export const UPDATE_CART_ITEM_QUANTITY = 'UPDATE_CART_ITEM_QUANTITY';
+export const GET_USER_BY_ID = 'GET_USER_BY_ID';
 
 export const fetchData = (dispatch) => {
     axios.get(`${process.env.REACT_APP_HOST_NAME}/motorcycles`)
@@ -114,3 +115,24 @@ export const updateCartItemQuantity = (data) => {
     }
 }
 
+export const getUserById = (id) => {
+    return async function(dispatch) {
+        try {
+            if (!id) {
+                dispatch({
+                    type: GET_USER_BY_ID,
+                    payload: null,
+                }) 
+            }
+            const response = await fetch(`${process.env.REACT_APP_HOST_NAME}/users/${id}`);
+            const data = await response.json();
+            
+            dispatch({
+                type: GET_USER_BY_ID,
+                payload: data,
+            }) 
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+}
