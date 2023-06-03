@@ -4,8 +4,8 @@ import { changeFilterBrand, changeFilterCategory, fetchDataByName } from "../../
 import styles from './Filter.module.scss';
 
 
-export default function Filter(props){
-    const {displayedMotorcycles} = props
+export default function Filter(){
+    const allMotorcycles = useSelector(state => state.allMotorcycles)
     const [categories, setCategories] = useState([])
     const [brands, setBrands] = useState([])
     const dispatch = useDispatch();
@@ -15,8 +15,8 @@ export default function Filter(props){
     const descendingState = useSelector(state => state.orderDesc);
     const activeSearch = useSelector(state => state.activeSearch);
     
-    displayedMotorcycles.forEach(m => {if(!brands.includes(m.brand)) setBrands(brands.concat(m.brand))})
-    displayedMotorcycles.forEach(m => {if(!categories.includes(m.category)) setCategories(categories.concat(m.category))})
+    allMotorcycles.forEach(m => {if(!brands.includes(m.brand)) setBrands(brands.concat(m.brand))})
+    allMotorcycles.forEach(m => {if(!categories.includes(m.category)) setCategories(categories.concat(m.category))})
 
 
     function handleFilterCat(e){
