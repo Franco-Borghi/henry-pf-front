@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { CheckoutButton } from '../CheckoutButton/CheckoutButton'
 import { useSelector } from 'react-redux'
 import Style from "./Checkout.module.scss"
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { convertirNumero } from '../../utils';
 
 export function Checkout() {
@@ -10,13 +10,13 @@ export function Checkout() {
   const navigate = useNavigate();
   const shoppingCart = useSelector(state => state.shoppingCart);
   const allMotorcycles = useSelector(state => state.allMotorcycles);
-  const [motosArray, setMotosArray] = React.useState(null);
+  const [motosArray, setMotosArray] = useState(null);
   const suma = shoppingCart.map(el => el.unitPrice)
   const resume = suma.reduce((accumulator, currentValue) => {
   return accumulator + currentValue;
   }, 0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (shoppingCart && allMotorcycles) {
       const array = shoppingCart.map(el => allMotorcycles.find(moto => el.id === moto.id));
       console.log(array);
@@ -36,7 +36,6 @@ export function Checkout() {
 
                 <p className={Style.color}>Color: {el.color.charAt(0).toUpperCase() + el.color.slice(1)}</p>
                 <p className={Style.unitPrice}>Unit price: $USD {convertirNumero(el.unitPrice)}</p>
-                {/* <div className={Style['separator']}></div> */}
                 <p className={Style.quantity}>Quantity: {el.quantity}</p>
                 <p className={Style.itemSubtotal}>Item subtotal: $USD {convertirNumero(el.unitPrice * el.quantity)}</p>
               </div>
