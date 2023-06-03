@@ -11,6 +11,7 @@ import { convertirNumero } from '../../utils';
 
 export default function Detail() {
   const [motorcycle, setMotorcycle] = useState(null);
+  const reduxUser = useSelector(state => state.user);
   const allMotorcycles = useSelector(state => state.allMotorcycles);
   const [colors, setColors] = useState([]);
   const [pickedColor, setPickedColor] = useState(null);
@@ -18,7 +19,7 @@ export default function Detail() {
   const [description, setDescription] = React.useState(true);
   const [details, setDetails] = React.useState(false);
   const [shoppingCartButton, setShoppingCartButton] = React.useState(false);
-  const { isAuthenticated, user } = useAuth0();
+  const { isAuthenticated, user, loginWithRedirect } = useAuth0();
   const [stock, setStock] = React.useState(true);
 
   const handleDescription = () => {
@@ -37,6 +38,30 @@ export default function Detail() {
   const handleDispatch = () => {
     if (!stock) {
       return false;
+    }
+
+    if (!isAuthenticated) {
+      return new swal({
+        title: "Please login",
+        text: "You need to login to add items to the shopping cart",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: 'Login',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          loginWithRedirect();
+        }
+      });      
+    }
+    
+    if (reduxUser && reduxUser.role === 'admin') {
+      return new swal({
+        title: "Error",
+        text: "Admins can't make purchases",
+        icon: "error",
+        buttons: true,
+      })
     }
 
     if (!pickedColor) {
@@ -124,7 +149,7 @@ export default function Detail() {
             </div>
 
             <div>
-              <label onClick={() => motorcycle && motorcycle.stock > 0 && isAuthenticated && user && handleDispatch()} className={shoppingCartButton && motorcycle.stock > 0 && isAuthenticated && pickedColor ? styles['cart-container'] : styles['cart-container-disabled']}>
+              <label onClick={() => motorcycle && motorcycle.stock > 0 && handleDispatch()} className={shoppingCartButton && motorcycle.stock > 0 && isAuthenticated && pickedColor && reduxUser && reduxUser.role !== 'admin' ? styles['cart-container'] : styles['cart-container-disabled']}>
                 Add to cart 
                 <ion-icon style={{ color: "#000 "}} className='svg' size="small" name="cart-outline"></ion-icon>
               </label>

@@ -13,6 +13,8 @@ export default function ProfileForm() {
   const { user, isAuthenticated } = useAuth0();
   const navigate = useNavigate()
   const mySwal = withReactContent(Swal);
+  const [orders, setOrders] = useState(false);
+  const [profile, setProfile] = useState(true);
 
    useEffect(() => {
     if(!isAuthenticated) navigate("/")
@@ -25,6 +27,15 @@ export default function ProfileForm() {
   }
   }, [user?.sub])
 
+  const handleProfile = () => {
+    setProfile(false);
+    setOrders(true);
+  }
+
+  const handleOrders = () => {
+    setOrders(false);
+    setProfile(true);
+  }
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -58,9 +69,15 @@ export default function ProfileForm() {
 
     
       <div className={styles.ProfileForm}>
-        <section>
+        <h1>Profile Account</h1>
+      <div className={styles['selector-container']}>
+          <div className={styles['selector']}>
+            <h4 onClick={handleOrders} className={styles[`${profile}`]}>Personal Data</h4>
+            <h4 onClick={handleProfile} className={styles[`${orders}`]}>Orders</h4>
+          </div>
+          <div data-visible={`${profile}`} className={styles[`selector-content`]}>
+          <section>
           <form>
-            <h1>Profile Account</h1>
             <div >
               <label>
                 Email:
@@ -135,17 +152,27 @@ export default function ProfileForm() {
                 )}
               </label>
             </div>
-                
-            <div>
+        
+
+
+          <section>
+            {editMode ? (
+              <button className={styles.saveBtn} onClick={handleSaveClick}>Save</button>
+            ) : (
+              <button className={styles.editBtn} onClick={handleEditClick}>Edit</button>
+            )}
+          </section>
+        </form>
+      </section>
+          </div>
+          <div data-visible={`${orders}`} className={styles[`selector-content`]}>
               <ul>
-                Orders:
-                  {profileData?.orders?.map((o, i) => 
+                  {profileData?.orders? profileData.orders.map((o, i) => 
                     <li>
-                      <p>Order {i+1}</p>
                       <div>
+                        <p>Order Number: {o?.orderNumber}</p>
                         <p>Date: {o?.date}</p>
                         <p>Amount: ${o?.amountPaid}</p>
-                        <p>Order Number: {o?.orderNumber}</p>
                         <p>Items:</p>
                         <table>
                             <thead>
@@ -175,24 +202,11 @@ export default function ProfileForm() {
                           </table>
                       </div>
                     </li>
-                  )}
+                  ): <h4>You don't have any orders</h4>}
                   </ul> 
-            </div>
-        
-
-
-          <section>
-            {editMode ? (
-              <button className={styles.saveBtn} onClick={handleSaveClick}>Save</button>
-            ) : (
-              <button className={styles.editBtn} onClick={handleEditClick}>Edit</button>
-            )}
-
-            <Link to="/" ><button className={styles.homeBtn}>Home</button></Link>
-          </section>
-        </form>
-      </section>
-
+          </div>
+        </div>
+        <Link to="/" ><button className={styles.homeBtn}>Home</button></Link>
     </div>
   );
 }
