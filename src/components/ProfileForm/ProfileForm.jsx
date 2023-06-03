@@ -16,9 +16,10 @@ export default function ProfileForm() {
 
    useEffect(() => {
     if(!isAuthenticated) navigate("/")
-    else{axios.get(`${process.env.REACT_APP_HOST_NAME}/users/${user?.sub}`)
+    else{axios.get(`${process.env.REACT_APP_HOST_NAME}/orders/${user?.sub}`)
     .then(res => {
       setProfileData(res.data)
+      console.log(res.data);
    }) 
    .catch(err => console.log("ERROR", err))
   }
@@ -50,6 +51,8 @@ export default function ProfileForm() {
         })
       }).catch(err => console.log("ERROR", err))
   }
+
+  // TODO: Modificar algo, cuando se actualizan los campos del usuario, se borran las ordenes
 
   return (
 
@@ -132,7 +135,49 @@ export default function ProfileForm() {
                 )}
               </label>
             </div>
-
+                
+            <div>
+              <ul>
+                Orders:
+                  {profileData?.orders?.map((o, i) => 
+                    <li>
+                      <p>Order {i+1}</p>
+                      <div>
+                        <p>Date: {o?.date}</p>
+                        <p>Amount: ${o?.amountPaid}</p>
+                        <p>Order Number: {o?.orderNumber}</p>
+                        <p>Items:</p>
+                        <table>
+                            <thead>
+                              <tr>
+                                <th>Brand</th>
+                                <th>Model</th>
+                                <th>Transmission</th>
+                                <th>CC</th>
+                                <th>Year</th>
+                                <th>Color</th>
+                                <th>Price</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            {o?.items?.map(i => {
+                          return <tr>
+                          <td>{i?.motorcycle?.brand}</td>
+                          <td>{i?.motorcycle?.model}</td>
+                          <td>{i?.motorcycle?.transmission}</td>
+                          <td>{i?.motorcycle?.cc}</td>
+                          <td>{i?.motorcycle?.year}</td>
+                          <td>{i?.color}</td>
+                          <td>{i?.motorcycle?.price}</td>
+                          </tr>
+                        })}
+                            </tbody>
+                          </table>
+                      </div>
+                    </li>
+                  )}
+                  </ul> 
+            </div>
         
 
 

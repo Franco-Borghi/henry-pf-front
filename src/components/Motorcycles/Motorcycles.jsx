@@ -76,7 +76,7 @@ export default function Motorcycles() {
 
         <FilterBar>
           <div className={styles.filterOrderSection}>
-            <Filter displayedMotorcycles={displayedMotorcycles} />
+            <Filter/>
             <Order displayedMotorcycles={displayedMotorcycles} setDisplayedMotorcycles={setDisplayedMotorcycles} />
           </div>
         </FilterBar>
