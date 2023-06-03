@@ -1,7 +1,7 @@
 import "./App.scss";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home/Home"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addItemToCart, fetchData, getUserById } from "./redux/actions";
 import { CreateMotorcycle } from "./containers/CreateMotorcycle/CreateMotorcycle";
@@ -24,6 +24,7 @@ function App() {
 
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useAuth0();
+  const reduxUser = useSelector(state => state.user);
 
   useEffect(() => {
     if (isAuthenticated && user && user.email && localStorage.getItem(`shoppingCart${user.email}`)) {
@@ -54,14 +55,17 @@ function App() {
             <Route path='/contact-us' element={<ContactUs/>}></Route>
           </Route>
           {/* //ruta dashAdmin */}
-          <Route path="/admin" element={<Dashboard />} >
-              <Route index element={<Graphs />}/>
-              <Route path="/admin/itemsTable" element={<ItemsTable />} />
-              <Route path="/admin/motorcyclesTable" element={<MotorcyclesTable />} /> {/* A cambiar luego */}
-              <Route path="/admin/create" element={<Form/>}/>
-              <Route path="/admin/users" element={<User/>}/>
-              <Route path="/admin/orders" element={<Orders/>}/>
-          </Route>
+          {
+            isAuthenticated && reduxUser && reduxUser.role === 'admin' &&
+            <Route path="/admin" element={<Dashboard />} >
+                <Route index element={<Graphs />}/>
+                <Route path="/admin/itemsTable" element={<ItemsTable />} />
+                <Route path="/admin/motorcyclesTable" element={<MotorcyclesTable />} /> {/* A cambiar luego */}
+                <Route path="/admin/create" element={<Form/>}/>
+                <Route path="/admin/users" element={<User/>}/>
+                <Route path="/admin/orders" element={<Orders/>}/>
+            </Route>
+          }
         </Routes>
       </BrowserRouter>
     </>
