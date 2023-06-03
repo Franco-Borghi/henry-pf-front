@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import withReactContent from 'sweetalert2-react-content';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from "./ProfileForm.module.css";
+import ReturnToHomeButton from '../ReturnToHomeButton/ReturnToHomeButton';
 
 export default function ProfileForm() {
   const [editMode, setEditMode] = useState(false);
@@ -67,7 +68,8 @@ export default function ProfileForm() {
 
   return (
 
-    
+    <div>
+      <ReturnToHomeButton />
       <div className={styles.ProfileForm}>
         <h1>Profile Account</h1>
       <div className={styles['selector-container']}>
@@ -204,9 +206,26 @@ export default function ProfileForm() {
                     </li>
                   ): <h4>You don't have any orders</h4>}
                   </ul> 
-          </div>
-        </div>
-        <Link to="/" ><button className={styles.homeBtn}>Home</button></Link>
+
+            </div>
+        
+
+
+          <section>
+            {editMode ? (
+              <button className={styles.saveBtn} onClick={handleSaveClick}>Save</button>
+            ) : (
+              <button className={styles.editBtn} onClick={handleEditClick}>Edit</button>
+            )}
+
+            
+          </section>
+        </form>
+      </section>
+
+
+         
+    </div>
     </div>
   );
 }
