@@ -126,6 +126,7 @@ export const getOrders = ()=>{
             payload: orders
         })
     }
+}
 
 export const getUserById = (id) => {
     return async function(dispatch) {
