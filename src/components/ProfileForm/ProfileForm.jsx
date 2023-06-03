@@ -208,23 +208,7 @@ export default function ProfileForm() {
                   </ul> 
 
             </div>
-        
-
-
-          <section>
-            {editMode ? (
-              <button className={styles.saveBtn} onClick={handleSaveClick}>Save</button>
-            ) : (
-              <button className={styles.editBtn} onClick={handleEditClick}>Edit</button>
-            )}
-
-            
-          </section>
-        </form>
-      </section>
-
-
-         
+              </div>
     </div>
     </div>
   );
