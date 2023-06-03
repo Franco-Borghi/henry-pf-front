@@ -1,4 +1,4 @@
-import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID, ORDER_ASC, ORDER_DESC, SET_ACTIVE_SEARCH, ADD_ITEM_TO_CART, DELETE_ITEM_FROM_CART, UPDATE_CART_ITEM_QUANTITY, GET_USER_BY_ID } from "./actions";
+import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID, ORDER_ASC, ORDER_DESC, SET_ACTIVE_SEARCH, ADD_ITEM_TO_CART, DELETE_ITEM_FROM_CART, UPDATE_CART_ITEM_QUANTITY, GET_ORDERS, GET_USER_BY_ID  } from "./actions";
 
 const initialState = {
     motos: [],
@@ -9,7 +9,9 @@ const initialState = {
     orderAsc : false,
     orderDesc : false,
     activeSearch: '',
+    orders:[],
     user: null,
+
 }
 
 export const reducer = (state = initialState, action) => {
@@ -122,13 +124,18 @@ export const reducer = (state = initialState, action) => {
                     shoppingCart: [...cart],
                 }
             }
+        case GET_ORDERS:
+            return{
+                ...state,
+                orders: action.payload
+            }
 
         case GET_USER_BY_ID:
             return {
                 ...state,
                 user: action.payload,
             }
-
+        
         default:
             return state
     }
