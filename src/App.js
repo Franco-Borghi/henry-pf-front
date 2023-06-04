@@ -15,7 +15,7 @@ import MotorcyclesTable from "./components/AdminDashboard/MotorcyclesTable/Motor
 import ItemsTable from "./components/AdminDashboard/ItemsTable/ItemsTable";
 import Graphs from "./components/AdminDashboard/Graphs/Graphs";
 import Form from "./components/AdminDashboard/Form/Form";
-import User from "./components/AdminDashboard/Users/Users";
+import Users from "./components/AdminDashboard/Users/Users";
 import Orders from "./components/AdminDashboard/Orders/Orders";
 import ContactUs from "./components/ContactUs/ContactUs";
 
