@@ -58,7 +58,7 @@ export default function NavBar(props) {
           <div className={styles.ctnIcons}>
 
             {
-              isAuthenticated /* && reduxUser && reduxUser.role === 'client' TODO: descomentar */
+              isAuthenticated  && reduxUser && reduxUser.role === 'client'
               &&  <Link to="/shopping-cart">
                       <div className={styles['icon-container']} >
                         {
@@ -75,7 +75,7 @@ export default function NavBar(props) {
             }
 
             {
-              isAuthenticated/*  && reduxUser && reduxUser.role === 'admin'  TODO: descomentar */ 
+              isAuthenticated  && reduxUser && reduxUser.role === 'admin'
               &&  <Link to={"/admin"}>
                     <div className={styles['icon-container']} >
                       <button className={styles.btnIcon}>
@@ -89,7 +89,7 @@ export default function NavBar(props) {
 
             <div className={styles['icon-container']} >
               {
-                isAuthenticated && reduxUser
+                isAuthenticated && reduxUser  
                 ? <>
                     <Link to={`/profile`}>
                       <img style={{height: '40px', width: '40px', borderRadius: '50%', cursor: 'pointer'}} src={user.picture} alt="User Image" />
@@ -103,7 +103,7 @@ export default function NavBar(props) {
             <div className={styles['icon-container']} >
               <button className={styles.btnIcon} style={{ width: 'fit-content', paddingLeft: '10px', paddingRight: '10px', color: '#fff'}}>
                 {
-                  isAuthenticated /* && reduxUser */
+                  isAuthenticated 
                   ? <LogoutBtn />
                   : <LoginBtn />
                 }
