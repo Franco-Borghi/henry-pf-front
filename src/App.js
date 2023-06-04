@@ -55,8 +55,8 @@ function App() {
             <Route path='/contact-us' element={<ContactUs/>}></Route>
           </Route>
           {/* //ruta dashAdmin */}
-          {
-            isAuthenticated && reduxUser && reduxUser.role === 'admin' &&
+          {/* {
+            isAuthenticated && reduxUser && reduxUser.role === 'admin' &&  TODO: descomentar */}
             <Route path="/admin" element={<Dashboard />} >
                 <Route index element={<Graphs />}/>
                 <Route path="/admin/itemsTable" element={<ItemsTable />} />
@@ -65,7 +65,7 @@ function App() {
                 <Route path="/admin/users" element={<User/>}/>
                 <Route path="/admin/orders" element={<Orders/>}/>
             </Route>
-          }
+          {/* } */}
         </Routes>
       </BrowserRouter>
     </>
