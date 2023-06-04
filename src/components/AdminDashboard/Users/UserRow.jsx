@@ -8,7 +8,6 @@ export function UserRow({user, getUsers}) {
   const [edit, setEdit] = React.useState(false);
   const [firstName, setFirstName] = React.useState(user.firstName);
   const [lastName, setLastName] = React.useState(user.lastName);
-  const [email, setEmail] = React.useState(user.email);
   const [phoneNumber, setPhoneNumber] = React.useState(user.phoneNumber);
   const [idNumber, setIdNumber] = React.useState(user.idNumber);
   const [active, setActive] = React.useState(user.active);
@@ -19,7 +18,6 @@ export function UserRow({user, getUsers}) {
       // editedFromAdmin: true,
       firstName,
       lastName,
-      email,
       phoneNumber,
       idNumber,
       active,
@@ -49,7 +47,6 @@ export function UserRow({user, getUsers}) {
   const refreshState = () => {
     setFirstName(user.firstName);
     setLastName(user.lastName);
-    setEmail(user.email);
     setPhoneNumber(user.phoneNumber);
     setIdNumber(user.idNumber);
     setActive(user.active);
@@ -64,7 +61,7 @@ export function UserRow({user, getUsers}) {
             <td className={styles.td}>{`${user.id}`}</td>
             <td className={styles.td}><input placeholder='empty' type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} /></td>
             <td className={styles.td}><input placeholder='empty' type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} /></td>
-            <td className={styles.td}><input placeholder='empty' type="text" value={email} onChange={(e) => setEmail(e.target.value)} /></td>
+            <td className={styles.td}>{`${user.email}`}</td>
             <td className={styles.td}><input placeholder='empty' type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} /></td>
             <td className={styles.td}><input placeholder='empty' type="text" value={idNumber} onChange={(e) => setIdNumber(e.target.value)} /></td>
             {/* <td><input placeholder='Active' type="text" value={active} onChange={(e) => setActive(e.target.value)} /></td> */}
@@ -85,13 +82,13 @@ export function UserRow({user, getUsers}) {
           </>
         : <>
             <td className={styles.td}>{`${user.id}`}</td>
-            <td className={styles.td}>{`${firstName}`}</td>
-            <td className={styles.td}>{`${lastName}`}</td>
-            <td className={styles.td}>{`${email}`}</td>
-            <td className={styles.td}>{`${phoneNumber}`}</td>
-            <td className={styles.td}>{`${idNumber}`}</td>
-            <td className={styles.td}>{`${active}`}</td>
-            <td className={styles.td}>{`${role}`}</td>
+            <td className={styles.td}>{`${user.firstName}`}</td>
+            <td className={styles.td}>{`${user.lastName}`}</td>
+            <td className={styles.td}>{`${user.email}`}</td>
+            <td className={styles.td}>{`${user.phoneNumber}`}</td>
+            <td className={styles.td}>{`${user.idNumber}`}</td>
+            <td className={styles.td}>{`${user.active}`}</td>
+            <td className={styles.td}>{`${user.role}`}</td>
             <td className={styles.td}>{user.orders.length}</td>
           </>
       }   
