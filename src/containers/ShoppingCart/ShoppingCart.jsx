@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './ShoppingCart.module.scss';
 import { useSelector } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { ShoppingCartCard } from '../../components/ShoppingCartCard/ShoppingCartCard';
 import { Checkout } from '../../components/CheckoutPage/Checkout';
 
@@ -12,7 +12,7 @@ export function ShoppingCart() {
   const shoppingCart = useSelector(state => state.shoppingCart);
   const reduxUser = useSelector(state => state.user);
 
-  if (!isAuthenticated || isAuthenticated && reduxUser && reduxUser.role !== 'client') {
+  if (!isAuthenticated || (isAuthenticated && reduxUser && reduxUser.role !== 'client')) {
     return (
       <Navigate replace to='/' />
     )

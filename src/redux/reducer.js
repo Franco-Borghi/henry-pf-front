@@ -110,6 +110,7 @@ export const reducer = (state = initialState, action) => {
                     shoppingCart: [...newState],
                 }
             }
+            break;
 
         case UPDATE_CART_ITEM_QUANTITY:
             const cart = state.shoppingCart;
@@ -124,6 +125,8 @@ export const reducer = (state = initialState, action) => {
                     shoppingCart: [...cart],
                 }
             }
+            break;
+            
         case GET_ORDERS:
             return{
                 ...state,
