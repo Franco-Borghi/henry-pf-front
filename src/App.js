@@ -15,7 +15,7 @@ import MotorcyclesTable from "./components/AdminDashboard/MotorcyclesTable/Motor
 import ItemsTable from "./components/AdminDashboard/ItemsTable/ItemsTable";
 import Graphs from "./components/AdminDashboard/Graphs/Graphs";
 import Form from "./components/AdminDashboard/Form/Form";
-import User from "./components/AdminDashboard/Users/Users";
+import Users from "./components/AdminDashboard/Users/Users";
 import Orders from "./components/AdminDashboard/Orders/Orders";
 import ContactUs from "./components/ContactUs/ContactUs";
 
@@ -62,7 +62,7 @@ function App() {
                 <Route path="/admin/itemsTable" element={<ItemsTable />} />
                 <Route path="/admin/motorcyclesTable" element={<MotorcyclesTable />} /> {/* A cambiar luego */}
                 <Route path="/admin/create" element={<Form/>}/>
-                <Route path="/admin/users" element={<User/>}/>
+                <Route path="/admin/users" element={<Users/>}/>
                 <Route path="/admin/orders" element={<Orders/>}/>
             </Route>
           }
