@@ -58,7 +58,7 @@ export default function NavBar(props) {
           <div className={styles.ctnIcons}>
 
             {
-              isAuthenticated && reduxUser && reduxUser.role === 'client'
+              isAuthenticated /* && reduxUser && reduxUser.role === 'client' TODO: descomentar */
               &&  <Link to="/shopping-cart">
                       <div className={styles['icon-container']} >
                         {
@@ -75,7 +75,7 @@ export default function NavBar(props) {
             }
 
             {
-              isAuthenticated && reduxUser && reduxUser.role === 'admin'
+              isAuthenticated/*  && reduxUser && reduxUser.role === 'admin'  TODO: descomentar */ 
               &&  <Link to={"/admin"}>
                     <div className={styles['icon-container']} >
                       <button className={styles.btnIcon}>

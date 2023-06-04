@@ -56,7 +56,7 @@ function App() {
           </Route>
           {/* //ruta dashAdmin */}
           {/* {
-            isAuthenticated && reduxUser && reduxUser.role === 'admin' && */}
+            isAuthenticated && reduxUser && reduxUser.role === 'admin' &&  TODO: descomentar */}
             <Route path="/admin" element={<Dashboard />} >
                 <Route index element={<Graphs />}/>
                 <Route path="/admin/itemsTable" element={<ItemsTable />} />
