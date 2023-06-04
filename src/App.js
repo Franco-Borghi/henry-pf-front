@@ -66,7 +66,7 @@ function App() {
             <Route path="/admin/itemsTable" element={<ItemsTable />} />
             <Route path="/admin/motorcyclesTable" element={<MotorcyclesTable />} /> {/* A cambiar luego */}
             <Route path="/admin/create" element={<Form />} />
-            <Route path="/admin/users" element={<User />} />
+            <Route path="/admin/users" element={<Users />} />
             <Route path="/admin/orders" element={<Orders />} />
           </Route>
           {/*    } */}
