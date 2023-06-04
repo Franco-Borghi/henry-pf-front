@@ -4,12 +4,13 @@ import { useSelector, useDispatch } from "react-redux"
 import styles from "./MotorcyclesTable.module.scss"
 import CloudinaryUploadWidget from "../../CloudinaryUploadWidget/CloudinaryUploadWidget"
 import { fetchData } from "../../../redux/actions"
+import SearchBarAdmin from "../SearchBarAdmin/SearchBarAdmin"
 
 export default function MotorcyclesTable() {
   const [filteredData, setFilteredData] = useState([])
+  const [searchQuery, setSearchQuery] = useState("")
   const [filter, setFilter] = useState("all")
   const [newMotorcycle, setNewMotorcycle] = useState({})
-  const [searchQuery, setSearchQuery] = useState("")
   const allMotorcycles = useSelector(state => state.allMotorcycles)
   const dispatch = useDispatch()
 
@@ -64,61 +65,11 @@ export default function MotorcyclesTable() {
       })
   }
 
-  // SearchBarAdmin
-  const handleSearch = e => {
-    const { value } = e.target
-    setSearchQuery(value)
-  }
-
-  const searchSubmit = e => {
-    e.preventDefault()
-    let auxMotorcycles = [...allMotorcycles]
-    if (filter !== "all")
-      setFilteredData(
-        auxMotorcycles.filter(moto => moto.active === (filter === "active"))
-      )
-    setFilteredData(
-      auxMotorcycles.filter(
-        moto =>
-          moto.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          moto.model.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    )
-  }
-
-  const reset = e => {
-    e.preventDefault()
-    setFilteredData(allMotorcycles)
-    setSearchQuery("")
-  }
-
   return (
     <div>
       <h1 className={styles.title}>Motorcycle List </h1>
 
-      {/* SearchBarAdmin */}
-      <div>
-        <form onSubmit={e => e.preventDefault()} className={styles.ctnInput}>
-          <input
-            value={searchQuery}
-            className={styles.inputSearch}
-            placeholder="Search"
-            onChange={handleSearch}
-          />
-          <button
-            type="submit"
-            className={styles.btnIconSearch}
-            onClick={searchSubmit}>
-            <ion-icon
-              style={{ color: "#fff" }}
-              size="small"
-              name="search-outline"></ion-icon>
-          </button>
-          <button type="submit" onClick={reset}>
-            View all
-          </button>
-        </form>
-      </div>
+      <SearchBarAdmin data={allMotorcycles} setFilteredData={setFilteredData} setFilter={setFilter} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
       {/* Filters */}
       <select onChange={handleFilter}>
