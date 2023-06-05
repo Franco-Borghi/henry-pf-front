@@ -1,5 +1,5 @@
-import React from 'react'
-import styles from "./AdminSearchBar.module.scss"
+import React from 'react';
+import styles from "./AdminSearchBar.module.scss";
 
 export default function AdminSearchBar({searchQuery, setSearchQuery, searchSubmit, handleReset}) {
 
@@ -27,7 +27,7 @@ export default function AdminSearchBar({searchQuery, setSearchQuery, searchSubmi
           size="small"
           name="search-outline"></ion-icon>
       </button>
-      <button type="button" onClick={handleReset}>
+      <button className={styles['view-all-button']} type="button" onClick={handleReset}>
         View all
       </button>
     </form>
