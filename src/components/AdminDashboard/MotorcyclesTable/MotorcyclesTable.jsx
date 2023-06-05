@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux"
 import styles from "./MotorcyclesTable.module.scss"
 import CloudinaryUploadWidget from "../../CloudinaryUploadWidget/CloudinaryUploadWidget"
 import { fetchData } from "../../../redux/actions"
+import AdminSearchBar from "../AdminSearchBar/AdminSearchBar"
 
 export default function MotorcyclesTable() {
   const [filteredData, setFilteredData] = useState([])
@@ -64,14 +65,7 @@ export default function MotorcyclesTable() {
       })
   }
 
-  // SearchBarAdmin
-  const handleSearch = e => {
-    const { value } = e.target
-    setSearchQuery(value)
-  }
-
   const searchSubmit = e => {
-    e.preventDefault()
     let auxMotorcycles = [...allMotorcycles]
     if (filter !== "all")
       setFilteredData(
@@ -96,29 +90,7 @@ export default function MotorcyclesTable() {
     <div>
       <h1 className={styles.title}>Motorcycle List </h1>
 
-      {/* SearchBarAdmin */}
-      <div>
-        <form onSubmit={e => e.preventDefault()} className={styles.ctnInput}>
-          <input
-            value={searchQuery}
-            className={styles.inputSearch}
-            placeholder="Search"
-            onChange={handleSearch}
-          />
-          <button
-            type="submit"
-            className={styles.btnIconSearch}
-            onClick={searchSubmit}>
-            <ion-icon
-              style={{ color: "#fff" }}
-              size="small"
-              name="search-outline"></ion-icon>
-          </button>
-          <button type="submit" onClick={reset}>
-            View all
-          </button>
-        </form>
-      </div>
+      <AdminSearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchSubmit={searchSubmit} handleReset={reset} />
 
       {/* Filters */}
       <select onChange={handleFilter}>
