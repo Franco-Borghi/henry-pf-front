@@ -47,6 +47,10 @@ function App() {
   useEffect(() => {
     fetchData(dispatch)
   }, [])
+
+
+  
+
   return (
     <>
       <BrowserRouter>
