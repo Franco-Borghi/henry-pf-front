@@ -27,6 +27,7 @@ export default function Users(){
         return result;
       }
 
+    /* Funcion para traer los usuarios del endpoint GET /users */
     const getUsers = () => {
         fetch(`${process.env.REACT_APP_HOST_NAME}/users`)
             .then(response => response.json())
@@ -34,6 +35,7 @@ export default function Users(){
             .catch(err => console.error(err.message));
     }
 
+    /* Funcion callback para Pagination */
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
@@ -42,18 +44,22 @@ export default function Users(){
         getUsers();
     }, [])
 
+    /* Manejo de filtrado con useEffect */
     React.useEffect(() => {
         if (users) {
             let usersToFilter = [...users];
 
+            /* Filtrado de roles */
             if (filterRole !== 'all') {
                 usersToFilter = usersToFilter.filter(el => el.role === filterRole);
             }
 
+            /* Filtrado de active */
             if (filterActive !== 'all') {
                 usersToFilter = usersToFilter.filter(el => el.active.toString() === filterActive.toString());
             }
 
+            /* Filtrado de AdminSearchBar */
             if (filterWord) {
                 const filterWordArray = filterWord.split(' ');
                 const usersToFilterCopy = [];
@@ -71,20 +77,12 @@ export default function Users(){
                 }
 
                 usersToFilter = [...new Set(usersToFilterCopy)];
-                
             }
 
             setFilteredUsers(usersToFilter);
             setCurrentPage(1);
         }
     }, [users, filterActive, filterRole, filterWord])
-
-    React.useEffect(() => {
-        // getUsers();
-        console.log(filterActive);
-        console.log(filterRole);
-        console.log(filteredUsers);
-    }, [filteredUsers])
 
     return (
         <div className={styles.container}>
