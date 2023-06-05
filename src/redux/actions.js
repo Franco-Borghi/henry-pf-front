@@ -28,14 +28,14 @@ export const getAllMotos = (motos) => {
     }
 }
 
-const getMotosByName = (motos) => {
+export const getMotosByName = (motos) => {
     return{
         type: GET_MOTOS_BY_NAME,
         payload: motos
     }
 }
 
-const setActiveSearch = (value) => {
+export const setActiveSearch = (value) => {
     return {
         type: SET_ACTIVE_SEARCH,
         payload: value
@@ -43,7 +43,7 @@ const setActiveSearch = (value) => {
 }
 
 export const fetchDataByName = (dispatch,value) => {
-    axios.get(`${process.env.REACT_APP_HOST_NAME}/motorcycles?name=${value}`)
+    return axios.get(`${process.env.REACT_APP_HOST_NAME}/motorcycles?name=${value}`)
     .then(d => {
         dispatch(getMotosByName(d.data));
         dispatch(setActiveSearch(value));
@@ -55,6 +55,7 @@ export const postMotorcycle = async (data) => {
     return await axios.post(`${process.env.REACT_APP_HOST_NAME}/motorcycles`, data)
 }
 
+//TODO: si no vamos a hacer nada con esta action deberiamos borrarla
 export const getMotoById = (id) => {
 }
 
@@ -137,8 +138,8 @@ export const getUserById = (id) => {
                     payload: null,
                 }) 
             }
-            const response = await fetch(`${process.env.REACT_APP_HOST_NAME}/users/${id}`);
-            const data = await response.json();
+            const response = await axios(`${process.env.REACT_APP_HOST_NAME}/users/${id}`);
+            const data = await response.data;
             
             dispatch({
                 type: GET_USER_BY_ID,
@@ -148,5 +149,4 @@ export const getUserById = (id) => {
             console.error(error.message);
         }
     }
-
 }
