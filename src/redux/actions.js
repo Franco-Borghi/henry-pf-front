@@ -16,12 +16,12 @@ export const GET_USER_BY_ID = 'GET_USER_BY_ID';
 
 
 export const fetchData = (dispatch) => {
-    axios.get(`${process.env.REACT_APP_HOST_NAME}/motorcycles`)
+    return axios.get(`${process.env.REACT_APP_HOST_NAME}/motorcycles`)
     .then(d => dispatch(getAllMotos(d.data)))
     .catch(err => console.log(err))
 }
 
-const getAllMotos = (motos) => {
+export const getAllMotos = (motos) => {
     return {
         type: GET_ALL_MOTOS,
         payload: motos
