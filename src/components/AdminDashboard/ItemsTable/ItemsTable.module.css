@@ -44,4 +44,29 @@
     
     
   }
+
+  .button {
+    margin-right: 4px;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    background-color: #eee;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #ddd;
+  }
+
+  input {
+    
+    font-size: medium;
+    background-color:#ddd;
+    
+  }
+
+  .inputColor {
+    width: 100px; 
+  }
   
