@@ -154,7 +154,7 @@ export default function Users(){
             <div className={styles['pagination-container']}>
                 <div>
                     {
-                        filteredUsers && filteredUsers.length && filteredUsers.length > itemsPerPage &&
+                        filteredUsers && filteredUsers.length && filteredUsers.length > itemsPerPage ?
                         <Pagination 
                             currentPage={currentPage}
                             totalPages={Math.ceil(filteredUsers.length / itemsPerPage)}
@@ -162,6 +162,7 @@ export default function Users(){
                             onPreviousPage={() => setCurrentPage(prevState => prevState - 1)}
                             onNextPage={() => setCurrentPage(prevState => prevState + 1)}
                         />
+                        : null
                     }
                 </div>
 
