@@ -1,7 +1,8 @@
 import React from "react";
 import { UserRow } from "./UserRow";
 import styles from './Users.module.scss';
-import { Paginado } from "../Paginado/Paginado";
+import Pagination from "../../Pagination/Pagination";
+import AdminSearchBar from "../AdminSearchBar/AdminSearchBar";
 
 export default function Users(){
 
@@ -11,6 +12,8 @@ export default function Users(){
     const [filterActive, setFilterActive] = React.useState('all');
     const [currentPage, setCurrentPage] = React.useState(1);
     const [itemsPerPage, setItemsPerPage] = React.useState(5);
+    const [searchQuery, setSearchQuery] = React.useState('');
+    const [filterWord, setFilterWord] = React.useState('');
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
@@ -41,7 +44,7 @@ export default function Users(){
 
     React.useEffect(() => {
         if (users) {
-            let usersToFilter = users;
+            let usersToFilter = [...users];
 
             if (filterRole !== 'all') {
                 usersToFilter = usersToFilter.filter(el => el.role === filterRole);
@@ -51,10 +54,30 @@ export default function Users(){
                 usersToFilter = usersToFilter.filter(el => el.active.toString() === filterActive.toString());
             }
 
+            if (filterWord) {
+                const filterWordArray = filterWord.split(' ');
+                const usersToFilterCopy = [];
+
+                for (let index = 0; index < filterWordArray.length; index++) {
+                    usersToFilter.forEach(user => {
+                        if (
+                            (user.firstName && user.firstName.toLowerCase().includes(filterWordArray[index].toLowerCase())) ||
+                            (user.lastName && user.lastName.toLowerCase().includes(filterWordArray[index].toLowerCase())) ||
+                            (user.email && user.email.toLowerCase().includes(filterWordArray[index].toLowerCase()))
+                        ) {
+                            usersToFilterCopy.push(user);
+                        }
+                    })
+                }
+
+                usersToFilter = [...new Set(usersToFilterCopy)];
+                
+            }
+
             setFilteredUsers(usersToFilter);
             setCurrentPage(1);
         }
-    }, [users, filterActive, filterRole])
+    }, [users, filterActive, filterRole, filterWord])
 
     React.useEffect(() => {
         // getUsers();
@@ -68,22 +91,32 @@ export default function Users(){
             <h2>Users Table</h2>
 
             <section className={styles['filters-section']}>
-                <div>
-                    <p>Role:</p>
-                    <select value={filterRole} onChange={e => setFilterRole(e.target.value === 'all' ? 'all' : e.target.value)}>
-                        <option value="all">Show all</option>
-                        <option value="admin">admin</option>
-                        <option value="client">client</option>
-                    </select>
+                <div className={styles['filters-section-first-child']}>
+                    <div>
+                        <p>Role:</p>
+                        <select value={filterRole} onChange={e => setFilterRole(e.target.value === 'all' ? 'all' : e.target.value)}>
+                            <option value="all">Show all</option>
+                            <option value="admin">admin</option>
+                            <option value="client">client</option>
+                        </select>
+                    </div>
+                    <div>
+                        <p>Active:</p>
+                        <select value={filterActive} onChange={e => setFilterActive(e.target.value === 'all' ? 'all' : e.target.value === 'true')}>
+                            <option value="all">Show all</option>
+                            <option value="true">true</option>
+                            <option value="false">false</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div>
-                    <p>Active:</p>
-                    <select value={filterActive} onChange={e => setFilterActive(e.target.value === 'all' ? 'all' : e.target.value === 'true')}>
-                        <option value="all">Show all</option>
-                        <option value="true">true</option>
-                        <option value="false">false</option>
-                    </select>
+                    <AdminSearchBar
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
+                    searchSubmit={() => setFilterWord(`${searchQuery}`)}
+                    handleReset={() => {setSearchQuery(''); setFilterWord('')}}
+                    />
                 </div>
             </section>
             <table className={styles.table}>
@@ -119,12 +152,18 @@ export default function Users(){
             </table>
 
             <div className={styles['pagination-container']}>
-                <Paginado
-                    totalItems={filteredUsers ? filteredUsers.length : 0}
-                    itemsPerPage={itemsPerPage}
-                    onPageChange={handlePageChange}
-                    currentPage={currentPage}
-                />
+                <div>
+                    {
+                        filteredUsers && filteredUsers.length && filteredUsers.length > itemsPerPage &&
+                        <Pagination 
+                            currentPage={currentPage}
+                            totalPages={Math.ceil(filteredUsers.length / itemsPerPage)}
+                            onPageChange={handlePageChange}
+                            onPreviousPage={() => setCurrentPage(prevState => prevState - 1)}
+                            onNextPage={() => setCurrentPage(prevState => prevState + 1)}
+                        />
+                    }
+                </div>
 
                 <div className={styles['pagination-container__selector']}>
                     <p>Items per page:</p>
