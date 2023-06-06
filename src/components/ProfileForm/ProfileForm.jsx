@@ -111,7 +111,7 @@ export default function ProfileForm() {
                     onChange={handleInputChange}
                   />
                 ) : (
-                  <span>{profileData?.firstName}</span>
+                  <p className={styles['user-data-label']}>{profileData?.firstName}</p>
                 )}
               </label>
             </div>
@@ -127,7 +127,7 @@ export default function ProfileForm() {
                     onChange={handleInputChange}
                   />
                 ) : (
-                  <span>{profileData?.lastName}</span>
+                  <p className={styles['user-data-label']}>{profileData?.lastName}</p>
                 )}
               </label>
             </div>
@@ -143,7 +143,7 @@ export default function ProfileForm() {
                     onChange={handleInputChange}
                   />
                 ) : (
-                  <span>{profileData?.phoneNumber}</span>
+                  <p className={styles['user-data-label']}>{profileData?.phoneNumber}</p>
                 )}
               </label>
             </div>
@@ -159,7 +159,7 @@ export default function ProfileForm() {
                     onChange={handleInputChange}
                   />
                 ) : (
-                  <span>{profileData?.idNumber}</span>
+                  <p className={styles['user-data-label']}>{profileData?.idNumber}</p>
                 )}
               </label>
             </div>
