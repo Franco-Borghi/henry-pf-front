@@ -147,3 +147,42 @@
   .selector-container .selector-content[data-visible="true"] {
     display: block;
   }
+
+  .orders-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .order-item {
+    padding: 10px;
+  }
+  
+  .order-info {
+    font-weight: bold;
+    margin: 5px 0;
+  }
+  
+  .order-details-toggle {
+    cursor: pointer;
+    margin-bottom: 5px;
+  }
+  
+  .order-details-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .order-item-row td {
+    padding-top: 10px;
+    text-align: center;
+  }
+
+  .order-item-row th {
+    text-align: center;
+  }
+  
+  .no-orders-message {
+    margin: 20px 0;
+    color: #999;
+  }
+  
