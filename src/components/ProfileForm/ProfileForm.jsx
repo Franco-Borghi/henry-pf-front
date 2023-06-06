@@ -75,8 +75,6 @@ export default function ProfileForm() {
       }).catch(err => console.log("ERROR", err))
   }
 
-  // TODO: Modificar algo, cuando se actualizan los campos del usuario, se borran las ordenes, hay dos formas: La primera: Se fuerza un rerender del componente, la segunda, se cambia el controlador para que tambien traiga las ordenes y todo.
-
   return (
 
     <div>
