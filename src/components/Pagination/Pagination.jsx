@@ -8,21 +8,36 @@ export default function Pagination({
   onPreviousPage,
   onNextPage,
 }) {
-  const pageNumbers = [];
+  let pageNumbers = [];
 
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
+  if (currentPage > 2) {
+    pageNumbers.push(currentPage - 1);
+  }
+
+  if (currentPage !== 1 && currentPage !== totalPages) {
+    pageNumbers.push(currentPage);
+  }
+
+  if (currentPage < totalPages - 1) {
+    pageNumbers.push(currentPage + 1);
   }
 
   return (
-    <div className={styles.pagination}>{
-      !totalPages
-      ? null
-      : <button className={styles.paginationButton} onClick={onPreviousPage} disabled={currentPage === 1}>
-        Previous
+    <div className={styles.pagination}>
+       {currentPage !== 1 && (
+        <button className={styles.paginationButton} onClick={onPreviousPage}>
+          Previous
+        </button>
+      )}
+
+      <button className={styles.paginationButton} onClick={() => onPageChange(1)} disabled={currentPage === 1}>
+        1
       </button>
-    }
-      
+
+
+      {currentPage > 3 && <span className={styles.paginationSeparator}>...</span>}
+
+
       {pageNumbers.map((pageNumber) => (
         <button
           className={styles.paginationButton}
@@ -32,12 +47,21 @@ export default function Pagination({
         >
           {pageNumber}
         </button>
-      ))}{
-        !totalPages 
-        ? null
-        : <button className={styles.paginationButton} onClick={onNextPage} disabled={currentPage === totalPages}>
+      ))}
+
+      {currentPage < totalPages - 2 && <span className={styles.paginationSeparator}>...</span>}
+      
+
+      <button className={styles.paginationButton} onClick={() => onPageChange(totalPages)} disabled={currentPage === totalPages}>
+        {totalPages}
+      </button>
+
+     
+      {currentPage !== totalPages && (
+        <button className={styles.paginationButton} onClick={onNextPage}>
           Next
-         </button>}
+        </button>
+      )}
     </div>
   );
 }
