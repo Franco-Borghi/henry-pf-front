@@ -136,7 +136,7 @@ export default function Form(){
 
                         <div>
                             {!createModel ?
-                            <label for="motorcycleModel">Color:
+                            <label for="motorcycleModel">Motorcycle Model:
                             <select name="motorcycleModel" id="" onChange={handleSelectModelChange} ref={motorcycleModelRef}>
                                 <option></option>
                                 {[...motorcyclesData].sort((a,b) => {if(a.brand.localeCompare(b.brand) !== 0) return a.brand.localeCompare(b.brand) 
