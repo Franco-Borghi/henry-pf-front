@@ -16,6 +16,7 @@ import ItemsTable from "./components/AdminDashboard/ItemsTable/ItemsTable";
 import Graphs from "./components/AdminDashboard/Graphs/Graphs";
 import Form from "./components/AdminDashboard/Form/Form";
 import Users from "./components/AdminDashboard/Users/Users";
+import { User } from "./components/AdminDashboard/User/User";
 import Orders from "./components/AdminDashboard/Orders/Orders";
 import ContactUs from "./components/ContactUs/ContactUs";
 
@@ -65,13 +66,14 @@ function App() {
           {/* //ruta dashAdmin */}
           {/*    {
             isAuthenticated  &&  reduxUser && reduxUser.role === 'admin' &&   TODO: descomentar */}
-          <Route path="/admin" element={<Dashboard />} >
+          <Route path="admin" element={<Dashboard />} >
             <Route index element={<Graphs />} />
-            <Route path="/admin/itemsTable" element={<ItemsTable />} />
-            <Route path="/admin/motorcyclesTable" element={<MotorcyclesTable />} /> {/* A cambiar luego */}
-            <Route path="/admin/create" element={<Form />} />
-            <Route path="/admin/users" element={<Users />} />
-            <Route path="/admin/orders" element={<Orders />} />
+            <Route path="itemsTable" element={<ItemsTable />} />
+            <Route path="motorcyclesTable" element={<MotorcyclesTable />} /> {/* A cambiar luego */}
+            <Route path="create" element={<Form />} />
+            <Route path="users" element={<Users />} />
+            <Route path="users/:id" element={<User />}/>
+            <Route path="orders" element={<Orders />} />
           </Route>
           {/*    } */}
         </Routes>
