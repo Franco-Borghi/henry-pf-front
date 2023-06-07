@@ -1,10 +1,20 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import styles from "./ItemsTable.module.css";
+import AdminSearchBar from "../AdminSearchBar/AdminSearchBar";
 
 export default function ItemsTable() {
   const [motorcyclesData, setMotorcyclesData] = useState([]);
   const [editData, setEditData] = useState({});
+  const [filter, setFilter] = useState("all");
+  const allMotorcycles = useSelector((state) => state.allMotorcycles);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+
+  useEffect(() => {
+    setFilteredData(allMotorcycles);
+  }, [allMotorcycles]);
 
   useEffect(() => {
     axios
@@ -14,7 +24,7 @@ export default function ItemsTable() {
         console.log(response.data);
       })
       .catch((error) => {
-        console.error('Error retrieving data:', error);
+        console.error("Error retrieving data:", error);
       });
   }, []);
 
@@ -26,18 +36,20 @@ export default function ItemsTable() {
     setEditData((prevEditData) => ({
       ...prevEditData,
       [chassisId]: {
-        ...motorcycleData
-      }
+        ...motorcycleData,
+      },
     }));
   };
 
   const handleSave = (chassisId) => {
     const editedMotorcycle = editData[chassisId];
-
     const { color, chassisId: editedChassisId } = editedMotorcycle;
 
     axios
-      .put(`${process.env.REACT_APP_HOST_NAME}/motorcycles/item/${chassisId}`, { color, chassisId:editedChassisId })
+      .put(`${process.env.REACT_APP_HOST_NAME}/motorcycles/item/${chassisId}`, {
+        color,
+        chassisId: editedChassisId,
+      })
       .then(() => {
         setEditData((prevEditData) => {
           const updatedEditData = { ...prevEditData };
@@ -58,9 +70,36 @@ export default function ItemsTable() {
     });
   };
 
+  const searchSubmit = (e) => {
+    let auxMotorcycles = [...allMotorcycles];
+    if (filter !== "all")
+      setFilteredData(
+        auxMotorcycles.filter((moto) => moto.active === (filter === "active"))
+      );
+    setFilteredData(
+      auxMotorcycles.filter(
+        (moto) =>
+          moto.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          moto.model.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+  };
+
+  const reset = (e) => {
+    e.preventDefault();
+    setFilteredData(allMotorcycles);
+    setSearchQuery("");
+  };
+
   return (
     <div>
       <h1 className={styles.title}>MOTORCYCLE LIST</h1>
+      <AdminSearchBar
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        searchSubmit={searchSubmit}
+        handleReset={reset}
+      />
       <table className={styles.table}>
         <thead>
           <tr>
@@ -77,12 +116,12 @@ export default function ItemsTable() {
           </tr>
         </thead>
         <tbody className={styles.font}>
-          {motorcyclesData.length === 0 ? (
+          {filteredData.length === 0 ? (
             <tr>
-              <td>No motorcycles found</td>
+              <td colSpan="10">No motorcycles found</td>
             </tr>
           ) : (
-            motorcyclesData.map((moto) =>
+            filteredData.map((moto) =>
               moto.items.map((item) => (
                 <tr key={item.chassisId} data-id={item.chassisId}>
                   <td>
@@ -95,8 +134,8 @@ export default function ItemsTable() {
                             ...prevEditData,
                             [item.chassisId]: {
                               ...prevEditData[item.chassisId],
-                              chassisId: e.target.value
-                            }
+                              chassisId: e.target.value,
+                            },
                           }))
                         }
                       />
@@ -118,8 +157,8 @@ export default function ItemsTable() {
                             ...prevEditData,
                             [item.chassisId]: {
                               ...prevEditData[item.chassisId],
-                              color: e.target.value
-                            }
+                              color: e.target.value,
+                            },
                           }))
                         }
                         className={styles.inputColor}
@@ -134,16 +173,25 @@ export default function ItemsTable() {
                   <td className={styles.actionsHeader}>
                     {editData[item.chassisId] ? (
                       <>
-                        <button onClick={() => handleSave(item.chassisId)} className={styles.button}>
+                        <button
+                          onClick={() => handleSave(item.chassisId)}
+                          className={styles.button}
+                        >
                           Save
                         </button>
-                        <button onClick={() => handleCancel(item.chassisId)} className={styles.button}>
+                        <button
+                          onClick={() => handleCancel(item.chassisId)}
+                          className={styles.button}
+                        >
                           Cancel
                         </button>
                       </>
                     ) : (
                       <>
-                        <button onClick={() => handleEdit(item.chassisId, item.color)} className={styles.button}>
+                        <button
+                          onClick={() => handleEdit(item.chassisId, item.color)}
+                          className={styles.button}
+                        >
                           Edit
                         </button>
                         <button className={styles.button}>Delete</button>

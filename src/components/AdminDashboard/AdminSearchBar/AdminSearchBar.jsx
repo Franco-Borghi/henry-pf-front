@@ -15,7 +15,7 @@ export default function AdminSearchBar({searchQuery, setSearchQuery, searchSubmi
       <input
         value={searchQuery}
         className={styles.inputSearch}
-        placeholder="Search"
+        placeholder="Search by Brand or Model"
         onChange={(e) => setSearchQuery(e.target.value)}
       />
       <button
