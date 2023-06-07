@@ -82,7 +82,7 @@ export default function Users(){
             setFilteredUsers(usersToFilter);
             setCurrentPage(1);
         }
-    }, [users, filterActive, filterRole, filterWord])
+    }, [users, filterActive, filterRole, filterWord, itemsPerPage])
 
     return (
         <div className={styles.container}>
