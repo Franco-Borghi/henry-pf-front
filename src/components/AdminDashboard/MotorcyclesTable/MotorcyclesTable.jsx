@@ -5,33 +5,63 @@ import styles from "./MotorcyclesTable.module.scss"
 import CloudinaryUploadWidget from "../../CloudinaryUploadWidget/CloudinaryUploadWidget"
 import { fetchData } from "../../../redux/actions"
 import AdminSearchBar from "../AdminSearchBar/AdminSearchBar"
+import Pagination from "../../Pagination/Pagination"
 
 export default function MotorcyclesTable() {
   const [filteredData, setFilteredData] = useState([])
   const [filter, setFilter] = useState("all")
   const [newMotorcycle, setNewMotorcycle] = useState({})
   const [searchQuery, setSearchQuery] = useState("")
+  const [currentPage, setCurrentPage] = React.useState(1)
+  const [itemsPerPage, setItemsPerPage] = React.useState(5)
   const allMotorcycles = useSelector(state => state.allMotorcycles)
   const dispatch = useDispatch()
+  const indexOfLastItem = currentPage * itemsPerPage
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage
 
   useEffect(() => {
     setFilteredData(allMotorcycles)
   }, [allMotorcycles])
 
-  const handleFilter = (e) => {
+  useEffect(() => {
+    let auxMotorcycles = [...allMotorcycles]
+
+    if (filter !== "all") {
+      auxMotorcycles = auxMotorcycles.filter(
+        moto => moto.active === (filter === "active")
+      )
+    }
+
+    if (searchQuery !== "") {
+      const searchQueryArray = searchQuery.split(" ")
+      const motorcyclesToFilterCopy = []
+
+      for (let index = 0; index < searchQueryArray.length; index++) {
+        auxMotorcycles.forEach(motorcycle => {
+          if (
+            (motorcycle.brand &&
+              motorcycle.brand
+                .toLowerCase()
+                .includes(searchQueryArray[index].toLowerCase())) ||
+            (motorcycle.model &&
+              motorcycle.model
+                .toLowerCase()
+                .includes(searchQueryArray[index].toLowerCase()))
+          ) {
+            motorcyclesToFilterCopy.push(motorcycle)
+          }
+        })
+      }
+      auxMotorcycles = [...new Set(motorcyclesToFilterCopy)]
+    }
+
+    setFilteredData(auxMotorcycles)
+    setCurrentPage(1)
+  }, [allMotorcycles, filter, searchQuery])
+
+  const handleFilter = e => {
     const { value } = e.target
     setFilter(value)
-    let auxMotorcycles = [...allMotorcycles]
-    if (searchQuery !== "")
-      auxMotorcycles = allMotorcycles.filter(
-        moto =>
-          moto.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          moto.model.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    if (value === "all") return setFilteredData(auxMotorcycles)
-    setFilteredData(
-      auxMotorcycles.filter(moto => moto.active === (value === "active"))
-    )
   }
 
   const changeInputFields = e => {
@@ -40,12 +70,16 @@ export default function MotorcyclesTable() {
     setNewMotorcycle({ ...newMotorcycle, [name]: newValue })
   }
 
-  const startEditing = (moto) => {
+  const startEditing = moto => {
     setNewMotorcycle(moto)
   }
 
   const cancelEdit = () => {
     setNewMotorcycle({})
+  }
+
+  const handlePageChange = page => {
+    setCurrentPage(page)
   }
 
   const submitUpdatedMotorcycle = motoId => {
@@ -55,9 +89,10 @@ export default function MotorcyclesTable() {
         newMotorcycle
       )
       .then(response => {
-
         fetchData(dispatch)
-        setFilteredData(filteredData.map(moto => (moto.id === motoId ? response.data : moto)))
+        setFilteredData(
+          filteredData.map(moto => (moto.id === motoId ? response.data : moto))
+        )
         setNewMotorcycle({})
       })
       .catch(error => {
@@ -87,46 +122,59 @@ export default function MotorcyclesTable() {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       <h1 className={styles.title}>Motorcycle List </h1>
 
-      <AdminSearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchSubmit={searchSubmit} handleReset={reset} />
+      <section className={styles["filters-section"]}>
+        <div className={styles["filters-section-first-child"]}>
+          {/* Filters */}
+          <select onChange={handleFilter}>
+            <option value="all">All</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
 
-      {/* Filters */}
-      <select onChange={handleFilter}>
-        <option value="all">All</option>
-        <option value="active">Active</option>
-        <option value="inactive">Inactive</option>
-      </select>
+        <AdminSearchBar
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          searchSubmit={searchSubmit}
+          handleReset={reset}
+        />
+      </section>
 
       {/* Table */}
       <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Brand</th>
-            <th>Model</th>
-            <th>Year</th>
-            <th>CC</th>
-            <th>Transmission</th>
-            <th>Price</th>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Image</th>
-            <th>Status</th>
-            <th>Action</th>
+        <thead className={styles.thead}>
+          <tr className={styles.tr}>
+            <th className={styles.th}>Brand</th>
+            <th className={styles.th}>Model</th>
+            <th className={styles.th}>Year</th>
+            <th className={styles.th}>CC</th>
+            <th className={styles.th}>Transmission</th>
+            <th className={styles.th}>Price</th>
+            <th className={styles.th}>Category</th>
+            <th className={styles.th}>Description</th>
+            <th className={styles.th}>Image</th>
+            <th className={styles.th}>Status</th>
+            <th className={styles.th}>Action</th>
           </tr>
         </thead>
-        <tbody className={styles.font}>
+        <tbody className={styles.tbody}>
           {filteredData?.length === 0 ? (
-            <tr>
-              <td>No motorcycles found</td>
+            <tr className={styles.tr}>
+              <td className={styles.td}>No motorcycles found</td>
             </tr>
           ) : (
-            filteredData?.map(moto => (
-              <tr key={moto.id}>
+            filteredData
+            ?.slice(indexOfFirstItem, indexOfLastItem)
+            .map(moto => (
+              <tr
+                key={moto.id}
+                className={newMotorcycle.id === moto.id ? styles.tr : styles["tr-true"]}>
                 {newMotorcycle.id === moto.id ? (
                   <>
-                    <td>
+                    <td className={styles.td}>
                       <input
                         type="text"
                         name="brand"
@@ -134,7 +182,7 @@ export default function MotorcyclesTable() {
                         onChange={changeInputFields}
                       />
                     </td>
-                    <td>
+                    <td className={styles.td}>
                       <input
                         type="text"
                         name="model"
@@ -142,7 +190,7 @@ export default function MotorcyclesTable() {
                         onChange={changeInputFields}
                       />
                     </td>
-                    <td>
+                    <td className={styles.td}>
                       <input
                         type="text"
                         name="year"
@@ -150,7 +198,7 @@ export default function MotorcyclesTable() {
                         onChange={changeInputFields}
                       />
                     </td>
-                    <td>
+                    <td className={styles.td}>
                       <input
                         type="text"
                         name="cc"
@@ -158,7 +206,7 @@ export default function MotorcyclesTable() {
                         onChange={changeInputFields}
                       />
                     </td>
-                    <td>
+                    <td className={styles.td}>
                       <input
                         type="text"
                         name="transmission"
@@ -166,7 +214,7 @@ export default function MotorcyclesTable() {
                         onChange={changeInputFields}
                       />
                     </td>
-                    <td>
+                    <td className={styles.td}>
                       <input
                         type="text"
                         name="price"
@@ -174,7 +222,7 @@ export default function MotorcyclesTable() {
                         onChange={changeInputFields}
                       />
                     </td>
-                    <td>
+                    <td className={styles.td}>
                       <input
                         type="text"
                         name="category"
@@ -182,7 +230,7 @@ export default function MotorcyclesTable() {
                         onChange={changeInputFields}
                       />
                     </td>
-                    <td>
+                    <td className={styles.td}>
                       <input
                         type="text"
                         name="description"
@@ -190,13 +238,13 @@ export default function MotorcyclesTable() {
                         onChange={changeInputFields}
                       />
                     </td>
-                    <td>
+                    <td className={styles.td}>
                       <CloudinaryUploadWidget
                         imageUrl={setNewMotorcycle}
                         inputs={newMotorcycle}
                       />
                     </td>
-                    <td>
+                    <td className={styles.td}>
                       <select
                         name="active"
                         value={newMotorcycle.active ? "active" : "inactive"}
@@ -205,33 +253,54 @@ export default function MotorcyclesTable() {
                         <option value="inactive">inactive</option>
                       </select>
                     </td>
-                    <td className={styles.actionsHeader}>
+                    <td
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "10px",
+                      }}
+                      className={styles.td}>
                       <button
-                        className={styles.button}
-                        onClick={() => submitUpdatedMotorcycle(moto.id)}>
+                        className={styles.save}
+                        onClick={() => submitUpdatedMotorcycle(moto.id)}
+                        type="button">
                         Save
                       </button>
-                      <button className={styles.button} onClick={cancelEdit}>
+                      <button
+                        className={styles.cancel}
+                        onClick={cancelEdit}
+                        type="button">
                         Cancel
                       </button>
                     </td>
                   </>
                 ) : (
                   <>
-                    <td>{moto.brand}</td>
-                    <td>{moto.model}</td>
-                    <td>{moto.year}</td>
-                    <td>{moto.cc}</td>
-                    <td>{moto.transmission}</td>
-                    <td>{moto.price}</td>
-                    <td>{moto.category}</td>
-                    <td>{moto.description}</td>
-                    <td>{moto.image}</td>
-                    <td>{moto.active ? "active" : "inactive"}</td>
-                    <td className={styles.actionsHeader}>
+                    <td className={styles.td}>{moto.brand}</td>
+                    <td className={styles.td}>{moto.model}</td>
+                    <td className={styles.td}>{moto.year}</td>
+                    <td className={styles.td}>{moto.cc}</td>
+                    <td className={styles.td}>{moto.transmission}</td>
+                    <td className={styles.td}>{moto.price}</td>
+                    <td className={styles.td}>{moto.category}</td>
+                    <td className={styles.td}>
+                      {moto.description.substring(0, 15)}...
+                    </td>
+                    <td className={styles.td}>{moto.image.substring(0, 8)}...</td>
+                    <td className={styles.td}>
+                      {moto.active ? "active" : "inactive"}
+                    </td>
+                    <td
+                      className={styles.td}
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "10px",
+                      }}>
                       <button
-                        className={styles.button}
-                        onClick={() => startEditing(moto)}>
+                        className={styles.edit}
+                        onClick={() => startEditing(moto)}
+                        type="button">
                         Edit
                       </button>
                     </td>
@@ -242,6 +311,35 @@ export default function MotorcyclesTable() {
           )}
         </tbody>
       </table>
+
+      {/* Pagination */}
+      <div className={styles["pagination-container"]}>
+        <div>
+          {filteredData &&
+          filteredData.length &&
+          filteredData.length > itemsPerPage ? (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={Math.ceil(filteredData.length / itemsPerPage)}
+              onPageChange={handlePageChange}
+              onPreviousPage={() => setCurrentPage(prevState => prevState - 1)}
+              onNextPage={() => setCurrentPage(prevState => prevState + 1)}
+            />
+          ) : null}
+        </div>
+
+        <div className={styles["pagination-container__selector"]}>
+          <p>Items per page:</p>
+          <select
+            value={itemsPerPage}
+            onChange={e => setItemsPerPage(parseInt(e.target.value))}>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+          </select>
+        </div>
+      </div>
     </div>
   )
 }
