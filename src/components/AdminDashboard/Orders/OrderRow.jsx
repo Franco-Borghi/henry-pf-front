@@ -3,6 +3,7 @@ import React from 'react';
 import swal from 'sweetalert2';
 import styles from './Orders.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { convertirNumero } from '../../../utils';
 
 export function OrderRow({order, getOrders}) {
 
@@ -67,7 +68,7 @@ export function OrderRow({order, getOrders}) {
             <td className={styles.td}>{`${order.userId}`}</td> 
             <td className={styles.td}><input placeholder='empty' type="text" value={date} onChange={(e) => setDate(e.target.value)} /></td>
             <td className={styles.td}>{`${order.items.length}`}</td>
-            <td className={styles.td}>{`${order.amountPaid}`}</td>
+            <td className={styles.td}>{`$USD ${convertirNumero(order.amountPaid)}`}</td>
           </>
         : <>
             <td className={styles.td}>{`${order.orderNumber}`}</td>
@@ -75,7 +76,7 @@ export function OrderRow({order, getOrders}) {
             <td className={styles.td}>{`${order.userId}`}</td>
             <td className={styles.td}>{`${order.date}`}</td>
             <td className={styles.td}>{`${order.items.length}`}</td>
-            <td className={styles.td}>{`${order.amountPaid}`}</td>
+            <td className={styles.td}>{`$USD ${convertirNumero(order.amountPaid)}`}</td>
           </>
       }   
       <td style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '10px'}} className={styles.td}>

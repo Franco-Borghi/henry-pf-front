@@ -154,7 +154,12 @@ export default function Users() {
                                 <UserRow key={i} user={el} getUsers={getUsers}/>
                             )
                         })
-                        : null
+                        : <tr className={styles.tr}>
+                            <td style={{width: '100%', height: '150px', display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center', justifyContent: 'center'}}>
+                              <h3 style={{ textAlign: 'center', color: '#fff', fontWeight: '700' }}>No users found</h3>
+                              <p style={{ textAlign: 'center', color: '#fff', fontWeight: '500' }}>No users were found for the search performed. Please try another search.</p>
+                            </td>
+                          </tr>
                     }
                 </tbody>
             </table>

@@ -143,7 +143,12 @@ export default function Orders() {
                                 <OrderRow key={i} order={el} getOrders={getOrders}/>
                             )
                         })
-                        : null
+                        : <tr className={styles.tr}>
+                            <td style={{width: '100%', height: '150px', display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center', justifyContent: 'center'}}>
+                            <h3 style={{ textAlign: 'center', color: '#fff', fontWeight: '700' }}>No orders found</h3>
+                            <p style={{ textAlign: 'center', color: '#fff', fontWeight: '500' }}>No orders were found for the search performed. Please try another search.</p>
+                            </td>
+                          </tr>
                     }
                 </tbody>
             </table>
