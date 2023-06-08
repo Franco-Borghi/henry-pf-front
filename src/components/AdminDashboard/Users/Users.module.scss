@@ -1,6 +1,6 @@
 .container {
   width: -webkit-fill-available;
-  padding: 40px 40px 40px 0;
+  padding: 40px;
 
   h2 {
     font-size: 32px;
@@ -67,6 +67,7 @@
           width: calc(100% / 10.001);
           background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
           padding: 10px 2px;
+          background-clip: text;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
@@ -87,11 +88,12 @@
           width: calc(100% / 10.001);
           overflow: hidden;
           text-overflow: ellipsis;
-          text-wrap: nowrap;
+          white-space: nowrap;
           text-align: center;
           padding: 15px 8px;
           color: #fff;     
-          line-height: 40px;
+          line-height: 65.5px;
+          position: relative;
           
           .edit {
             font-size: 16px;
@@ -105,6 +107,20 @@
             &:hover {
               background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
               font-weight: 500;
+            }
+          }
+
+          .view {
+            font-size: 16px;
+            line-height: 16px;
+            color: rgba(2,94,255,1);
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+
+            &:hover {
+              color: greenyellow;
             }
           }
         }
@@ -122,7 +138,7 @@
           height: fit-content;
           overflow: hidden;
           text-overflow: ellipsis;
-          text-wrap: nowrap;
+          white-space: nowrap;
           text-align: center;
           padding: 15px 8px;
           color: #fff;
@@ -195,7 +211,7 @@
       gap: 16px;
 
       > p {
-        text-wrap: nowrap;
+        white-space: nowrap;
       }
 
       > select {

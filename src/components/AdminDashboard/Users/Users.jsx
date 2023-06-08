@@ -82,11 +82,11 @@ export default function Users(){
             setFilteredUsers(usersToFilter);
             setCurrentPage(1);
         }
-    }, [users, filterActive, filterRole, filterWord])
+    }, [users, filterActive, filterRole, filterWord, itemsPerPage])
 
     return (
         <div className={styles.container}>
-            <h2>Users Table</h2>
+            <h2>Users List</h2>
 
             <section className={styles['filters-section']}>
                 <div className={styles['filters-section-first-child']}>
