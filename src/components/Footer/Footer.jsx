@@ -17,6 +17,7 @@ export default function Footer(){
                 
                 <div className={styles['links']}>
                     <Link to="/"><p>Home</p></Link>
+                    <Link to="/about-us"><p>About Us</p></Link>
                     <a href="https://www.dinamotos.mx/wp-content/uploads/2016/08/terminos-y-condiciones-DINAMO.pdf"><p>Conditions of use</p></a>
                     <a href="https://www.dinamotos.mx/wp-content/uploads/2016/08/aviso-privacidad-DINAMO.pdf"><p>Privacy Notice </p></a>
                 </div>

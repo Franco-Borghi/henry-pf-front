@@ -19,7 +19,7 @@ import Users from "./components/AdminDashboard/Users/Users";
 import { User } from "./components/AdminDashboard/User/User";
 import Orders from "./components/AdminDashboard/Orders/Orders";
 import ContactUs from "./components/ContactUs/ContactUs";
-
+import AboutUs from "./components/Footer/AboutUs/AboutUs"
 
 function App() {
 
@@ -62,6 +62,7 @@ function App() {
             <Route path="/shopping-cart" element={<ShoppingCart />} />
             <Route path="/profile" element={< ProfileForm />} />
             <Route path='/contact-us' element={<ContactUs />}></Route>
+            <Route path="/about-us" element={<AboutUs />} />
           </Route>
           {/* //ruta dashAdmin */}
           {/*    {
