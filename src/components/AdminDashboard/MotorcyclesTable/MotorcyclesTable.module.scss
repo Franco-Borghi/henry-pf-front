@@ -1,77 +1,218 @@
-.title {
-    font-size: 30px;
-    margin-bottom: 16px;
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .table th,
-  .table td {
-    padding: 8px;
-    border: 1px solid #ddd;
-  }
-  
-  .table th {
-    background-color: #f5f5f5;
-    font-weight: bold;
-  }
-  
-  .table button {
-    margin-right: 4px;
-    padding: 10px 15px;
-    font-size: large;
-    border-radius: 4px;
-    background-color:#ddd;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .table button:hover {
-    background-color: grey;
-  }
+.container {
+  width: -webkit-fill-available;
+  padding: 40px 40px 40px 0;
 
-  .actionsHeader {
+  h2 {
+    font-size: 32px;
+    font-weight: 700;
     text-align: center;
+    padding-bottom: 20px;
   }
-  
-  .font {
-    margin-right: 4px;
-    padding: 10px 15px;
-    font-size: large;
-    
-    
-  }
-  
 
-
-  // Search Bar
-  .ctnInput {
+  .filters-section {
+    width: 100%;
     display: flex;
+    gap: 40px;
+    justify-content: space-between;
+    padding-bottom: 32px;
+
+    .filters-section-first-child {
+      display: flex;
+      gap: 40px;
+
+      > div {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+
+        > p {
+          width: fit-content;
+        }
+
+        > select {
+          margin: 0;
+          font-size: 16px;
+          padding: 0;
+          width: fit-content;
+
+          &:focus,
+          &:hover {
+            background-color: #fff;
+            outline: 2px solid #282828;
+          }
+        }
+      }
+    }
+  }
+
+  .table {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    width: 100%;
+    overflow: hidden;
+    border-spacing: 0;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: #282828;
+
+    .thead {
+
+      border-bottom: 1px solid rgb(2, 134, 255);
+      
+      .tr {
+        display: flex;
+        width: 100%;
+
+        .th {
+          width: calc(100% / 10.001);
+          background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
+          padding: 10px 2px;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+    }
+
+    .tbody {
+      padding: 0 0 20px;
+      width: 100%;
+      background: linear-gradient(90deg, rgba(69, 69, 69, 0.5) 68.41%, rgba(69, 69, 69, 0) 130.95%), #484848;
+
+      .tr {
+        width: 100%;
+        display: flex;
+        border-bottom: 1px solid #c7c7c750;
+
+        .td {
+          width: calc(100% / 10.001);
+          overflow: hidden;
+          text-overflow: ellipsis;
+          text-wrap: nowrap;
+          text-align: center;
+          padding: 15px 8px;
+          color: #fff;     
+          line-height: 40px;
+          
+          .edit {
+            font-size: 16px;
+            background: #c7c7c7;
+            border-radius: 4px;
+            padding: 10px 15px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+
+            &:hover {
+              background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
+              font-weight: 500;
+            }
+          }
+        }
+      }
+
+      .tr-true {
+        width: 100%;
+        display: flex;
+        background-color: #686868;
+        border-bottom: 1px solid #c7c7c750;
+
+        .td {
+          line-height: 56px;
+          width: calc(100% / 10.001);
+          height: fit-content;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          text-wrap: nowrap;
+          text-align: center;
+          padding: 15px 8px;
+          color: #fff;
+
+          .save {
+            font-size: 16px;
+            color: #fff;
+            background: #282828;
+            border-radius: 4px;
+            padding: 10px 15px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+              color: black;
+              background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
+              font-weight: 500;
+            }
+          }
+
+          .cancel {
+            font-size: 16px;
+            line-height: 16px;
+            color: #ff3300;
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+              font-size: 16px;
+              line-height: 16px;
+              font-weight: 700;
+            }
+          }
+
+          input,
+          select {
+            background-color: #c7c7c7;
+            width: 100%;
+            height: fit-content;
+            padding: 10px 5px;
+            font-size: 12px;
+            line-height: 14px;
+            border-radius: 4px;
+
+            &:focus,
+            &:hover {
+              background-color: #fff;
+              outline: 2px solid rgba(2,240,255,1);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .pagination-container {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
-  }
+    margin-top: 32px;
+
+    &__selector {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      > p {
+        text-wrap: nowrap;
+      }
+
+      > select {
+        padding: 0;
+        padding-left: 5px;
+        padding-right: 5px;
+        margin: 0;
+        font-size: 16px;
+        width: fit-content;
+        outline: 1px solid #686868;
   
-  .inputSearch {
-    background-color: white;
-    height: 35px;
-    width: 100vw;
-    max-width: 400px;
-    border-radius: 8px;
-    padding-left: 10px;
+        &:focus,
+        &:hover {
+          background-color: #fff;
+          outline: 2px solid #282828;
+        }
+      }
+    }
   }
-  
-  .btnIconSearch {
-    height: 40px;
-    width: 45px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    background-color: rgb(65,64,64);
-  }
-  
-  .btnIconSearch:hover {
-    transform: scale(1.05);
-  }
+}

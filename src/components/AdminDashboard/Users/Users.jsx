@@ -1,88 +1,98 @@
-import React from "react";
-import { UserRow } from "./UserRow";
-import styles from './Users.module.scss';
-import Pagination from "../../Pagination/Pagination";
-import AdminSearchBar from "../AdminSearchBar/AdminSearchBar";
+import React from "react"
+import { UserRow } from "./UserRow"
+import styles from "./Users.module.scss"
+import Pagination from "../../Pagination/Pagination"
+import AdminSearchBar from "../AdminSearchBar/AdminSearchBar"
 
-export default function Users(){
+export default function Users() {
+  const [users, setUsers] = React.useState(null)
+  const [filteredUsers, setFilteredUsers] = React.useState(null)
+  const [filterRole, setFilterRole] = React.useState("all")
+  const [filterActive, setFilterActive] = React.useState("all")
+  const [currentPage, setCurrentPage] = React.useState(1)
+  const [itemsPerPage, setItemsPerPage] = React.useState(5)
+  const [searchQuery, setSearchQuery] = React.useState("")
+  const [filterWord, setFilterWord] = React.useState("")
+  const indexOfLastItem = currentPage * itemsPerPage
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage
 
-    const [users, setUsers] = React.useState(null);
-    const [filteredUsers, setFilteredUsers] = React.useState(null);
-    const [filterRole, setFilterRole] = React.useState('all');
-    const [filterActive, setFilterActive] = React.useState('all');
-    const [currentPage, setCurrentPage] = React.useState(1);
-    const [itemsPerPage, setItemsPerPage] = React.useState(5);
-    const [searchQuery, setSearchQuery] = React.useState('');
-    const [filterWord, setFilterWord] = React.useState('');
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  function convertCamelCase(str) {
+    // Add a space before each uppercase letter
+    var result = str.replace(/([A-Z])/g, " $1")
 
-    function convertCamelCase(str) {
-        // Add a space before each uppercase letter
-        var result = str.replace(/([A-Z])/g, ' $1');
-        
-        // Capitalize the first letter
-        result = result.charAt(0).toUpperCase() + result.slice(1);
-        
-        return result;
+    // Capitalize the first letter
+    result = result.charAt(0).toUpperCase() + result.slice(1)
+
+    return result
+  }
+
+  /* Funcion para traer los usuarios del endpoint GET /users */
+  const getUsers = () => {
+    fetch(`${process.env.REACT_APP_HOST_NAME}/users`)
+      .then(response => response.json())
+      .then(data => setUsers(data))
+      .catch(err => console.error(err.message))
+  }
+
+  /* Funcion callback para Pagination */
+  const handlePageChange = page => {
+    setCurrentPage(page)
+  }
+
+  React.useEffect(() => {
+    getUsers()
+  }, [])
+
+  /* Manejo de filtrado con useEffect */
+  React.useEffect(() => {
+    if (users) {
+      let usersToFilter = [...users]
+
+      /* Filtrado de roles */
+      if (filterRole !== "all") {
+        usersToFilter = usersToFilter.filter(el => el.role === filterRole)
       }
 
-    /* Funcion para traer los usuarios del endpoint GET /users */
-    const getUsers = () => {
-        fetch(`${process.env.REACT_APP_HOST_NAME}/users`)
-            .then(response => response.json())
-            .then(data => setUsers(data))
-            .catch(err => console.error(err.message));
-    }
+      /* Filtrado de active */
+      if (filterActive !== "all") {
+        usersToFilter = usersToFilter.filter(
+          el => el.active.toString() === filterActive.toString()
+        )
+      }
 
-    /* Funcion callback para Pagination */
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-    };
+      /* Filtrado de AdminSearchBar */
+      if (filterWord) {
+        const filterWordArray = filterWord.split(" ")
+        const usersToFilterCopy = []
 
-    React.useEffect(() => {
-        getUsers();
-    }, [])
-
-    /* Manejo de filtrado con useEffect */
-    React.useEffect(() => {
-        if (users) {
-            let usersToFilter = [...users];
-
-            /* Filtrado de roles */
-            if (filterRole !== 'all') {
-                usersToFilter = usersToFilter.filter(el => el.role === filterRole);
+        for (let index = 0; index < filterWordArray.length; index++) {
+          usersToFilter.forEach(user => {
+            if (
+              (user.firstName &&
+                user.firstName
+                  .toLowerCase()
+                  .includes(filterWordArray[index].toLowerCase())) ||
+              (user.lastName &&
+                user.lastName
+                  .toLowerCase()
+                  .includes(filterWordArray[index].toLowerCase())) ||
+              (user.email &&
+                user.email
+                  .toLowerCase()
+                  .includes(filterWordArray[index].toLowerCase()))
+            ) {
+              usersToFilterCopy.push(user)
             }
-
-            /* Filtrado de active */
-            if (filterActive !== 'all') {
-                usersToFilter = usersToFilter.filter(el => el.active.toString() === filterActive.toString());
-            }
-
-            /* Filtrado de AdminSearchBar */
-            if (filterWord) {
-                const filterWordArray = filterWord.split(' ');
-                const usersToFilterCopy = [];
-
-                for (let index = 0; index < filterWordArray.length; index++) {
-                    usersToFilter.forEach(user => {
-                        if (
-                            (user.firstName && user.firstName.toLowerCase().includes(filterWordArray[index].toLowerCase())) ||
-                            (user.lastName && user.lastName.toLowerCase().includes(filterWordArray[index].toLowerCase())) ||
-                            (user.email && user.email.toLowerCase().includes(filterWordArray[index].toLowerCase()))
-                        ) {
-                            usersToFilterCopy.push(user);
-                        }
-                    })
-                }
-
-                usersToFilter = [...new Set(usersToFilterCopy)];
-            }
-
-            setFilteredUsers(usersToFilter);
-            setCurrentPage(1);
+          })
         }
-    }, [users, filterActive, filterRole, filterWord, itemsPerPage])
+
+        usersToFilter = [...new Set(usersToFilterCopy)]
+      }
+
+      setFilteredUsers(usersToFilter)
+      setCurrentPage(1)
+    }
+  }, [users, filterActive, filterRole, filterWord])
 
     return (
         <div className={styles.container}>
@@ -175,5 +185,7 @@ export default function Users(){
                 </div>
             </div>
         </div>
-    )
+      </div>
+    </div>
+  )
 }
