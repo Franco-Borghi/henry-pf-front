@@ -180,7 +180,7 @@ export default function MotorcyclesTable() {
             ?.map(moto => (
               <tr
                 key={moto?.id}
-                className={newMotorcycle?.id === moto?.id ? styles.tr : styles["tr-true"]}>
+                className={newMotorcycle?.id === moto?.id ? styles["tr-true"] : styles.tr }>
                 {newMotorcycle?.id === moto?.id ? (
                   <>
                     <td className={styles.td}>
@@ -251,6 +251,7 @@ export default function MotorcyclesTable() {
                       <CloudinaryUploadWidget
                         imageUrl={setNewMotorcycle}
                         inputs={newMotorcycle}
+                        // className={styles.save}
                       />
                     </td>
                     <td className={styles.td}>

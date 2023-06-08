@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import styles from "./CloudinaryUploadWidget.module.scss";
 
 class CloudinaryUploadWidget extends Component {
   componentDidMount() {
@@ -56,7 +57,7 @@ class CloudinaryUploadWidget extends Component {
 
   render() {
     return (
-      <button id="upload_widget" className="cloudinary-button" type="button">
+      <button id="upload_widget" className={styles.save}/* "cloudinary-button" */ type="button">
         Upload
       </button>
     );
