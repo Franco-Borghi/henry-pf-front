@@ -170,7 +170,7 @@ export default function Orders() {
 
                 <div className={styles['pagination-container__selector']}>
                     <p>Items per page:</p>
-                    <select value={itemsPerPage} onChange={e => setItemsPerPage(parseInt(e.target.value))}>
+                    <select value={itemsPerPage} onChange={e => {setItemsPerPage(parseInt(e.target.value)); setCurrentPage(1)}}>
                         <option value="5">5</option>
                         <option value="10">10</option>
                         <option value="25">25</option>
