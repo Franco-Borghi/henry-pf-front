@@ -6,6 +6,7 @@ import CloudinaryUploadWidget from "../../CloudinaryUploadWidget/CloudinaryUploa
 import { fetchData } from "../../../redux/actions"
 import AdminSearchBar from "../AdminSearchBar/AdminSearchBar"
 import Pagination from "../../Pagination/Pagination"
+import swal from "sweetalert2"
 
 export default function MotorcyclesTable() {
   const [filteredData, setFilteredData] = useState([])
@@ -88,6 +89,14 @@ export default function MotorcyclesTable() {
         `${process.env.REACT_APP_HOST_NAME}/motorcycles/${motoId}`,
         newMotorcycle
       )
+      .then(res => {
+        return new swal({
+          title: "Success",
+          text: "The motorcycle was successfully edited",
+          icon: "success",
+          buttons: true,
+        })
+      })
       .then(response => {
         fetchData(dispatch)
         setFilteredData(
@@ -168,11 +177,11 @@ export default function MotorcyclesTable() {
           ) : (
             filteredData
             ?.slice(indexOfFirstItem, indexOfLastItem)
-            .map(moto => (
+            ?.map(moto => (
               <tr
-                key={moto.id}
-                className={newMotorcycle.id === moto.id ? styles.tr : styles["tr-true"]}>
-                {newMotorcycle.id === moto.id ? (
+                key={moto?.id}
+                className={newMotorcycle?.id === moto?.id ? styles.tr : styles["tr-true"]}>
+                {newMotorcycle?.id === moto?.id ? (
                   <>
                     <td className={styles.td}>
                       <input
