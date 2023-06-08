@@ -65,7 +65,7 @@ export function OrderRow({order, getOrders}) {
               </select>
             </td>
             <td className={styles.td}>{`${order.userId}`}</td> 
-            <td className={styles.td}><input placeholder='empty' type="text" value={date} onChange={(e) => setDate(e.target.value)} /></td>
+            <td className={styles.td}>{`${order.date}`}</td>
             <td className={styles.td}>{`${order.items.length}`}</td>
             <td className={styles.td}>{`$USD ${convertirNumero(order.amountPaid)}`}</td>
           </>
