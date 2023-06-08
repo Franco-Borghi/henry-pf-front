@@ -19,7 +19,6 @@ export function OrderRow({order, getOrders}) {
   const handlePut = () => {
     axios.put(`${process.env.REACT_APP_HOST_NAME}/order`, {
       orderStatus, 
-      date, 
       orderNumber
     })
     .then(() => {
