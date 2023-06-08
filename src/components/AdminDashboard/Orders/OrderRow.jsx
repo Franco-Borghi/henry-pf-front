@@ -10,10 +10,10 @@ export function OrderRow({order, getOrders}) {
   const [edit, setEdit] = React.useState(false);
   const [orderNumber, setOrderNumber] = React.useState(order.orderNumber);
   const [orderStatus, setOrderStatus] = React.useState(order.orderStatus);
-  const [userId, setUserId] = React.useState(order.userId);
-  const [amountPaid, setAmountPaid] = React.useState(order.amountPaid);
-  const [date, setDate] = React.useState(order.date);
-  const [items, setItems] = React.useState(order.items);
+  // const [userId, setUserId] = React.useState(order.userId);
+  // const [amountPaid, setAmountPaid] = React.useState(order.amountPaid);
+  // const [date, setDate] = React.useState(order.date);
+  // const [items, setItems] = React.useState(order.items);
   const navigate = useNavigate();
 
   const handlePut = () => {
@@ -43,12 +43,12 @@ export function OrderRow({order, getOrders}) {
   }
 
   const refreshState = () => {
-    setOrderNumber(order.orderNumber);
+    // setOrderNumber(order.orderNumber);
     setOrderStatus(order.orderStatus);
-    setUserId(order.userId);
-    setAmountPaid(order.amountPaid);
-    setDate(order.date);
-    setItems(order.items);
+    // setUserId(order.userId);
+    // setAmountPaid(order.amountPaid);
+    // setDate(order.date);
+    // setItems(order.items);
   }
 
   return (
