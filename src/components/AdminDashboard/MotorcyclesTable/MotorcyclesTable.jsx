@@ -293,10 +293,8 @@ export default function MotorcyclesTable() {
                     <td className={styles.td}>{moto.transmission}</td>
                     <td className={styles.td}>{moto.price}</td>
                     <td className={styles.td}>{moto.category}</td>
-                    <td className={styles.td}>
-                      {moto.description.substring(0, 15)}...
-                    </td>
-                    <td className={styles.td}>{moto.image.substring(0, 8)}...</td>
+                    <td className={styles.td}>{moto.description}</td>
+                    <td className={styles.td}>{moto.image}</td>
                     <td className={styles.td}>
                       {moto.active ? "active" : "inactive"}
                     </td>
