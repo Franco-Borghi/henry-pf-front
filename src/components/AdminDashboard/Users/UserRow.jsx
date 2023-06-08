@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import swal from 'sweetalert2';
 import styles from './Users.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 export function UserRow({user, getUsers}) {
 
@@ -12,6 +13,7 @@ export function UserRow({user, getUsers}) {
   const [idNumber, setIdNumber] = React.useState(user.idNumber);
   const [active, setActive] = React.useState(user.active);
   const [role, setRole] = React.useState(user.role);
+  const navigate = useNavigate();
 
   const handlePut = () => {
     axios.put(`${process.env.REACT_APP_HOST_NAME}/users/${user.id}`, {
@@ -92,14 +94,19 @@ export function UserRow({user, getUsers}) {
             <td className={styles.td}>{user.orders.length}</td>
           </>
       }   
-      <td style={{display: 'flex', flexDirection: 'column', gap: '10px'}} className={styles.td}>
+      <td style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '10px'}} className={styles.td}>
         {
           edit
           ? <>
               <button className={styles.save} onClick={() => {handlePut(); setEdit(false)}} type='button'>Save</button>
               <button className={styles.cancel} onClick={() => {refreshState(); setEdit(false)}} type='button'>Cancel</button>
             </>
-          : (user.role !== 'admin' ? <button className={styles.edit} onClick={() => setEdit(true)} type='button'>Edit</button> : null)
+          : <>
+              {
+                (user.role !== 'admin' ? <button className={styles.edit} onClick={() => setEdit(true)} type='button'>Edit</button> : null)
+              }
+              <button className={styles.view} onClick={() => navigate(`/admin/users/${user.id}`)} type='button'>View Profile</button>
+            </>
         }
       </td>
     </tr>
