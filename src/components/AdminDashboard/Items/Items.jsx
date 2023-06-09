@@ -16,11 +16,20 @@ export default function Items() {
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
 
+  function orderByChassisId(array) {
+    return array.sort((a, b) => {
+      const chassisIdA = a.chassisId.toLowerCase();
+      const chassisIdB = b.chassisId.toLowerCase();
+  
+      return chassisIdA.localeCompare(chassisIdB, undefined, { numeric: true });
+    });
+  }
+
   /* Funcion para traer los usuarios del endpoint GET /items */
   const getItems = () => {
     axios.get(`${process.env.REACT_APP_HOST_NAME}/items`)
     .then(response => {
-      setItems(response.data)
+      setItems(orderByChassisId(response.data))
     })
     .catch(err => console.error(err.message))
   }

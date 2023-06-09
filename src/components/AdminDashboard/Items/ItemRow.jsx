@@ -7,13 +7,12 @@ import { useNavigate } from 'react-router-dom';
 export function ItemRow({item, getItems}) {
 
   const [edit, setEdit] = React.useState(false);
-  const [sold, setSold] = React.useState(item.sold);
+  const [color, setColor] = React.useState(item.color);
   const navigate = useNavigate();
 
   const handlePut = () => {
-    console.log(sold);
-    axios.put(`${process.env.REACT_APP_HOST_NAME}/item/${item.chassisId}`, {
-      sold,
+    axios.put(`${process.env.REACT_APP_HOST_NAME}/items/${item.chassisId}`, {
+      color,
     })
     .then(() => {
       getItems();
@@ -40,7 +39,7 @@ export function ItemRow({item, getItems}) {
   }
 
   const refreshState = () => {
-    setSold(item.sold);
+    setColor(item.color);
   }
 
   return (
@@ -49,13 +48,8 @@ export function ItemRow({item, getItems}) {
         edit
         ? <>
             <td className={styles.td}>{`${item.chassisId}`}</td>
-            <td className={styles.td}>{`${item.color}`}</td>
-            <td className={styles.td}>
-              <select value={sold} onChange={(e) => setSold(e.target.value === "true")}>
-                <option value="true">true</option>
-                <option value="false">false</option>
-              </select>
-            </td>
+            <td className={styles.td}><input placeholder='empty' type="text" value={color} onChange={(e) => setColor(e.target.value)} /></td>
+            <td className={styles.td}>{`${item.sold}`}</td>
             <td className={styles.td}>{`${item.motorcycle.brand} ${item.motorcycle.model}`}</td>
             <td className={styles.td}>{`${item.orderNumber || 'N/A'}`}</td>
           </>
@@ -75,7 +69,7 @@ export function ItemRow({item, getItems}) {
               <button className={styles.cancel} onClick={() => {refreshState(); setEdit(false)}} type='button'>Cancel</button>
             </>
           : <>
-              <button className={styles.edit} onClick={() => setEdit(true)} type='button'>Edit</button>
+              <button className={styles.edit} onClick={() => {refreshState(); setEdit(true)}} type='button'>Edit</button>
             </>
         }
       </td>
