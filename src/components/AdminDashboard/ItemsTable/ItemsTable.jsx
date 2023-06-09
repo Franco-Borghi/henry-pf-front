@@ -1,10 +1,23 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import styles from "./ItemsTable.module.css";
+import { useSelector } from "react-redux";
+import styles from "./ItemsTable.module.scss";
+import AdminSearchBar from "../AdminSearchBar/AdminSearchBar";
+import Pagination from "../../Pagination/Pagination";
 
 export default function ItemsTable() {
   const [motorcyclesData, setMotorcyclesData] = useState([]);
   const [editData, setEditData] = useState({});
+  const [filter, setFilter] = useState("all");
+  const allMotorcycles = useSelector((state) => state.allMotorcycles);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+
+  useEffect(() => {
+    setFilteredData(allMotorcycles);
+  }, [allMotorcycles]);
 
   useEffect(() => {
     axios
@@ -14,7 +27,7 @@ export default function ItemsTable() {
         console.log(response.data);
       })
       .catch((error) => {
-        console.error('Error retrieving data:', error);
+        console.error("Error retrieving data:", error);
       });
   }, []);
 
@@ -26,18 +39,20 @@ export default function ItemsTable() {
     setEditData((prevEditData) => ({
       ...prevEditData,
       [chassisId]: {
-        ...motorcycleData
-      }
+        ...motorcycleData,
+      },
     }));
   };
 
   const handleSave = (chassisId) => {
     const editedMotorcycle = editData[chassisId];
-
     const { color, chassisId: editedChassisId } = editedMotorcycle;
 
     axios
-      .put(`${process.env.REACT_APP_HOST_NAME}/motorcycles/item/${chassisId}`, { color, chassisId:editedChassisId })
+      .put(`${process.env.REACT_APP_HOST_NAME}/motorcycles/item/${chassisId}`, {
+        color,
+        chassisId: editedChassisId,
+      })
       .then(() => {
         setEditData((prevEditData) => {
           const updatedEditData = { ...prevEditData };
@@ -58,34 +73,72 @@ export default function ItemsTable() {
     });
   };
 
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+
+  const searchSubmit = (e) => {
+    let auxMotorcycles = [...allMotorcycles];
+    if (filter !== "all") {
+      auxMotorcycles = auxMotorcycles.filter(
+        (moto) => moto.active === (filter === "active")
+      );
+    }
+    const filteredMotorcycles = auxMotorcycles.filter(
+      (moto) =>
+        moto.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        moto.model.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredData(filteredMotorcycles);
+    setCurrentPage(1);
+  };
+
+  const reset = (e) => {
+    e.preventDefault();
+    setFilteredData(allMotorcycles);
+    setSearchQuery("");
+    setCurrentPage(1);
+  };
+
   return (
-    <div>
-      <h1 className={styles.title}>MOTORCYCLE LIST</h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Motorcycle Items</h1>
+      <AdminSearchBar
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        searchSubmit={searchSubmit}
+        handleReset={reset}
+      />
       <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Chassis Number</th>
-            <th>Brand</th>
-            <th>Model</th>
-            <th>Year</th>
-            <th>CC</th>
-            <th>Color</th>
-            <th>Transmission</th>
-            <th>Price</th>
-            <th>Category</th>
-            <th>Action</th>
+        <thead className={styles.thead}>
+          <tr className={styles.tr}>
+            <th className={styles.th}>Chassis Number</th>
+            <th className={styles.th}>Brand</th>
+            <th className={styles.th}>Model</th>
+            <th className={styles.th}>Year</th>
+            <th className={styles.th}>CC</th>
+            <th className={styles.th}>Color</th>
+            <th className={styles.th}>Transmission</th>
+            <th className={styles.th}>Price</th>
+            <th className={styles.th}>Category</th>
+            <th className={styles.th}>Action</th>
           </tr>
         </thead>
-        <tbody className={styles.font}>
-          {motorcyclesData.length === 0 ? (
-            <tr>
-              <td>No motorcycles found</td>
+        <tbody className={styles.tbody}>
+          {currentItems.length === 0 ? (
+            <tr tr className={styles.tr}>
+              <td className={styles.td}>No motorcycles found</td>
             </tr>
           ) : (
-            motorcyclesData.map((moto) =>
+            currentItems.map((moto) =>
               moto.items.map((item) => (
-                <tr key={item.chassisId} data-id={item.chassisId}>
-                  <td>
+                <tr key={item.chassisId} data-id={item.chassisId}
+                tr className={styles.tr}>
+                  <td className={styles.td}>
                     {editData[item.chassisId] ? (
                       <input
                         type="text"
@@ -95,8 +148,8 @@ export default function ItemsTable() {
                             ...prevEditData,
                             [item.chassisId]: {
                               ...prevEditData[item.chassisId],
-                              chassisId: e.target.value
-                            }
+                              chassisId: e.target.value,
+                            },
                           }))
                         }
                       />
@@ -104,11 +157,11 @@ export default function ItemsTable() {
                       item.chassisId
                     )}
                   </td>
-                  <td>{moto.brand}</td>
-                  <td>{moto.model}</td>
-                  <td>{moto.year}</td>
-                  <td>{moto.cc}</td>
-                  <td>
+                  <td className={styles.td}>{moto.brand}</td>
+                  <td className={styles.td}>{moto.model}</td>
+                  <td className={styles.td}>{moto.year}</td>
+                  <td className={styles.td}>{moto.cc}</td>
+                  <td className={styles.td}>
                     {editData[item.chassisId] ? (
                       <input
                         type="text"
@@ -118,8 +171,8 @@ export default function ItemsTable() {
                             ...prevEditData,
                             [item.chassisId]: {
                               ...prevEditData[item.chassisId],
-                              color: e.target.value
-                            }
+                              color: e.target.value,
+                            },
                           }))
                         }
                         className={styles.inputColor}
@@ -128,25 +181,34 @@ export default function ItemsTable() {
                       item.color
                     )}
                   </td>
-                  <td>{moto.transmission}</td>
-                  <td>{moto.price}</td>
-                  <td>{moto.category}</td>
-                  <td className={styles.actionsHeader}>
+                  <td className={styles.td}>{moto.transmission}</td>
+                  <td className={styles.td}>{moto.price}</td>
+                  <td className={styles.td}>{moto.category}</td>
+                  <td className={styles.td}>
                     {editData[item.chassisId] ? (
                       <>
-                        <button onClick={() => handleSave(item.chassisId)} className={styles.button}>
+                        <button
+                          onClick={() => handleSave(item.chassisId)}
+                          className={styles.edit}
+                        >
                           Save
                         </button>
-                        <button onClick={() => handleCancel(item.chassisId)} className={styles.button}>
+                        <button
+                          onClick={() => handleCancel(item.chassisId)}
+                          className={styles.edit}
+                        >
                           Cancel
                         </button>
                       </>
                     ) : (
                       <>
-                        <button onClick={() => handleEdit(item.chassisId, item.color)} className={styles.button}>
+                        <button
+                          onClick={() => handleEdit(item.chassisId, item.color)}
+                          className={styles.edit}
+                        >
                           Edit
                         </button>
-                        <button className={styles.button}>Delete</button>
+                        {/* <button className={styles.edit}>Delete</button> */}
                       </>
                     )}
                   </td>
@@ -156,6 +218,34 @@ export default function ItemsTable() {
           )}
         </tbody>
       </table>
+      <div className={styles["pagination-container"]}>
+        <div>
+          {filteredData &&
+          filteredData.length &&
+          filteredData.length > itemsPerPage ? (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={Math.ceil(filteredData.length / itemsPerPage)}
+              onPageChange={handlePageChange}
+              onPreviousPage={() => setCurrentPage(prevState => prevState - 1)}
+              onNextPage={() => setCurrentPage(prevState => prevState + 1)}
+            />
+          ) : null}
+        </div>
+
+        <div className={styles["pagination-container__selector"]}>
+          <p>Items per page:</p>
+          <select
+            value={itemsPerPage}
+            onChange={e => setItemsPerPage(parseInt(e.target.value))}>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+          </select>
+        </div>
+      </div>
+
     </div>
   );
 }
