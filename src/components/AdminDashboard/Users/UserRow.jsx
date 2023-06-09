@@ -25,6 +25,9 @@ export function UserRow({user, getUsers}) {
       active,
       role
     })
+    .then(() => {
+      getUsers();
+    })
     .then(res => {
       return new swal({
         title: "Success",
@@ -32,9 +35,6 @@ export function UserRow({user, getUsers}) {
         icon: "success",
         buttons: true,
       })
-    })
-    .then(() => {
-      getUsers();
     })
     .catch(err => {
       return new swal({

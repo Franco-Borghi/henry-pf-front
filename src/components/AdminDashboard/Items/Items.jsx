@@ -1,14 +1,14 @@
 import React from "react"
-import { UserRow } from "./UserRow"
-import styles from "./Users.module.scss"
+import { ItemRow } from "./ItemRow"
+import styles from "./Items.module.scss"
 import Pagination from "../../Pagination/Pagination"
 import AdminSearchBar from "../AdminSearchBar/AdminSearchBar"
+import axios from "axios"
 
-export default function Users() {
-  const [users, setUsers] = React.useState(null)
-  const [filteredUsers, setFilteredUsers] = React.useState(null)
-  const [filterRole, setFilterRole] = React.useState("all")
-  const [filterActive, setFilterActive] = React.useState("all")
+export default function Items() {
+  const [items, setItems] = React.useState(null)
+  const [filteredItems, setFilteredItems] = React.useState(null)
+  const [filterSold, setFilterSold] = React.useState("all")
   const [currentPage, setCurrentPage] = React.useState(1)
   const [itemsPerPage, setItemsPerPage] = React.useState(5)
   const [searchQuery, setSearchQuery] = React.useState("")
@@ -16,22 +16,22 @@ export default function Users() {
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
 
-  function convertCamelCase(str) {
-    // Add a space before each uppercase letter
-    var result = str.replace(/([A-Z])/g, " $1")
-
-    // Capitalize the first letter
-    result = result.charAt(0).toUpperCase() + result.slice(1)
-
-    return result
+  function orderByChassisId(array) {
+    return array.sort((a, b) => {
+      const chassisIdA = a.chassisId.toLowerCase();
+      const chassisIdB = b.chassisId.toLowerCase();
+  
+      return chassisIdA.localeCompare(chassisIdB, undefined, { numeric: true });
+    });
   }
 
-  /* Funcion para traer los usuarios del endpoint GET /users */
-  const getUsers = () => {
-    fetch(`${process.env.REACT_APP_HOST_NAME}/users`)
-      .then(response => response.json())
-      .then(data => setUsers(data))
-      .catch(err => console.error(err.message))
+  /* Funcion para traer los usuarios del endpoint GET /items */
+  const getItems = () => {
+    axios.get(`${process.env.REACT_APP_HOST_NAME}/items`)
+    .then(response => {
+      setItems(orderByChassisId(response.data))
+    })
+    .catch(err => console.error(err.message))
   }
 
   /* Funcion callback para Pagination */
@@ -40,77 +40,64 @@ export default function Users() {
   }
 
   React.useEffect(() => {
-    getUsers()
+    getItems()
   }, [])
 
   /* Manejo de filtrado con useEffect */
   React.useEffect(() => {
-    if (users) {
-      let usersToFilter = [...users]
-
-      /* Filtrado de roles */
-      if (filterRole !== "all") {
-        usersToFilter = usersToFilter.filter(el => el.role === filterRole)
-      }
+    if (items) {
+      let itemsToFilter = [...items]
 
       /* Filtrado de active */
-      if (filterActive !== "all") {
-        usersToFilter = usersToFilter.filter(
-          el => el.active.toString() === filterActive.toString()
+      if (filterSold !== "all") {
+        itemsToFilter = itemsToFilter.filter(
+          el => el.sold.toString() === filterSold.toString()
         )
       }
 
       /* Filtrado de AdminSearchBar */
       if (filterWord) {
         const filterWordArray = filterWord.split(" ")
-        const usersToFilterCopy = []
+        const itemsToFilterCopy = []
 
         for (let index = 0; index < filterWordArray.length; index++) {
-          usersToFilter.forEach(user => {
+          itemsToFilter.forEach(item => {
             if (
-              (user.firstName &&
-                user.firstName
+              (item.color &&
+                item.color
                   .toLowerCase()
                   .includes(filterWordArray[index].toLowerCase())) ||
-              (user.lastName &&
-                user.lastName
+              (item.chassisId &&
+                item.chassisId
                   .toLowerCase()
                   .includes(filterWordArray[index].toLowerCase())) ||
-              (user.email &&
-                user.email
+              (item.motorcycleModel &&
+                item.motorcycleModel
                   .toLowerCase()
                   .includes(filterWordArray[index].toLowerCase()))
             ) {
-              usersToFilterCopy.push(user)
+              itemsToFilterCopy.push(item)
             }
           })
         }
 
-        usersToFilter = [...new Set(usersToFilterCopy)]
+        itemsToFilter = [...new Set(itemsToFilterCopy)]
       }
 
-      setFilteredUsers(usersToFilter)
+      setFilteredItems(itemsToFilter)
       setCurrentPage(1)
     }
-  }, [users, filterActive, filterRole, filterWord])
+  }, [items, filterSold, filterWord ])
 
     return (
         <div className={styles.container}>
-            <h2>Users List</h2>
+            <h2>Items List</h2>
 
             <section className={styles['filters-section']}>
                 <div className={styles['filters-section-first-child']}>
                     <div>
-                        <p>Role:</p>
-                        <select value={filterRole} onChange={e => setFilterRole(e.target.value === 'all' ? 'all' : e.target.value)}>
-                            <option value="all">Show all</option>
-                            <option value="admin">admin</option>
-                            <option value="client">client</option>
-                        </select>
-                    </div>
-                    <div>
-                        <p>Active:</p>
-                        <select value={filterActive} onChange={e => setFilterActive(e.target.value === 'all' ? 'all' : e.target.value === 'true')}>
+                        <p>Sold:</p>
+                        <select value={filterSold} onChange={e => setFilterSold(e.target.value === 'all' ? 'all' : e.target.value === 'true')}>
                             <option value="all">Show all</option>
                             <option value="true">true</option>
                             <option value="false">false</option>
@@ -130,34 +117,26 @@ export default function Users() {
             <table className={styles.table}>
                 <thead className={styles.thead}>
                     <tr className={styles.tr}>
-                        {
-                            users && users.length &&
-                            <>
-                                {
-                                    Object.keys(users[0]).map((el, i) => {
-                                        if (el === 'orders') {
-                                            return <th key={i} className={styles.th}>Orders Quantity</th>
-                                        }
-                                        return <th key={i} className={styles.th}>{convertCamelCase(el)}</th>
-                                    })
-                                }
-                                <th className={styles.th}>Action</th>
-                            </>
-                        }
+                      <th className={styles.th}>Chassis Id</th>
+                      <th className={styles.th}>Color</th>
+                      <th className={styles.th}>Sold</th>
+                      <th className={styles.th}>Motorcycle Model</th>
+                      <th className={styles.th}>Order Number</th>
+                      <th className={styles.th}>Action</th>
                     </tr>
                 </thead>
                 <tbody className={styles.tbody}>
                     {
-                        filteredUsers && filteredUsers.length ?
-                        filteredUsers.slice(indexOfFirstItem, indexOfLastItem).map((el, i) => {
+                        filteredItems && filteredItems.length ?
+                        filteredItems.slice(indexOfFirstItem, indexOfLastItem).map((el, i) => {
                             return (
-                                <UserRow key={i} user={el} getUsers={getUsers}/>
+                                <ItemRow key={i} item={el} getItems={getItems}/>
                             )
                         })
                         : <tr className={styles.tr}>
                             <td style={{width: '100%', height: '150px', display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center', justifyContent: 'center'}}>
-                              <h3 style={{ textAlign: 'center', color: '#fff', fontWeight: '700' }}>No users found</h3>
-                              <p style={{ textAlign: 'center', color: '#fff', fontWeight: '500' }}>No users were found for the search performed. Please try another search.</p>
+                              <h3 style={{ textAlign: 'center', color: '#fff', fontWeight: '700' }}>No items found</h3>
+                              <p style={{ textAlign: 'center', color: '#fff', fontWeight: '500' }}>No items were found for the search performed. Please try another search.</p>
                             </td>
                           </tr>
                     }
@@ -167,10 +146,10 @@ export default function Users() {
             <div className={styles['pagination-container']}>
                 <div>
                     {
-                        filteredUsers && filteredUsers.length && filteredUsers.length > itemsPerPage ?
+                        filteredItems && filteredItems.length && filteredItems.length > itemsPerPage ?
                         <Pagination 
                             currentPage={currentPage}
-                            totalPages={Math.ceil(filteredUsers.length / itemsPerPage)}
+                            totalPages={Math.ceil(filteredItems.length / itemsPerPage)}
                             onPageChange={handlePageChange}
                             onPreviousPage={() => setCurrentPage(prevState => prevState - 1)}
                             onNextPage={() => setCurrentPage(prevState => prevState + 1)}
