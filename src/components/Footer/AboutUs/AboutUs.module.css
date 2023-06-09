@@ -1,50 +1,63 @@
+
 .aboutUs {
-    background: linear-gradient(to bottom right, #d8d8d8, #f2f2f2);
+  background: linear-gradient(to bottom right, gray, #f2f2f2, gray, #f2f2f2);
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .aboutUs h3 {
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .aboutUs h4 {
-    color: #666;
-    font-size: 20px;
-    margin-bottom: 8px;
-  }
-  
-  .aboutUs p {
-    color: #888;
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-  
-  .aboutUsImage {
-    width: 200px;
-    height: auto;
-    margin: 20px auto;
-  }
-  
-  .aboutUs ul {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 10px;
-  }
-  
-  .aboutUs ul li {
-    color: #555;
-    font-size: 16px;
-  }
-  
-  .aboutUs p,
-  .aboutUs ul {
-    text-align: left;
-  }
-  
-  .aboutUsImage {
-    width: 50%;
-  }
+  padding: 20px;
+  text-align: left;
+}
+
+.aboutUs h2 {
+  color: black;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.aboutUs h4 {
+  color: black;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.aboutUs p {
+  color: black;
+  font-size: large;
+  margin-bottom: 10px;
+}
+
+.aboutUsImage {
+  width: 50%;
+  height: auto;
+  margin: 20px auto;
+}
+
+.aboutUs ul {
+  list-style: disc;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.aboutUs ul li {
+  color: black;
+  font-size: 16px;
+}
+
+.aboutUs p,
+.aboutUs ul {
+  text-align: left;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.rightContent {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.rightContent ul li {
+  list-style-type: none;
+}
