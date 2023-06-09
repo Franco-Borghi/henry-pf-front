@@ -69,7 +69,9 @@ export function ItemRow({item, getItems}) {
               <button className={styles.cancel} onClick={() => {refreshState(); setEdit(false)}} type='button'>Cancel</button>
             </>
           : <>
-              <button className={styles.edit} onClick={() => {refreshState(); setEdit(true)}} type='button'>Edit</button>
+              {              
+                !item.sold ? <button className={styles.edit} onClick={() => {refreshState(); setEdit(true)}} type='button'>Edit</button> : null
+              }           
             </>
         }
       </td>
