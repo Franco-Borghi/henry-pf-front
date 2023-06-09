@@ -19,28 +19,31 @@ const AboutUs = () => {
         Our extensive network of agencies throughout Mexico provides you with
         professional service, with trained and dedicated service agents.
       </p>
-      <img
-        src={imgAbout}
-        alt="DINAMO"
-        className={styles.aboutUsImage}
-      />
-      <h4>WITH DINAMO YOU GET:</h4>
-      <ul>
-        <li>WARRANTY</li>
-        <li>FINANCING</li>
-        <li>SERVICES</li>
-      </ul>
-      <h4>MISSION</h4>
+      <div className={styles.contentWrapper}>
+        <img
+          src={imgAbout}
+          alt="DINAMO"
+          className={styles.aboutUsImage}
+        />
+        <div className={styles.rightContent}>
+          <h3>WITH DINAMO YOU GET:</h3>
+          <ul>
+            <li>WARRANTY</li>
+            <li>FINANCING</li>
+            <li>SERVICES</li>
+          </ul>
+        </div>
+      </div>
+      <h3>MISSION</h3>
       <p>
-        "TO BE AN INNOVATIVE MEXICAN COMPANY, COMMITTED TO ITS CUSTOMERS,
-        OFFERING AFFORDABLE MOTORCYCLES WITH GUARANTEED SUPPORT."
+      "To be an innovative mexican company, committed to its customers, offering affordable Motorcycles with guaranteed support."
       </p>
-      <h4>VISION</h4>
+      <h3>VISION</h3>
       <p>
-        "TO HAVE THE LARGEST, PROFITABLE, AND EFFICIENT DISTRIBUTION AND
-        SERVICE NETWORK OF MEXICAN BRAND MOTORCYCLES IN LATIN AMERICA."
+      "To have the largest, profitable, and efficient distribution and
+        service network of mexican brand Motorcycles in latin america."
       </p>
-      <h4>VALUES</h4>
+      <h3>VALUES</h3>
       <ul>
         <li>OUR PEOPLE</li>
         <li>PRODUCT</li>
@@ -53,3 +56,4 @@ const AboutUs = () => {
 };
 
 export default AboutUs;
+
