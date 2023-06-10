@@ -41,11 +41,11 @@ export default function NavBar(props) {
     }
   }, [shoppingCart])
 
-  // React.useEffect(() => {
-  //   if (isAuthenticated) {
-  //     console.log(user);
-  //   }
-  // }, [isAuthenticated])
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      console.log(user);
+    }
+  }, [isAuthenticated])
 
   return (
     <nav className={styles['nav-bar-container']}>
@@ -92,7 +92,8 @@ export default function NavBar(props) {
                 isAuthenticated && reduxUser  
                 ? <>
                     <Link to={`/profile`}>
-                      <img style={{height: '40px', width: '40px', borderRadius: '50%', cursor: 'pointer'}} src={user.picture} alt="User Image" />
+                      {/* <div style={{height: '40px', width: '40px', borderRadius: '50%', cursor: 'pointer',backgroundColor: '#c7c7c7', backgroundImage: user && `url('${user.picture}')`, backgroundSize: 'cover', backgroundPosition: 'center'}}></div> */}
+                      <img style={{height: '40px', width: '40px', borderRadius: '50%', cursor: 'pointer', backgroundColor: '#c7c7c7'}} src={user && user.picture} />
                       <p className={styles.txtBtnIcons}>Profile</p>
                     </Link>
                   </>
