@@ -71,8 +71,8 @@ export default function Items() {
                 item.chassisId
                   .toLowerCase()
                   .includes(filterWordArray[index].toLowerCase())) ||
-              (item.motorcycleModel &&
-                item.motorcycleModel
+              (item.motorcycle.brand && item.motorcycle.model &&
+                `${item.motorcycle.brand } ${item.motorcycle.model}`
                   .toLowerCase()
                   .includes(filterWordArray[index].toLowerCase()))
             ) {

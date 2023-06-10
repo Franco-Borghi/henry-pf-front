@@ -160,10 +160,10 @@ export default function Form(){
                                     category: ""
                                 })
                                 setErrors({})
-                                }} type="button">Other</button> : <button onClick={() => {
+                                }} type="button" className={styles['create-model']}>Create model</button> : <button onClick={() => {
                                     setCreateModel(false)
                                     setErrors({})
-                                    }} type="button">Cancel</button> }
+                                    }} type="button" className={styles['create-model-cancel']}>Cancel model creation</button> }
                         </div>
                     </section>
                         {createModel ? 
@@ -213,10 +213,10 @@ export default function Form(){
                             <p>{errors.description}</p>
                         </div>
 
-                        <div>
+                        <div className={styles['widget-container']} style={{ display: 'flex', flexDirection: 'column'}}>
                             <label for="image">Image:</label>
                             <input className={styles[`${errors.image ? 'error' : ''}`]} type="text" id="image" name="image" onChange={handleChange} value={inputs.image} hidden />
-                            <p>{errors.image}</p>
+                            <p style={{ display: errors.image ? 'block' : 'none'}}>{errors.image}</p>
                             <CloudinaryUploadWidget imageUrl={setInputs} inputs={inputs}/>
                             <img id="uploadedimage" src="" ref={imageRef}></img>
                         </div>

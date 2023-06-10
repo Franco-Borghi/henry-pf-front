@@ -116,7 +116,7 @@ export const Order = () => {
             }
             {
               order && order.items.length < 5 
-              ? Array.from({length: 4}).map(el => (
+              ? Array.from({length: (5 - order.items.length)}).map(el => (
                 <tr style={{ height: '40.5px'}}>
                   <td style={tdThStyles}></td>
                   <td style={tdThStyles}></td>

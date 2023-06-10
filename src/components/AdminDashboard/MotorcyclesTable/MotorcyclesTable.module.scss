@@ -1,6 +1,6 @@
 .container {
   width: -webkit-fill-available;
-  padding: 40px 40px 40px 0;
+  padding: 40px 40px 40px 40px;
 
   h2 {
     font-size: 32px;
@@ -19,6 +19,7 @@
     .filters-section-first-child {
       display: flex;
       gap: 40px;
+      align-items: center;
 
       > div {
         display: flex;
@@ -29,8 +30,8 @@
           width: fit-content;
         }
 
-        > select {
-          margin: 0;
+          select {
+          margin: 0 !important;
           font-size: 16px;
           padding: 0;
           width: fit-content;
@@ -91,7 +92,7 @@
           text-align: center;
           padding: 15px 8px;
           color: #fff;     
-          line-height: 40px;
+          line-height: 65.5px;
           
           .edit {
             font-size: 16px;

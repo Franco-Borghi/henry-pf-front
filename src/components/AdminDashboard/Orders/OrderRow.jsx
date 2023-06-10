@@ -87,7 +87,7 @@ export function OrderRow({order, getOrders}) {
             </>
           : <>
               <button className={styles.edit} onClick={() => setEdit(true)} type='button'>Edit</button>
-              <button className={styles.view} onClick={() => navigate(`/admin/order/${order.orderNumber}`)} type='button'>View Order</button>
+              <button className={styles.view} onClick={() => navigate(`/admin/orders/${order.orderNumber}`)} type='button'>View Order</button>
             </>
         }
       </td>

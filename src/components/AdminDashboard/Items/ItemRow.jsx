@@ -58,7 +58,7 @@ export function ItemRow({item, getItems}) {
             <td className={styles.td}>{`${item.color}`}</td>
             <td className={styles.td}>{`${item.sold}`}</td>
             <td className={styles.td}>{`${item.motorcycle.brand} ${item.motorcycle.model}`}</td>
-            <td style={{ cursor: item.orderNumber ? 'pointer' : ''}} onClick={() => item.orderNumber && navigate(`/admin/order/${item.orderNumber}`)} className={styles.td}>{`${item.orderNumber || 'N/A'}`}</td>
+            <td style={{ cursor: item.orderNumber ? 'pointer' : ''}} onClick={() => item.orderNumber && navigate(`/admin/orders/${item.orderNumber}`)} className={styles.td}>{`${item.orderNumber || 'N/A'}`}</td>
           </>
       }   
       <td style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '10px'}} className={styles.td}>
