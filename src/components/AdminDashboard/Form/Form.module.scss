@@ -1,7 +1,24 @@
+.widget-container button {
+  width: fit-content;
+  background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
+  color: black;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+  margin-bottom: 25px;
+
+  &:hover {
+    background: linear-gradient(360deg, rgb(2, 134, 255) 0%, rgb(2, 157, 255) 28%, rgba(2,181,255,1) 60%, rgba(2,240,255,1) 100%);
+  }
+}
+
 .form-container {
   width: 100%;
   max-width: 1440px;
-  padding: 0 40px;
+  padding: 40px;
   margin: 0 auto;
 
   h2 {
@@ -14,11 +31,10 @@
 
 .my-form-box {
   width: 100%;
-  max-width: 800px;
+  max-width: 700px;
   border-radius: 15px;
   padding: 3px;
   position: relative;
-  width: fit-content;
   margin: 0 auto;
   overflow: hidden;
   background-color: #272727;
@@ -65,6 +81,33 @@
     h2 {
       text-align: start;
       color: #fff;
+    }
+  }
+
+  .create-model {
+    background: none;
+    border: none;
+    outline: none;
+    padding: 20px 0;
+    cursor: pointer;
+    color: #fff;
+
+    &:hover {
+      color: greenyellow;
+      font-weight: 500;
+    }
+
+    &-cancel {
+      background: none;
+      border: none;
+      outline: none;
+      padding: 20px 0 0;
+      cursor: pointer;
+      color: #ff3300;
+
+      &:hover {
+        color: #ff3300;
+      }
     }
   }
 
@@ -142,6 +185,7 @@
   
   .my-form input[type="submit"]:hover {
     background: linear-gradient(360deg, rgb(2, 134, 255) 0%, rgb(2, 157, 255) 28%, rgba(2,181,255,1) 60%, rgba(2,240,255,1) 100%);
+    outline: none !important;
   }
 
   select {

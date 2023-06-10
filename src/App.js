@@ -73,12 +73,12 @@ function App() {
             <Route index element={<Graphs />} />
             {/* <Route path="itemsTable" element={<ItemsTable />} /> */}
             <Route path="items" element={<Items />} />
-            <Route path="motorcyclesTable" element={<MotorcyclesTable />} /> {/* A cambiar luego */}
+            <Route path="motorcycles" element={<MotorcyclesTable />} /> {/* A cambiar luego */}
             <Route path="create" element={<Form />} />
             <Route path="users" element={<Users />} />
             <Route path="users/:id" element={<User />}/>
             <Route path="orders" element={<Orders />} />
-            <Route path="order/:id" element={<Order />} />
+            <Route path="orders/:id" element={<Order />} />
           </Route>
           {/*    } */}
         </Routes>

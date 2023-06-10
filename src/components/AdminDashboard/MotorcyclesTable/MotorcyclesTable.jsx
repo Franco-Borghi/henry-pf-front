@@ -132,16 +132,18 @@ export default function MotorcyclesTable() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Motorcycle List </h1>
+      <h2 className={styles.title}>Motorcycle List </h2>
 
       <section className={styles["filters-section"]}>
         <div className={styles["filters-section-first-child"]}>
-          {/* Filters */}
-          <select onChange={handleFilter}>
-            <option value="all">All</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
+          <div>
+            <p>Status:</p>
+            <select onChange={handleFilter}>
+              <option value="all">All</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
         </div>
 
         <AdminSearchBar
@@ -172,7 +174,10 @@ export default function MotorcyclesTable() {
         <tbody className={styles.tbody}>
           {filteredData?.length === 0 ? (
             <tr className={styles.tr}>
-              <td className={styles.td}>No motorcycles found</td>
+              <td style={{width: '100%', height: '150px', display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center', justifyContent: 'center'}}>
+                <h3 style={{ textAlign: 'center', color: '#fff', fontWeight: '700' }}>No motorcycles found</h3>
+                <p style={{ textAlign: 'center', color: '#fff', fontWeight: '500' }}>No motorcycles were found for the search performed. Please try another search.</p>
+              </td>
             </tr>
           ) : (
             filteredData
@@ -304,6 +309,7 @@ export default function MotorcyclesTable() {
                         display: "flex",
                         flexDirection: "column",
                         gap: "10px",
+                        justifyContent: "center"
                       }}>
                       <button
                         className={styles.edit}
