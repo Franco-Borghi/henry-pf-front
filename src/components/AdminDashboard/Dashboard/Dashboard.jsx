@@ -20,7 +20,7 @@ export default function Dashboard() {
         <h3 style={{ paddingTop: '40px'}}>Admin Bar</h3>
         <Link to="/admin"><h4 style={{ paddingTop: '20px'}}>Dashboard</h4></Link>
         <Link to="/admin/motorcyclesTable"><h4 style={{ paddingTop: '20px'}}>Motorcycles List</h4></Link>
-        <Link to="/admin/itemsTable"><h4 style={{ paddingTop: '20px'}}>Items List</h4></Link>
+        <Link to="/admin/items"><h4 style={{ paddingTop: '20px'}}>Items List</h4></Link>
         <Link to="/admin/users"><h4 style={{ paddingTop: '20px'}}>Users List</h4></Link>
         <Link to="/admin/orders"><h4 style={{ paddingTop: '20px'}}>Orders List</h4></Link>
         <Link to="/admin/create"><h4 style={{ paddingTop: '20px'}}>Form to Create Model/Item</h4></Link>

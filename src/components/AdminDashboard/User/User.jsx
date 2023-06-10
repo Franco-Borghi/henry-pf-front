@@ -147,7 +147,7 @@ export const User = () => {
               ? <div className={styles['total-orders']}>
                   {
                     orders.orders.map(el => (
-                      <div onClick={() => navigate(`/admin/orders/${el.orderNumber}`)} key={el.orderNumber} className={styles['single-order']}>
+                      <div onClick={() => navigate(`/admin/order/${el.orderNumber}`)} key={el.orderNumber} className={styles['single-order']}>
                         <p><span>Order number:</span> {el.orderNumber}</p>
                         <p><span>Order Status:</span> {el.orderStatus}</p>
                         <p><span>Amount Paid:</span> $USD {convertirNumero(el.amountPaid)}</p>
