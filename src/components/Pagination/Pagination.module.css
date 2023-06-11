@@ -25,4 +25,16 @@
     background: #686868;
     color: #fff;
   }
+
+@media (max-width: 1023px) {
+  .pagination {
+    overflow: hidden;
+  }
+  
+  .paginationButton {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+}
   

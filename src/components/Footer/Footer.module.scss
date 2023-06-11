@@ -63,6 +63,11 @@ footer {
       overflow: hidden;
       color: #fff;
 
+      a {
+        color: #fff;
+        text-decoration: none;
+      }
+
       .icons {
         display: flex;
         gap: 16px;
@@ -97,6 +102,57 @@ footer {
           path {
             fill: #c837ab;
           }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  footer {
+    > section {
+      &:nth-child(1) {
+        padding: 30px 25px;
+        display: flex;
+        gap: 25px;
+        justify-content: space-between;
+      }
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  footer {
+    max-height: none;
+
+    * {
+      font-size: 16px;
+    }
+
+    > section {
+      &:nth-child(1) {
+        padding: 30px 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+
+        .links {
+          border-top: 1px solid #444;
+          padding-top: 25px;
+          width: 100%;
+          align-items: center;
+          gap: 25px;
+        }
+
+        .contact-us {
+          border-top: 1px solid #444;
+          width: 100%;
+          padding-top: 25px;
+          align-items: center;
+          gap: 25px;
         }
       }
     }
