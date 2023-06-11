@@ -10,7 +10,6 @@ import { LoginBtn } from "../LoginBtn/LoginBtn";
 import { LogoutBtn } from "../LogoutBtn/LogoutBtn";
 import { useAuth0 } from "@auth0/auth0-react";
 
-
 export default function NavBar(props) {
 
   const navigate = useNavigate();
@@ -76,7 +75,7 @@ export default function NavBar(props) {
                           ? <div className={styles.itemsNumber}>{cartItems}</div>
                           : null
                         }
-                        <button className={styles.btnIcon}>
+                        <button className={styles.btnIcon} data-testid="cartButton">
                           <ion-icon style={{ color: "#fff"}} className='svg' size="small" name="cart-outline"></ion-icon>
                         </button>
                         <p className={styles.txtBtnIcons}>Cart</p>
