@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from './Detail.module.scss';
 import { useDispatch, useSelector } from "react-redux";
-import { addItemToCart } from "../../redux/actions";
+import { addItemToCart, addItemToFavs, deleteItemFromFavs } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import swal from 'sweetalert2';
 import { convertirNumero } from '../../utils';
@@ -13,6 +13,7 @@ export default function Detail() {
   const [motorcycle, setMotorcycle] = useState(null);
   const reduxUser = useSelector(state => state.user);
   const allMotorcycles = useSelector(state => state.allMotorcycles);
+  const favourites = useSelector(state => state.favourites);
   const [colors, setColors] = useState([]);
   const [pickedColor, setPickedColor] = useState(null);
   const { id } = useParams();
@@ -21,6 +22,7 @@ export default function Detail() {
   const [shoppingCartButton, setShoppingCartButton] = React.useState(false);
   const { isAuthenticated, user, loginWithRedirect } = useAuth0();
   const [stock, setStock] = React.useState(true);
+  const [item, setItem] = React.useState(null);
 
   const handleDescription = () => {
     setDetails(false);
@@ -89,6 +91,37 @@ export default function Detail() {
     })
   }
 
+  const handleFavourites = () => {
+    if (!isAuthenticated) {
+      return new swal({
+        title: "Please login",
+        text: "You need to login to add items to favourites",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: 'Login',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          loginWithRedirect();
+        }
+      });      
+    }
+    
+    if (reduxUser && reduxUser.role === 'admin') {
+      return new swal({
+        title: "Error",
+        text: "Admins can't add to favourites",
+        icon: "error",
+        buttons: true,
+      })
+    }
+    
+    if (JSON.stringify(favourites).includes(JSON.stringify(item))) {
+      dispatch(deleteItemFromFavs(item));
+    } 
+    else dispatch(addItemToFavs(item));
+  }
+
   React.useEffect(() => {
 
     if (motorcycle && shoppingCart.some(el => el.id === motorcycle.id && el.color === pickedColor)) {
@@ -115,9 +148,28 @@ export default function Detail() {
 
   React.useEffect(() => {
     if (motorcycle) {
+      console.log(motorcycle);
       setStock(allMotorcycles.some(moto => moto.id === motorcycle.id && moto.items.some(item => item.sold === false)))
     }
   }, [motorcycle])
+
+  React.useEffect(() => {
+    if (motorcycle && user) {
+      setItem({
+        id: motorcycle.id,
+        brand: motorcycle.brand,
+        model: motorcycle.model,
+        year: motorcycle.year,
+        cc: motorcycle.cc,
+        transmission: motorcycle.transmission,
+        description: motorcycle.description,
+        image: motorcycle.image,
+        price: motorcycle.price,
+        category: motorcycle.category,
+        userEmail: user.email,
+      })
+    }
+  }, [motorcycle, user])
 
   if (!motorcycle) {
     return <div>Searching...</div>;
@@ -130,6 +182,15 @@ export default function Detail() {
         !stock
         ? <h1>Item out of stock</h1>
         : null
+      }
+      {
+        user && item && favourites && favourites.length && JSON.stringify(favourites).includes(JSON.stringify(item))
+        ? <div onClick={(handleFavourites)} className={styles["heart-container"]}>
+            <ion-icon style={{ color: 'red', fontSize: '25px' }} name="heart"></ion-icon>
+          </div>
+        : <div onClick={(handleFavourites)} className={styles["heart-container"]}>
+            <ion-icon style={{ color: 'white', fontSize: '25px' }} name="heart-outline"></ion-icon>
+          </div>
       }
       <div style={{ opacity: stock ? '1' : '0.5'}} className={styles['img-container']}>
         <img src={motorcycle.image} alt='product-image' />
@@ -155,6 +216,7 @@ export default function Detail() {
               </label>
             </div>
           </div>
+
           <div className={styles['color-container']}>
             <div className={styles['color']} >
               {
