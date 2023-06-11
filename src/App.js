@@ -20,6 +20,7 @@ import { User } from "./components/AdminDashboard/User/User";
 import Orders from "./components/AdminDashboard/Orders/Orders";
 import ContactUs from "./components/ContactUs/ContactUs";
 import AboutUs from "./components/Footer/AboutUs/AboutUs"
+import OurTime from "./components/Footer/OurTeam/OurTeam"
 import Items from "./components/AdminDashboard/Items/Items";
 import { Order } from "./components/AdminDashboard/Order/Order";
 import { Favourites } from "./containers/Favourites/Favourites";
@@ -76,6 +77,7 @@ function App() {
             <Route path="/profile" element={< ProfileForm />} />
             <Route path='/contact-us' element={<ContactUs />}></Route>
             <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/our-team" element={<OurTime />} />
           </Route>
           {/* //ruta dashAdmin */}
           {/*    {
