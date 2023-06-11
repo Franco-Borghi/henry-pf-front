@@ -13,6 +13,8 @@ export const DELETE_ITEM_FROM_CART ='DELETE_ITEM_FROM_CART';
 export const UPDATE_CART_ITEM_QUANTITY = 'UPDATE_CART_ITEM_QUANTITY';
 export const GET_ORDERS = 'GET_ORDERS';
 export const GET_USER_BY_ID = 'GET_USER_BY_ID';
+export const ADD_ITEM_TO_FAVS ='ADD_ITEM_TO_FAVS';
+export const DELETE_ITEM_FROM_FAVS ='DELETE_ITEM_FROM_FAVS';
 
 
 export const fetchData = (dispatch) => {
@@ -148,5 +150,20 @@ export const getUserById = (id) => {
         } catch (error) {
             console.error(error.message);
         }
+    }
+}
+
+export const addItemToFavs = (data) => {
+    return  {
+        type: ADD_ITEM_TO_FAVS,
+        payload: data,
+    }
+    
+}
+
+export const deleteItemFromFavs = (data) => {
+    return {
+        type: DELETE_ITEM_FROM_FAVS,
+        payload: data,
     }
 }
