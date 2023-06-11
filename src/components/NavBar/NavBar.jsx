@@ -112,7 +112,7 @@ export default function NavBar(props) {
             </div>
 
             <div className={styles['icon-container']} >
-              <button className={styles.btnIcon} style={{ width: 'fit-content', paddingLeft: '10px', paddingRight: '10px', color: '#fff'}}>
+              <button className={styles.btnIcon} aria-label="logout/in" style={{ width: 'fit-content', paddingLeft: '10px', paddingRight: '10px', color: '#fff'}}>
                 {
                   isAuthenticated 
                   ? <LogoutBtn />

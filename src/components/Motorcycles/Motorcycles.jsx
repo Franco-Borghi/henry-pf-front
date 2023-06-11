@@ -6,7 +6,7 @@ import Order from '../Order/Order';
 import { useSelector } from 'react-redux';
 import FilterBar from '../FilterBar/FilterBar';
 import styles from './Motorcycles.module.scss';
-import { Carousel } from 'react-responsive-carousel';
+import  {Carousel} from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 export default function Motorcycles() {
