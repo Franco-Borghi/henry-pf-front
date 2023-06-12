@@ -7,10 +7,39 @@
   width: 250px;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  transition: all 0.5s ease-in-out;
+  z-index: 9;
+  background-color: #fff;
+
+  * {
+    flex: none;
+    white-space: nowrap;
+  }
 
   & .sticky {
+    opacity: 1;
     position: sticky;
     top: 110px;
     overflow: auto;
+    transition: all 0.5s ease-in-out;
+  }
+}
+
+@media (max-width: 1023px) {
+  .filter-bar-container {
+  
+    & .sticky {
+      top: 95px;
+      padding-top: 25px;
+
+      h1 {
+        display: none;
+      }
+      h3 {
+        font-size: 18px !important;
+        line-height: 22px !important;
+        font-weight: 500;
+      }
+    }
   }
 }

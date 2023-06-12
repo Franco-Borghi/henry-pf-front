@@ -23,7 +23,7 @@ export default function Footer(){
                 </div>
             
                 <div className={styles['contact-us']}>
-                    <Link to='/contact-us'><p className={styles['links']}>Contact us</p></Link>
+                    <Link to='/contact-us'>Contact us</Link>
                         <div className={styles.icons}>
                             <a href="https://www.facebook.com/dinamotocicletas/">
                                 <svg className={styles.facebook}  viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
