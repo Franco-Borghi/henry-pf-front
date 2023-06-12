@@ -8,6 +8,7 @@ import { addItemToCart, addItemToFavs, deleteItemFromFavs } from "../../redux/ac
 import { useAuth0 } from "@auth0/auth0-react";
 import swal from 'sweetalert2';
 import { convertirNumero } from '../../utils';
+import Stars from "../UserDashboard/Reviews/Stars"
 
 export default function Detail() {
   const [motorcycle, setMotorcycle] = useState(null);
@@ -22,6 +23,7 @@ export default function Detail() {
   const [shoppingCartButton, setShoppingCartButton] = React.useState(false);
   const { isAuthenticated, user, loginWithRedirect } = useAuth0();
   const [stock, setStock] = React.useState(true);
+  const [rating, setRating] = useState(null)
   const [item, setItem] = React.useState(null);
 
   const handleDescription = () => {
@@ -142,6 +144,13 @@ export default function Detail() {
       } catch (error) {
         console.log(error);
       }
+
+      axios.get(`${process.env.REACT_APP_HOST_NAME}/reviews/motorcycles/${id}`)
+      .then(d => {
+        if(d.data.length > 0) {let total = 0;
+        d.data.forEach(r => total += r.rating)
+        setRating({[`rating-${id}`]: Math.ceil(total/d.data.length)})}
+      })
     };
     fetchMotorcycle();
   }, [id]);
@@ -189,7 +198,7 @@ export default function Detail() {
             <ion-icon style={{ color: 'red', fontSize: '25px' }} name="heart"></ion-icon>
           </div>
         : <div onClick={(handleFavourites)} className={styles["heart-container"]}>
-            <ion-icon style={{ color: 'white', fontSize: '25px' }} name="heart-outline"></ion-icon>
+            <ion-icon style={{ color: window.innerWidth < 1024 ? 'black' : 'white', fontSize: '25px' }} name="heart-outline"></ion-icon>
           </div>
       }
       <div style={{ opacity: stock ? '1' : '0.5'}} className={styles['img-container']}>
@@ -201,6 +210,7 @@ export default function Detail() {
             <p>{motorcycle.category}</p>
             <h1>{motorcycle.brand} {motorcycle.model}</h1>
             <h3>{motorcycle.year}</h3>
+            {rating !== null ? <Stars inputs={rating} item={motorcycle} /> : null }
           </div>
           <div className={styles['separator']}></div>
           <div className={styles['price-container']}>

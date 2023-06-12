@@ -8,6 +8,10 @@
   // background-color: rgb(227, 218, 218);
   background-color: #282828;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+  @media (max-width: 1023px) {
+    display: none;
+  }
 }
 
 .ctnNavBar {
@@ -87,4 +91,119 @@
   text-align: center;
   transition: all 0.3s ease-in-out;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+//
+// MOBILE VERSION
+//
+
+.nav-bar-container-mobile {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: #282828;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+  .mobile-container {
+    height: 55px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 25px;
+    position: relative;
+
+    .logo {
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+    }
+
+    .dropdown-container {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+
+      .logo-link {
+        height: 100%;
+      }
+    }
+  }
+
+  .dropdown-content {
+    height: calc(100vh - 55px);
+    padding: 10px 25px;
+    width: 100%;
+    background-color: #383838;
+    position: absolute;
+    top: 55px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+
+    .searchbar-div {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 20px;
+
+      form {
+        width: 100%;
+        max-width: 400px;
+        justify-content: center;
+
+        input {
+          max-width: 400px;
+        }
+
+        > button {
+          flex: none;
+        }
+      } 
+    }
+
+    .items {
+      display: flex;
+      width: 100%;
+      max-width: 400px;
+      flex-direction: column;
+      gap: 25px;
+      color: #fff;
+
+      .logout {
+        color: #ff3300;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        margin-top: 40px;
+        padding: 8px 12px;
+        border-radius: 4px;
+        background-color: #282828;
+        text-align: center;
+      }
+
+      .login {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        margin-top: 40px;
+        padding: 8px 12px;
+        border-radius: 4px;
+        background-color: #282828;
+        color: greenyellow;
+        text-align: center;
+      }
+    }
+  }
+
+  @media (min-width: 1024px) {
+    display: none;
+  }
 }

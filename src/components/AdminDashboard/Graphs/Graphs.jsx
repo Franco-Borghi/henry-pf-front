@@ -1,7 +1,3 @@
-    // Charts:
-    // Categorias mas vendidas (Pie chart)
-    // Marcas mas vendidas (Pie chart)
-    // Motos mas vendidas (Bar chart)
 import styles from './Graphs.module.scss';
 import React, { useEffect, useState } from 'react';
 import { Pie, PieChart, Cell, Tooltip, Legend, XAxis, YAxis, Bar, BarChart, CartesianGrid } from 'recharts';
@@ -11,11 +7,11 @@ const PieChartExample = () => {
     const [soldMotos, setSoldMotos] = useState([])
     const [soldCategories, setSoldCategories] = useState([])
     const [soldBrands, setSoldBrands] = useState([])
+    const [users, setUsers] = useState([])
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_HOST_NAME}/items/sold`)
         .then(d => {
-            console.log(d.data);
             const auxMotosObj = {}
             const auxCategories=  {}
             const auxBrands = {}
@@ -42,6 +38,19 @@ const PieChartExample = () => {
             setSoldMotos(Object.values(auxMotosObj).slice(0,5))
             setSoldCategories(Object.values(auxCategories).slice(0,5))
             setSoldBrands(Object.values(auxBrands).slice(0,5))
+    })
+
+    axios.get(`${process.env.REACT_APP_HOST_NAME}/users/`)
+    .then(d => {
+        const auxUsers = [];
+        d.data.forEach(u => {
+            if(u.orders.length > 0)
+            auxUsers.push({
+                name: u.email,
+                value: u.orders.length
+            })
+        })
+        setUsers(auxUsers);
     })
     }, [])
 
@@ -110,6 +119,21 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', "#FF00FF"];
             fill="#8884d8"
             >
             {soldBrands?.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+            </Bar>
+        </BarChart>
+
+        <BarChart width={500} height={400} data={users}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Bar
+            dataKey="value"
+            fill="#8884d8"
+            >
+            {users?.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
             </Bar>

@@ -20,7 +20,6 @@
     .grid-item {
       display: flex;
       justify-content: center;
-      align-items: center;
     }  
   }
 
@@ -61,6 +60,18 @@
         background: linear-gradient(360deg, rgb(2, 134, 255) 0%, rgb(2, 157, 255) 28%, rgba(2,181,255,1) 60%, rgba(2,240,255,1) 100%);
         transform: scale(1.05);
       }
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  .container {
+    padding: 40px 25px;
+  
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, 250px);
+      gap: 25px; 
     }
   }
 }
