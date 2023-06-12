@@ -4,15 +4,13 @@ import Home from "./components/Home/Home"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addItemToCart, fetchData, getUserById } from "./redux/actions";
-import { CreateMotorcycle } from "./containers/CreateMotorcycle/CreateMotorcycle";
 import { ItemDetail } from "./containers/ItemDetail/ItemDetail";
 import { Layout } from "./components/Layout/Layout";
 import { ShoppingCart } from "./containers/ShoppingCart/ShoppingCart";
 import { useAuth0 } from "@auth0/auth0-react";
-import ProfileForm from "./components/ProfileForm/ProfileForm";
+import ProfileForm from "./components/UserDashboard/ProfileForm/ProfileForm";
 import Dashboard from "./components/AdminDashboard/Dashboard/Dashboard";
 import MotorcyclesTable from "./components/AdminDashboard/MotorcyclesTable/MotorcyclesTable";
-import ItemsTable from "./components/AdminDashboard/ItemsTable/ItemsTable";
 import Graphs from "./components/AdminDashboard/Graphs/Graphs";
 import Form from "./components/AdminDashboard/Form/Form";
 import Users from "./components/AdminDashboard/Users/Users";

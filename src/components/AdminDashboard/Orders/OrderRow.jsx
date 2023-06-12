@@ -17,7 +17,7 @@ export function OrderRow({order, getOrders}) {
   const navigate = useNavigate();
 
   const handlePut = () => {
-    axios.put(`${process.env.REACT_APP_HOST_NAME}/order`, {
+    axios.put(`${process.env.REACT_APP_HOST_NAME}/orders`, {
       orderStatus, 
       orderNumber
     })
