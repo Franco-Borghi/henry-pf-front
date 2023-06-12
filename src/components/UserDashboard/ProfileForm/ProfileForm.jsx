@@ -6,7 +6,8 @@ import Swal from "sweetalert2";
 import withReactContent from 'sweetalert2-react-content';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from "./ProfileForm.module.css";
-import ReturnToHomeButton from '../ReturnToHomeButton/ReturnToHomeButton';
+import ReturnToHomeButton from '../../ReturnToHomeButton/ReturnToHomeButton';
+import Review from '../Reviews/Review';
 
 export default function ProfileForm() {
   const [editMode, setEditMode] = useState(false);
@@ -16,6 +17,7 @@ export default function ProfileForm() {
   const mySwal = withReactContent(Swal);
   const [orders, setOrders] = useState(false);
   const [profile, setProfile] = useState(true);
+  const [reviews, setReviews] = useState(false);
   const [selectedOrders, setSelectedOrders] = useState([]);
 
    useEffect(() => {
@@ -25,22 +27,30 @@ export default function ProfileForm() {
       axios.get(`${process.env.REACT_APP_HOST_NAME}/orders/${user?.sub}`)
     .then(res => {
       setProfileData(res.data)
-      console.log(res.data);
    }) 
    .catch(err => console.log("ERROR", err))
   }
 }
   }, [user?.sub], editMode)
 
-  const handleProfile = () => {
+  const handleOrders = () => {
     setProfile(false);
     setOrders(true);
+    setReviews(false)
   }
 
-  const handleOrders = () => {
+  const handleProfile = () => {
     setOrders(false);
     setProfile(true);
+    setReviews(false)
   }
+
+  const handleReviews = () => {
+    setOrders(false);
+    setProfile(false);
+    setReviews(true);
+  }
+
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -83,8 +93,9 @@ export default function ProfileForm() {
         <h1>Profile Account</h1>
       <div className={styles['selector-container']}>
           <div className={styles['selector']}>
-            <h4 onClick={handleOrders} className={styles[`${profile}`]}>Personal Data</h4>
-            <h4 onClick={handleProfile} className={styles[`${orders}`]}>Orders</h4>
+            <h4 onClick={handleProfile} className={styles[`${profile}`]}>Personal Data</h4>
+            <h4 onClick={handleOrders} className={styles[`${orders}`]}>Orders</h4>
+            <h4 onClick={handleReviews} className={styles[`${reviews}`]}>Reviews</h4>
           </div>
           <div data-visible={`${profile}`} className={styles[`selector-content`]}>
           <section>
@@ -226,6 +237,9 @@ export default function ProfileForm() {
           <h4 className={styles['no-orders-message']}>You don't have any orders</h4>
         )}
       </ul>
+            </div>
+            <div data-visible={`${reviews}`} className={styles[`selector-content`]}>
+              <Review orders={profileData?.orders} user={user} />
             </div>
               </div>
     </div>
