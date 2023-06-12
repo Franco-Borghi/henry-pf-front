@@ -17,6 +17,10 @@ export default function SearchBar(props){
         navigate('/');
         categoriesFilter.forEach(c => dispatch(changeFilterCategory(c)))
         brandsFilter.forEach(b => dispatch(changeFilterBrand(b)))
+
+        if (props.setDropdownActive) {
+          props.setDropdownActive(false);
+        }
     }
 
     return (

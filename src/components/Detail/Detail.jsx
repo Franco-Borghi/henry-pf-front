@@ -189,7 +189,7 @@ export default function Detail() {
             <ion-icon style={{ color: 'red', fontSize: '25px' }} name="heart"></ion-icon>
           </div>
         : <div onClick={(handleFavourites)} className={styles["heart-container"]}>
-            <ion-icon style={{ color: 'white', fontSize: '25px' }} name="heart-outline"></ion-icon>
+            <ion-icon style={{ color: window.innerWidth < 1024 ? 'black' : 'white', fontSize: '25px' }} name="heart-outline"></ion-icon>
           </div>
       }
       <div style={{ opacity: stock ? '1' : '0.5'}} className={styles['img-container']}>
