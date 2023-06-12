@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import Swal from "sweetalert2";
 import withReactContent from 'sweetalert2-react-content';
 import { Link, useNavigate } from 'react-router-dom';
-import styles from "./ProfileForm.module.css";
+import styles from "./ProfileForm.module.scss";
 import ReturnToHomeButton from '../../ReturnToHomeButton/ReturnToHomeButton';
 import Review from '../Reviews/Review';
 
@@ -87,8 +87,7 @@ export default function ProfileForm() {
 
   return (
 
-    <div>
-      <ReturnToHomeButton />
+    <div className={styles.container}>
       <div className={styles.ProfileForm}>
         <h1>Profile Account</h1>
       <div className={styles['selector-container']}>
@@ -102,18 +101,16 @@ export default function ProfileForm() {
           <form>
             <div >
               <label>
-                Email:
-                <input className={styles.inputField}
-                  type="text"
-                  disabled
-                  value={profileData?.email}
-                />
+                <span>Email:</span>
+                  <p className={styles['user-data-label']}>{profileData?.email}</p>
               </label>
             </div>
   
             <div>
               <label >
+                <span>
                 First Name:
+                </span>
                 {editMode ? (
                   <input className={styles.inputField}
                     type="text"
@@ -129,7 +126,9 @@ export default function ProfileForm() {
   
             <div>
               <label >
+                <span>
                 Last Name:
+                </span>
                 {editMode ? (
                   <input className={styles.inputField}
                     type="text"
@@ -145,7 +144,9 @@ export default function ProfileForm() {
   
             <div>
               <label>
+                <span>
                 Phone Number:
+                </span>
                 {editMode ? (
                   <input className={styles.inputField}
                     type="tel"
@@ -161,7 +162,9 @@ export default function ProfileForm() {
   
             <div>
               <label >
+                <span>
                 ID Number:
+                </span>
                 {editMode ? (
                   <input className={styles.inputField}
                     type="text"

@@ -125,13 +125,17 @@ export default function Motorcycles() {
         </div>
 
         <div className={styles.pagination}>
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={goToPage}
-            onPreviousPage={goToPreviousPage}
-            onNextPage={goToNextPage}
-          />
+          {
+            totalPages > 1
+            ? <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={goToPage}
+                onPreviousPage={goToPreviousPage}
+                onNextPage={goToNextPage}
+              />
+            : null
+          }
         </div>
       </div>
     </>

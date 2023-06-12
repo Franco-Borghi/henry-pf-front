@@ -1,7 +1,14 @@
+.container {
+  padding: 40px;
+  width: 100vw;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
 .ProfileForm {
-    width: 40%;
-    max-width: 90%;
-    padding: 0 40px;
+    width: 100%;
+    max-width: 800px;
+    padding: 25px;
     margin: auto ;
     font-size: 16px;
     color: #fff;
@@ -12,10 +19,13 @@
   
   .ProfileForm h1 {
     font-size: 32px;
+    line-height: 40px;
     font-weight: 700;
     text-align: center;
-    padding-bottom: 20px;
-    margin-top: 20px;
+    background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   
   .ProfileForm form {
@@ -26,13 +36,37 @@
   }
   
   .ProfileForm label {
-    color: #fff;
-    font-weight: bold;
-    font-size: x-large;
+    font-weight: 500;
+    font-size: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    max-width: 400px;
+
+    > span {
+      background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    > p {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 400;
+      margin: 0;
+    }
+
+    > input {
+      margin: 0;
+      width: -webkit-fill-available;
+    }
   }
   
   .inputField{
-    width: 70%;
+    width: 100%;
+    max-width: 400px;
     padding: 8px;
     margin-top: 15px;
     border-radius: 4px;
@@ -63,8 +97,7 @@
   }
 
   .ProfileForm button {
-    padding: 10px 20px;
-    margin: 30px 2px;
+    padding: 10px 40px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -77,22 +110,23 @@
   }
   
   .ProfileForm .editBtn {
+    background-color: #686868;
+    color: #000;
+  }
+  
+  .ProfileForm .editBtn:hover {
+    background-color: #c7c7c7;
+  }
+
+  .ProfileForm .saveBtn {
     background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
     color: black;
   }
   
-  .ProfileForm .editBtn:hover {
+  .ProfileForm .saveBtn:hover {
     background: linear-gradient(360deg, rgb(2, 134, 255) 0%, rgb(2, 157, 255) 28%, rgba(2,181,255,1) 60%, rgba(2,240,255,1) 100%);
   }
   
-  .ProfileForm .saveBtn {
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
-    color: black;
-  }
-  
-  .ProfileForm .saveBtn:hover {
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,96,168,1) 35%, rgba(0,212,255,1) 100%);
-  }
   
   .ProfileForm .homeBtn {
     background: rgba(255,255,255,0.3);
@@ -123,7 +157,7 @@
     width: 50%;
     cursor: pointer;
     font-weight: 700;
-    color: #b7b7b7;
+    color: #888;
     transition: all 0.3s ease-in-out;
     padding-bottom: 10px;
   }

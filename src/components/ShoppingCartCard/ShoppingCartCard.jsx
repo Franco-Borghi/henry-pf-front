@@ -72,6 +72,7 @@ export function ShoppingCartCard({el}) {
       <div className={styles.container}>
         <img onClick={() => navigate(`/${el.id}`)} src={motorcycleDetails.image} alt="Item image" />
         <div className={styles['main-container']}>
+          <div className={styles['main-container-background']}></div>
           <div className={styles['info-container']}>
             <div>
               <p>{motorcycleDetails.category}</p>
@@ -79,15 +80,15 @@ export function ShoppingCartCard({el}) {
               <h4>{motorcycleDetails.year}</h4>
             </div>
 
-            <div style={{ display: 'flex', gap: '10px', alignItems: 'center', paddingBottom: '5px', borderBottom: `2px solid ${el.color}`, width: 'fit-content'}}>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center', paddingBottom: '5px', width: 'fit-content'}}>
               <p>Color: {el.color}</p>
-              <div style={{ width: '20px', height: '20px', background: `${el.color}`, border: '1px solid black'}}></div>
+              <div style={{ width: '20px', height: '20px', background: `${el.color}`, border: '1px solid white'}}></div>
             </div>
 
             <div className={styles['actions-container']}>
               <div className={styles['counter']}>
                 <span onClick={() => el.quantity > 1 && dispatch(updateCartItemQuantity({id: el.id, quantity: -1, userEmail: user.email, color: el.color}))} style={{cursor: 'pointer'}}>-</span>
-                <span>{`${el.quantity}`}</span>
+                <span style={{ paddingLeft: '0', paddingRight: '0', userSelect: 'none'}}>{`${el.quantity}`}</span>
                 <span onClick={() => validateStock(el.quantity) && dispatch(updateCartItemQuantity({id: el.id, quantity: 1, userEmail: user.email, color: el.color}))} style={{cursor: 'pointer'}}>+</span>
               </div>
               <div onClick={() => dispatch(deleteItemFromCart(el))} className={styles['delete']}>
