@@ -16,7 +16,7 @@ export default function Dashboard() {
     <>
       <NavBar />
       <div className={styles['list-container']}>
-        <FilterBar>
+        <FilterBar status={true}>
           {/* <ReturnToHomeButton/> */}
           {/* <h3 style={{ paddingTop: '40px'}}>Admin Bar</h3> */}
           <NavLink to="/admin" end >Dashboard</NavLink>

@@ -5,8 +5,7 @@ import { useEffect } from 'react';
 import Swal from "sweetalert2";
 import withReactContent from 'sweetalert2-react-content';
 import { Link, useNavigate } from 'react-router-dom';
-import styles from "./ProfileForm.module.css";
-import ReturnToHomeButton from '../../ReturnToHomeButton/ReturnToHomeButton';
+import styles from "./ProfileForm.module.scss";
 import Review from '../Reviews/Review';
 import PersonalData from '../PersonalData/PersonalData';
 import OrdersProfile from '../OrdersProfile/OrdersProfile';
@@ -89,8 +88,7 @@ export default function ProfileForm() {
 
   return (
 
-    <div>
-      <ReturnToHomeButton />
+    <div className={styles.container}>
       <div className={styles.ProfileForm}>
         <h1>Profile Account</h1>
       <div className={styles['selector-container']}>
