@@ -175,3 +175,29 @@
     }
   }
 }
+
+@media (max-width: 1023px) {
+  .detail-container {
+    max-width: 700px;
+    flex-direction: column;
+
+    .img-container {
+      width: 100%;
+    }
+
+    .detail {
+      width: 100%;
+
+      h1 {
+        font-size: 32px !important;
+        line-height: 38px !important;
+      }
+
+      .price-container {
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: flex-start;
+      }
+    }
+  }
+}
