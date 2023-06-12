@@ -25,7 +25,7 @@
     gap: 30px;
   }
   
-  .ProfileForm label {
+  .labelElement {
     color: #fff;
     font-weight: bold;
     font-size: x-large;

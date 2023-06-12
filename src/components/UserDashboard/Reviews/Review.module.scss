@@ -1,68 +1,3 @@
-.rate {
-    float: left;
-    height: 46px;
-    padding: 0 10px;
-}
-.rate:not(:checked) > input {
-    position:absolute;
-    top:-9999px;
-}
-.rate:not(:checked) > label {
-    float:right;
-    width:1em;
-    overflow:hidden;
-    white-space:nowrap;
-    cursor:pointer;
-    font-size:30px;
-    color:#ccc;
-}
-.rate:not(:checked) > label:before {
-    content: '★ ';
-}
-.rate > input:checked ~ label {
-    color: #ffc700;    
-}
-.rate:not(:checked) > label:hover,
-.rate:not(:checked) > label:hover ~ label {
-    color: #deb217;  
-}
-.rate > input:checked + label:hover,
-.rate > input:checked + label:hover ~ label,
-.rate > input:checked ~ label:hover,
-.rate > input:checked ~ label:hover ~ label,
-.rate > label:hover ~ input:checked ~ label {
-    color: #c59b08;
-}
-
-.reviewContainer {
-    float: left;
-    height: 46px;
-    padding: 0 10px;
-}
-.reviewContainer:not(:checked) > input {
-    position:absolute;
-    top:-9999px;
-}
-.reviewContainer:not(:checked) > label {
-    float:right;
-    width:1em;
-    overflow:hidden;
-    white-space:nowrap;
-    font-size:30px;
-    color:#ccc;
-}
-.reviewContainer:not(:checked) > label:before {
-    content: '★ ';
-}
-.reviewContainer > input:checked ~ label {
-    color: #ffc700;    
-}
-
-.reviewContainer > p{
-    text-align: left;
-    color: black;
-}
-
 .order-details-table {
     width: 100%;
     border-collapse: collapse;
@@ -76,4 +11,4 @@
   .order-item-row th {
     text-align: center;
   }
-  
+
