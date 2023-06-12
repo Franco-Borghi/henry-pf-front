@@ -100,16 +100,16 @@ export default function ProfileForm() {
             <h4 onClick={handleReviews} className={styles[`${reviews}`]}>Reviews</h4>
           </div>
           <div data-visible={`${profile}`} className={styles[`selector-content`]}>
-          <PersonalData profileData={profileData} handleEditClick={handleEditClick} handleInputChange={handleInputChange} handleSaveClick={handleSaveClick} editMode={editMode}/>
+            <PersonalData profileData={profileData} handleEditClick={handleEditClick} handleInputChange={handleInputChange} handleSaveClick={handleSaveClick} editMode={editMode}/>
           </div>
           <div data-visible={`${orders}`} className={styles[`selector-content`]}>
-          <OrdersProfile selectedOrders={selectedOrders} profileData={profileData} toggleItems={toggleItems} />
-            </div>
-            <div data-visible={`${reviews}`} className={styles[`selector-content`]}>
-              <Review orders={profileData?.orders} user={user} />
-            </div>
-              </div>
-    </div>
+            <OrdersProfile selectedOrders={selectedOrders} profileData={profileData} toggleItems={toggleItems} />
+          </div>
+          <div data-visible={`${reviews}`} className={styles[`selector-content`]}>
+            <Review orders={profileData?.orders} user={user} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
