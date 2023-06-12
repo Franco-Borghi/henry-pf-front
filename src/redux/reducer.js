@@ -1,9 +1,10 @@
-import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID, ORDER_ASC, ORDER_DESC, SET_ACTIVE_SEARCH, ADD_ITEM_TO_CART, DELETE_ITEM_FROM_CART, UPDATE_CART_ITEM_QUANTITY, GET_ORDERS, GET_USER_BY_ID  } from "./actions";
+import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID, ORDER_ASC, ORDER_DESC, SET_ACTIVE_SEARCH, ADD_ITEM_TO_CART, DELETE_ITEM_FROM_CART, UPDATE_CART_ITEM_QUANTITY, GET_ORDERS, GET_USER_BY_ID, ADD_ITEM_TO_FAVS, DELETE_ITEM_FROM_FAVS  } from "./actions";
 
 const initialState = {
     motos: [],
     allMotorcycles: [],
     shoppingCart: [],
+    favourites: [],
     filterCategory: [],
     filterBrand: [],
     orderAsc : false,
@@ -96,7 +97,21 @@ export const reducer = (state = initialState, action) => {
                     shoppingCart: [...state.shoppingCart, action.payload],
                 }
             }
-            
+
+        case ADD_ITEM_TO_FAVS:
+            if (Array.isArray(action.payload)) {
+                return {
+                    ...state,
+                    favourites: [...action.payload]
+                }
+            } else {
+                console.log(`favourites${action.payload.userEmail}`);
+                localStorage.setItem(`favourites${action.payload.userEmail}`, JSON.stringify([...state.favourites, action.payload]));
+                return {
+                    ...state,
+                    favourites: [...state.favourites, action.payload],
+                }
+            }
 
         case DELETE_ITEM_FROM_CART:
             const itemToRemove = state.shoppingCart.indexOf(action.payload);
@@ -110,7 +125,20 @@ export const reducer = (state = initialState, action) => {
                     shoppingCart: [...newState],
                 }
             }
-            break;
+
+        case DELETE_ITEM_FROM_FAVS:
+            const fav = state.favourites.filter(el => el.id === action.payload.id)
+            const favsToRemove = state.favourites.indexOf(fav[0]);
+
+            if (favsToRemove > -1) {
+                const newState = state.favourites;
+                newState.splice(favsToRemove, 1)
+                localStorage.setItem(`favourites${action.payload.userEmail}`, JSON.stringify([...newState]));
+                return {
+                    ...state,
+                    favourites: [...newState],
+                }
+            }
 
         case UPDATE_CART_ITEM_QUANTITY:
             const cart = state.shoppingCart;
@@ -125,7 +153,6 @@ export const reducer = (state = initialState, action) => {
                     shoppingCart: [...cart],
                 }
             }
-            break;
             
         case GET_ORDERS:
             return{

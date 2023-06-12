@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home/Home"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { addItemToCart, fetchData, getUserById } from "./redux/actions";
+import { addItemToCart, fetchData, getUserById, addItemToFavs } from "./redux/actions";
+import { CreateMotorcycle } from "./containers/CreateMotorcycle/CreateMotorcycle";
 import { ItemDetail } from "./containers/ItemDetail/ItemDetail";
 import { Layout } from "./components/Layout/Layout";
 import { ShoppingCart } from "./containers/ShoppingCart/ShoppingCart";
@@ -20,6 +21,7 @@ import ContactUs from "./components/ContactUs/ContactUs";
 import AboutUs from "./components/Footer/AboutUs/AboutUs"
 import Items from "./components/AdminDashboard/Items/Items";
 import { Order } from "./components/AdminDashboard/Order/Order";
+import { Favourites } from "./containers/Favourites/Favourites";
 
 function App() {
 
@@ -36,6 +38,15 @@ function App() {
       }
     } else {
       dispatch(addItemToCart([]));
+    }
+
+    if (isAuthenticated && user && user.email && localStorage.getItem(`favourites${user.email}`)) {
+      const storedFavourites = JSON.parse(localStorage.getItem(`favourites${user.email}`));
+      if (storedFavourites.length) {
+        dispatch(addItemToFavs(storedFavourites));
+      }
+    } else {
+      dispatch(addItemToFavs([]));
     }
 
     if (isAuthenticated && user && user.email) {
@@ -60,6 +71,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/:id" element={<ItemDetail />} />
             <Route path="/shopping-cart" element={<ShoppingCart />} />
+            <Route path="/favourites" element={<Favourites />} />
             <Route path="/profile" element={< ProfileForm />} />
             <Route path='/contact-us' element={<ContactUs />}></Route>
             <Route path="/about-us" element={<AboutUs />} />
@@ -69,7 +81,6 @@ function App() {
             isAuthenticated  &&  reduxUser && reduxUser.role === 'admin' &&   TODO: descomentar */}
           <Route path="admin" element={<Dashboard />} >
             <Route index element={<Graphs />} />
-            {/* <Route path="itemsTable" element={<ItemsTable />} /> */}
             <Route path="items" element={<Items />} />
             <Route path="motorcycles" element={<MotorcyclesTable />} /> {/* A cambiar luego */}
             <Route path="create" element={<Form />} />

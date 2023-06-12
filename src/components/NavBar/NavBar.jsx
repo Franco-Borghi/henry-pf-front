@@ -68,6 +68,18 @@ export default function NavBar(props) {
             </Link>
 
             {
+              isAuthenticated  && reduxUser && reduxUser.role === 'client' && 
+                <Link to="/favourites">
+                  <div className={styles['icon-container']} >
+                    <button className={styles.btnIcon}>
+                      <ion-icon style={{ color: "#fff"}} className='svg' size="small" name="heart-circle-sharp"></ion-icon>
+                    </button>
+                    <p className={styles.txtBtnIcons}>Favourites</p>
+                  </div>
+                </Link>
+            }
+
+            {
               isAuthenticated  && reduxUser && reduxUser.role === 'client'
               &&  <Link to="/shopping-cart">
                       <div className={styles['icon-container']} >
