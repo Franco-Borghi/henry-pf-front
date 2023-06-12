@@ -10,7 +10,7 @@ export const Favourites = () => {
 
   return (
     <div className={styles.container}>
-      <h2>Favourites Motorcycles</h2>
+      <h2>Favourites</h2>
       {
         favourites && favourites.length
         ? <div className={styles['grid-container']}>

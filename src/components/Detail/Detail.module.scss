@@ -181,6 +181,11 @@
     max-width: 700px;
     flex-direction: column;
 
+    .heart-container {
+      top: 10px;
+      right: 10px;
+    }
+
     .img-container {
       width: 100%;
     }

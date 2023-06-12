@@ -26,10 +26,10 @@ export default function NavBar(props) {
 
   function onClickLogo (){
     navigate('/')
-    fetchDataByName(dispatch, "");
-    searchInput.current.value = "";
-    categoriesFilter.forEach(c => dispatch(changeFilterCategory(c)))
-    brandsFilter.forEach(b => dispatch(changeFilterBrand(b)))
+    // fetchDataByName(dispatch, "");
+    // searchInput.current.value = "";
+    // categoriesFilter.forEach(c => dispatch(changeFilterCategory(c)))
+    // brandsFilter.forEach(b => dispatch(changeFilterBrand(b)))
   }
 
   React.useEffect(() => {
