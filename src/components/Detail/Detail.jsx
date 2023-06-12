@@ -8,7 +8,7 @@ import { addItemToCart, addItemToFavs, deleteItemFromFavs } from "../../redux/ac
 import { useAuth0 } from "@auth0/auth0-react";
 import swal from 'sweetalert2';
 import { convertirNumero } from '../../utils';
-import Stars from "../UserDashboard/Reviews/Stars"
+import { Rating } from "@mui/material";
 
 export default function Detail() {
   const [motorcycle, setMotorcycle] = useState(null);
@@ -149,7 +149,7 @@ export default function Detail() {
       .then(d => {
         if(d.data.length > 0) {let total = 0;
         d.data.forEach(r => total += r.rating)
-        setRating({[`rating-${id}`]: Math.ceil(total/d.data.length)})}
+        setRating(Math.ceil(total/d.data.length))}
       })
     };
     fetchMotorcycle();
@@ -210,7 +210,12 @@ export default function Detail() {
             <p>{motorcycle.category}</p>
             <h1>{motorcycle.brand} {motorcycle.model}</h1>
             <h3>{motorcycle.year}</h3>
-            {rating !== null ? <Stars inputs={rating} item={motorcycle} /> : null }
+            {rating !== null ? <Rating
+            name="read-only-detail"
+            value={rating}
+            readOnly
+            size="large"
+          />  : null }
           </div>
           <div className={styles['separator']}></div>
           <div className={styles['price-container']}>

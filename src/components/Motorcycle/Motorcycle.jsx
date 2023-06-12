@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import React, { useState } from 'react'
 import styles from "./Motorcycle.module.scss";
 import { useSelector } from 'react-redux';
-import Stars from '../UserDashboard/Reviews/Stars';
 import axios from 'axios';
+import Rating from '@mui/material/Rating'; 
 
 export default function Motorcycle(props) {
 
@@ -42,7 +42,7 @@ export default function Motorcycle(props) {
       .then(d => {
         if(d.data.length > 0) {let total = 0;
         d.data.forEach(r => total += r.rating)
-        setRating({[`rating-${id}`]: Math.ceil(total/d.data.length)})}
+        setRating( Math.ceil(total/d.data.length))}
       })
   }, [])
 
@@ -63,7 +63,13 @@ export default function Motorcycle(props) {
             <p>{category}</p>
             <h4>{`${brand} ${model}`}</h4>
             <p>{year}</p>
-            {rating !== null ? <Stars inputs={rating} item={{id: id}}></Stars>:null}
+            {rating !== null ? 
+            <Rating
+            name="read-only-motorcycle"
+            value={rating}
+            readOnly
+          /> 
+            :null}
             {/* <p>{description}</p> */}
           </div>
           <div className={styles.buttonContainer}>

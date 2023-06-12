@@ -8,6 +8,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from "./ProfileForm.module.css";
 import ReturnToHomeButton from '../../ReturnToHomeButton/ReturnToHomeButton';
 import Review from '../Reviews/Review';
+import PersonalData from '../PersonalData/PersonalData';
+import OrdersProfile from '../OrdersProfile/OrdersProfile';
 
 export default function ProfileForm() {
   const [editMode, setEditMode] = useState(false);
@@ -98,145 +100,10 @@ export default function ProfileForm() {
             <h4 onClick={handleReviews} className={styles[`${reviews}`]}>Reviews</h4>
           </div>
           <div data-visible={`${profile}`} className={styles[`selector-content`]}>
-          <section>
-          <form>
-            <div >
-              <label>
-                Email:
-                <input className={styles.inputField}
-                  type="text"
-                  disabled
-                  value={profileData?.email}
-                />
-              </label>
-            </div>
-  
-            <div>
-              <label >
-                First Name:
-                {editMode ? (
-                  <input className={styles.inputField}
-                    type="text"
-                    name="firstName"
-                    value={profileData?.firstName}
-                    onChange={handleInputChange}
-                  />
-                ) : (
-                  <p className={styles['user-data-label']}>{profileData?.firstName}</p>
-                )}
-              </label>
-            </div>
-  
-            <div>
-              <label >
-                Last Name:
-                {editMode ? (
-                  <input className={styles.inputField}
-                    type="text"
-                    name="lastName"
-                    value={profileData?.lastName}
-                    onChange={handleInputChange}
-                  />
-                ) : (
-                  <p className={styles['user-data-label']}>{profileData?.lastName}</p>
-                )}
-              </label>
-            </div>
-  
-            <div>
-              <label>
-                Phone Number:
-                {editMode ? (
-                  <input className={styles.inputField}
-                    type="tel"
-                    name="phoneNumber"
-                    value={profileData?.phoneNumber}
-                    onChange={handleInputChange}
-                  />
-                ) : (
-                  <p className={styles['user-data-label']}>{profileData?.phoneNumber}</p>
-                )}
-              </label>
-            </div>
-  
-            <div>
-              <label >
-                ID Number:
-                {editMode ? (
-                  <input className={styles.inputField}
-                    type="text"
-                    name="idNumber"
-                    value={profileData?.idNumber}
-                    onChange={handleInputChange}
-                  />
-                ) : (
-                  <p className={styles['user-data-label']}>{profileData?.idNumber}</p>
-                )}
-              </label>
-            </div>
-        
-
-
-          <section>
-            {editMode ? (
-              <button className={styles.saveBtn} onClick={handleSaveClick}>Save</button>
-            ) : (
-              <button className={styles.editBtn} onClick={handleEditClick}>Edit</button>
-            )}
-          </section>
-        </form>
-      </section>
+          <PersonalData profileData={profileData} handleEditClick={handleEditClick} handleInputChange={handleInputChange} handleSaveClick={handleSaveClick} editMode={editMode}/>
           </div>
           <div data-visible={`${orders}`} className={styles[`selector-content`]}>
-          <ul className={styles['orders-list']}>
-        {profileData?.orders ? (
-          profileData.orders.map((o) => (
-            <li className={styles['order-item']}>
-              <div>
-                <p className={styles['order-info']}>Order Number: {o?.orderNumber}</p>
-                <p className={styles['order-info']}>Date: {o?.date}</p>
-                <p className={styles['order-info']}>Amount: ${o?.amountPaid}</p>
-                <p
-                  onClick={() => toggleItems(o.orderNumber)}
-                  className={styles['order-details-toggle']}
-                >
-                  Details:
-                </p>
-                {selectedOrders.includes(o.orderNumber) && (
-                  <table className={styles['order-details-table']}>
-                    <thead>
-                      <tr className={styles['order-item-row']}>
-                        <th>Brand</th>
-                        <th>Model</th>
-                        <th>Transmission</th>
-                        <th>CC</th>
-                        <th>Year</th>
-                        <th>Color</th>
-                        <th>Price</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {o?.items?.map((item, index) => (
-                        <tr className={styles['order-item-row']} key={index}>
-                          <td>{item?.motorcycle?.brand}</td>
-                          <td>{item?.motorcycle?.model}</td>
-                          <td>{item?.motorcycle?.transmission}</td>
-                          <td>{item?.motorcycle?.cc}</td>
-                          <td>{item?.motorcycle?.year}</td>
-                          <td>{item?.color}</td>
-                          <td>{item?.motorcycle?.price}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                )}
-              </div>
-            </li>
-          ))
-        ) : (
-          <h4 className={styles['no-orders-message']}>You don't have any orders</h4>
-        )}
-      </ul>
+          <OrdersProfile selectedOrders={selectedOrders} profileData={profileData} toggleItems={toggleItems} />
             </div>
             <div data-visible={`${reviews}`} className={styles[`selector-content`]}>
               <Review orders={profileData?.orders} user={user} />
