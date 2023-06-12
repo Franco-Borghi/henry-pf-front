@@ -5,8 +5,7 @@ import { useEffect } from 'react';
 import Swal from "sweetalert2";
 import withReactContent from 'sweetalert2-react-content';
 import { Link, useNavigate } from 'react-router-dom';
-import styles from "./ProfileForm.module.css";
-import ReturnToHomeButton from '../../ReturnToHomeButton/ReturnToHomeButton';
+import styles from "./ProfileForm.module.scss";
 import Review from '../Reviews/Review';
 import PersonalData from '../PersonalData/PersonalData';
 import OrdersProfile from '../OrdersProfile/OrdersProfile';
@@ -89,8 +88,7 @@ export default function ProfileForm() {
 
   return (
 
-    <div>
-      <ReturnToHomeButton />
+    <div className={styles.container}>
       <div className={styles.ProfileForm}>
         <h1>Profile Account</h1>
       <div className={styles['selector-container']}>
@@ -100,16 +98,16 @@ export default function ProfileForm() {
             <h4 onClick={handleReviews} className={styles[`${reviews}`]}>Reviews</h4>
           </div>
           <div data-visible={`${profile}`} className={styles[`selector-content`]}>
-          <PersonalData profileData={profileData} handleEditClick={handleEditClick} handleInputChange={handleInputChange} handleSaveClick={handleSaveClick} editMode={editMode}/>
+            <PersonalData profileData={profileData} handleEditClick={handleEditClick} handleInputChange={handleInputChange} handleSaveClick={handleSaveClick} editMode={editMode}/>
           </div>
           <div data-visible={`${orders}`} className={styles[`selector-content`]}>
-          <OrdersProfile selectedOrders={selectedOrders} profileData={profileData} toggleItems={toggleItems} />
-            </div>
-            <div data-visible={`${reviews}`} className={styles[`selector-content`]}>
-              <Review orders={profileData?.orders} user={user} />
-            </div>
-              </div>
-    </div>
+            <OrdersProfile selectedOrders={selectedOrders} profileData={profileData} toggleItems={toggleItems} />
+          </div>
+          <div data-visible={`${reviews}`} className={styles[`selector-content`]}>
+            <Review orders={profileData?.orders} user={user} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

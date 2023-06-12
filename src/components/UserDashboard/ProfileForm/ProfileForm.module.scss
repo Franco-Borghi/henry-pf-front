@@ -1,7 +1,14 @@
+.container {
+  padding: 40px;
+  width: 100vw;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
 .ProfileForm {
-    width: 40%;
-    max-width: 90%;
-    padding: 0 40px;
+    width: 100%;
+    max-width: 800px;
+    padding: 25px;
     margin: auto ;
     font-size: 16px;
     color: #fff;
@@ -12,10 +19,13 @@
   
   .ProfileForm h1 {
     font-size: 32px;
+    line-height: 40px;
     font-weight: 700;
     text-align: center;
-    padding-bottom: 20px;
-    margin-top: 20px;
+    background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   
   .ProfileForm form {
@@ -30,9 +40,39 @@
     font-weight: bold;
     font-size: x-large;
   }
+
+  .ProfileForm label {
+    font-weight: 500;
+    font-size: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    max-width: 400px;
+
+    > span {
+      background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    > p {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 400;
+      margin: 0;
+    }
+
+    > input {
+      margin: 0;
+      width: -webkit-fill-available;
+    }
+  }
   
   .inputField{
-    width: 70%;
+    width: 100%;
+    max-width: 400px;
     padding: 8px;
     margin-top: 15px;
     border-radius: 4px;
@@ -63,8 +103,7 @@
   }
 
   .ProfileForm button {
-    padding: 10px 20px;
-    margin: 30px 2px;
+    padding: 10px 40px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -77,22 +116,23 @@
   }
   
   .ProfileForm .editBtn {
+    background-color: #686868;
+    color: #000;
+  }
+  
+  .ProfileForm .editBtn:hover {
+    background-color: #c7c7c7;
+  }
+
+  .ProfileForm .saveBtn {
     background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
     color: black;
   }
   
-  .ProfileForm .editBtn:hover {
+  .ProfileForm .saveBtn:hover {
     background: linear-gradient(360deg, rgb(2, 134, 255) 0%, rgb(2, 157, 255) 28%, rgba(2,181,255,1) 60%, rgba(2,240,255,1) 100%);
   }
   
-  .ProfileForm .saveBtn {
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
-    color: black;
-  }
-  
-  .ProfileForm .saveBtn:hover {
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,96,168,1) 35%, rgba(0,212,255,1) 100%);
-  }
   
   .ProfileForm .homeBtn {
     background: rgba(255,255,255,0.3);
@@ -123,7 +163,7 @@
     width: 50%;
     cursor: pointer;
     font-weight: 700;
-    color: #b7b7b7;
+    color: #888;
     transition: all 0.3s ease-in-out;
     padding-bottom: 10px;
   }
@@ -153,31 +193,69 @@
   
   .order-item {
     padding: 10px;
+    border-bottom: 1px solid #888;
   }
   
   .order-info {
-    font-weight: bold;
-    margin: 5px 0;
+    font-weight: 700;
+
+    span {
+      font-weight: 400;
+      color: #c7c7c7;
+    }
   }
   
   .order-details-toggle {
     cursor: pointer;
     margin-bottom: 5px;
+    color: greenyellow;
+    padding: 8px 12px;
+    border-radius: 4px;
+    background-color: #484848;
+    width: fit-content;
   }
   
+  .order-details-table-container {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #484848;
+    overflow-x: scroll;
+  }
+
   .order-details-table {
     width: 100%;
+    min-width: 620px;
     border-collapse: collapse;
+
+    thead {
+      th {
+        padding: 10px 0;
+      }
+
+      border-bottom: 2px solid #c7c7c7;
+    }
+
+    tbody {
+      td {
+        padding: 10px 0;
+      }
+      tr {
+        border-bottom: 1px solid #888;
+      }
+    }
   }
   
   .order-item-row td {
     padding-top: 10px;
     text-align: center;
+
   }
 
   .order-item-row th {
     text-align: center;
   }
+
   
   .no-orders-message {
     margin: 20px 0;
@@ -189,3 +267,9 @@
     margin-left: 20px;
     font-size: x-large;
   }
+
+@media (max-width: 1023px) {
+  .container {
+    padding: 40px 25px;
+  }
+}
