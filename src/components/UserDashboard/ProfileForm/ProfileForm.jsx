@@ -6,8 +6,8 @@ import Swal from "sweetalert2";
 import withReactContent from 'sweetalert2-react-content';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from "./ProfileForm.module.scss";
-import ReturnToHomeButton from '../../ReturnToHomeButton/ReturnToHomeButton';
 import Review from '../Reviews/Review';
+import { convertirNumero } from '../../../utils';
 
 export default function ProfileForm() {
   const [editMode, setEditMode] = useState(false);
@@ -99,12 +99,18 @@ export default function ProfileForm() {
           <div data-visible={`${profile}`} className={styles[`selector-content`]}>
           <section>
           <form>
-            <div >
+            <div>
               <label>
                 <span>Email:</span>
                   <p className={styles['user-data-label']}>{profileData?.email}</p>
               </label>
             </div>
+
+            {
+              editMode
+              ? <div style={{ height: '1px', width: '100%', background: '#888'}}></div>
+              : null
+            }
   
             <div>
               <label >
@@ -195,43 +201,42 @@ export default function ProfileForm() {
         {profileData?.orders ? (
           profileData.orders.map((o) => (
             <li className={styles['order-item']}>
-              <div>
-                <p className={styles['order-info']}>Order Number: {o?.orderNumber}</p>
-                <p className={styles['order-info']}>Date: {o?.date}</p>
-                <p className={styles['order-info']}>Amount: ${o?.amountPaid}</p>
-                <p
-                  onClick={() => toggleItems(o.orderNumber)}
-                  className={styles['order-details-toggle']}
-                >
-                  Details:
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px'}}>
+                <p className={styles['order-info']}>Order Number: <span>{o?.orderNumber}</span></p>
+                <p className={styles['order-info']}>Date: <span>{o?.date}</span></p>
+                <p className={styles['order-info']}>Amount: <span>$USD {convertirNumero(o?.amountPaid)}</span></p>
+                <p onClick={() => toggleItems(o.orderNumber)} className={styles['order-details-toggle']}>
+                  Details
                 </p>
                 {selectedOrders.includes(o.orderNumber) && (
-                  <table className={styles['order-details-table']}>
-                    <thead>
-                      <tr className={styles['order-item-row']}>
-                        <th>Brand</th>
-                        <th>Model</th>
-                        <th>Transmission</th>
-                        <th>CC</th>
-                        <th>Year</th>
-                        <th>Color</th>
-                        <th>Price</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {o?.items?.map((item, index) => (
-                        <tr className={styles['order-item-row']} key={index}>
-                          <td>{item?.motorcycle?.brand}</td>
-                          <td>{item?.motorcycle?.model}</td>
-                          <td>{item?.motorcycle?.transmission}</td>
-                          <td>{item?.motorcycle?.cc}</td>
-                          <td>{item?.motorcycle?.year}</td>
-                          <td>{item?.color}</td>
-                          <td>{item?.motorcycle?.price}</td>
+                  <div className={styles['order-details-table-container']}>
+                    <table className={styles['order-details-table']}>
+                      <thead>
+                        <tr className={styles['order-item-row']}>
+                          <th>Brand</th>
+                          <th>Model</th>
+                          <th>Transmission</th>
+                          <th>CC</th>
+                          <th>Year</th>
+                          <th>Color</th>
+                          <th>Price</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {o?.items?.map((item, index) => (
+                          <tr className={styles['order-item-row']} key={index}>
+                            <td>{item?.motorcycle?.brand}</td>
+                            <td>{item?.motorcycle?.model}</td>
+                            <td>{item?.motorcycle?.transmission}</td>
+                            <td>{item?.motorcycle?.cc}</td>
+                            <td>{item?.motorcycle?.year}</td>
+                            <td>{item?.color}</td>
+                            <td>{convertirNumero(item?.motorcycle?.price)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 )}
               </div>
             </li>
