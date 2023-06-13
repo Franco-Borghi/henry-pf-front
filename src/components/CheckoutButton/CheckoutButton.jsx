@@ -3,7 +3,7 @@ import { PayPalScriptProvider,PayPalButtons,FUNDING,} from "@paypal/react-paypal
 import { useAuth0 } from "@auth0/auth0-react";
 import { useSelector } from "react-redux";
 import swal from "sweetalert2";
-import { addItemToCart, fetchData } from "../../redux/actions";
+import { addItemToCart, fetchData, setCurrentOrder } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
 export function CheckoutButton() {
@@ -85,6 +85,8 @@ export function CheckoutButton() {
           items: itemsToPost,
           orderStatus: "Completed",
         };
+
+        dispatch(setCurrentOrder(postData))
   
         fetch(`${process.env.REACT_APP_HOST_NAME}/orders`, {
           method: "POST",

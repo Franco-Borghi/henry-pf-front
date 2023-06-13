@@ -15,6 +15,7 @@ export const GET_ORDERS = 'GET_ORDERS';
 export const GET_USER_BY_ID = 'GET_USER_BY_ID';
 export const ADD_ITEM_TO_FAVS ='ADD_ITEM_TO_FAVS';
 export const DELETE_ITEM_FROM_FAVS ='DELETE_ITEM_FROM_FAVS';
+export const SET_CURRENT_ORDER = 'SET_CURRENT_ORDER';
 
 
 export const fetchData = (dispatch) => {
@@ -164,6 +165,13 @@ export const addItemToFavs = (data) => {
 export const deleteItemFromFavs = (data) => {
     return {
         type: DELETE_ITEM_FROM_FAVS,
+        payload: data,
+    }
+}
+
+export const setCurrentOrder = (data) => {
+    return {
+        type: SET_CURRENT_ORDER,
         payload: data,
     }
 }

@@ -23,10 +23,9 @@ import OurTime from "./components/Footer/OurTeam/OurTeam"
 import Items from "./components/AdminDashboard/Items/Items";
 import { Order } from "./components/AdminDashboard/Order/Order";
 import { Favourites } from "./containers/Favourites/Favourites";
+import CreateImageForm from "./components/CreateImageForm/CreateImageForm";
 
 function App() {
-  
-  console.log("prueba")
 
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useAuth0();
@@ -79,6 +78,7 @@ function App() {
             <Route path='/contact-us' element={<ContactUs />}></Route>
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/our-team" element={<OurTime />} />
+            <Route path="/create-image" element={<CreateImageForm />} />
           </Route>
           {/* //ruta dashAdmin */}
           {/*    {
