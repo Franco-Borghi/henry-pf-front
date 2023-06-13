@@ -24,7 +24,7 @@ export default function Footer(){
                 </div>
             
                 <div className={styles['contact-us']}>
-                <Link style={{color: "yellow"}} to="/our-team"><p>Our Team</p></Link>
+                <Link to="/our-team"><p>Our Team</p></Link>
                     <Link to='/contact-us'><p>Contact us</p></Link>
                         <div className={styles.icons}>
                             <a href="https://www.facebook.com/dinamotocicletas/">

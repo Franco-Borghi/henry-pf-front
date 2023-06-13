@@ -24,7 +24,6 @@ const AboutUs = () => {
         <div className={styles.contentWrapper}>
           <img id="image" src={imgAbout} alt="DINAMO" className={styles.aboutUsImage} />
           <div id="right-content" className={styles.rightContent}>
-            <div className={styles.bg}></div>
             <h3>WITH DINAMO YOU GET:</h3>
             <ul>
               <li><span>Warranty:</span> peace of mind with our warranty coverage</li>
@@ -39,19 +38,16 @@ const AboutUs = () => {
         </div>
 
         <div id="first-card" className={`${styles.card} ${styles.firstCard}`} style={{ marginBottom: "60px" }}>
-          <div className={styles.bg}></div>
           <h3>MISSION</h3>
           <p>"As an innovative Mexican company, we are committed to our customers, offering affordable Motorcycles with guaranteed support. Our focus is on providing exceptional value and outstanding service, ensuring that every customer receives the best experience. With our dedication to excellence and continuous innovation, we strive to exceed expectations and set new industry standards."</p>
         </div>
 
         <div id="second-card" className={`${styles.card} ${styles.secondCard}`} style={{ marginLeft: "auto", marginBottom: "60px" }}>
-          <div className={styles.bg}></div>
           <h3>VISION</h3>
           <p>"Our goal is to develop the largest, most profitable, and efficient distribution and service network of Mexican brand motorcycles in Latin America. We aim to establish a strong presence throughout the region, providing comprehensive coverage to meet the needs of our customers. Through strategic partnerships and careful expansion, we ensure that our products are accessible. Additionally, we strive to be both profitable and efficient in all areas, optimizing processes and maximizing economic results. With strategically located distribution centers and a skilled team, we deliver an exceptional experience to our customers. Our aim is to lead the Latin American market with the best distribution and service network for Mexican brand motorcycles."</p>
         </div>
 
         <div id="third-card" className={`${styles.card} ${styles.thirdCard}`} style={{ marginBottom: "60px" }}>
-          <div className={styles.bg}></div>
           <h3>VALUES</h3>
           <ul className={styles.values}>
             <li>Our people: <span>Our team consists of highly trained and dedicated professionals, ready to provide you with excellent service and guidance.</span></li>
