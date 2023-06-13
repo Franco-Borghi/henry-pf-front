@@ -59,7 +59,7 @@
 
     > p {
       color: #fff;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 400;
       margin: 0;
     }
@@ -271,5 +271,9 @@
 @media (max-width: 1023px) {
   .container {
     padding: 40px 25px;
+
+    .ProfileForm {
+      padding: 15px;
+    }
   }
 }

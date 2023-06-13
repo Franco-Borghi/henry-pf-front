@@ -22,4 +22,37 @@ export function convertirNumero(numero) {
   }
 }
 
+export function animateElements(idsArray, direction, once) {
 
+  idsArray.forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.classList.add(`hidden`);
+    }
+  });
+
+  const options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.5
+  };
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add(`animate-appear-${direction}`);
+        entry.target.classList.remove(`hidden`);
+        if (once) {
+          observer.unobserve(entry.target);
+        }
+      }
+    });
+  }, options);
+
+  idsArray.forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+      observer.observe(element);
+    }
+  });
+}
