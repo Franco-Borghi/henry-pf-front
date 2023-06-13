@@ -168,6 +168,7 @@ export const reducer = (state = initialState, action) => {
 
         case SET_CURRENT_ORDER:
             return {
+                ...state,
                 currentOrder: action.payload,
             }
         
