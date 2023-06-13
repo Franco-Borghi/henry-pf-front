@@ -48,9 +48,9 @@ export default function CreateImageForm() {
   useEffect(() => {
     setInputs({
       ...inputs,
-      color: currentOrder.color,
-      motorcycle: currentOrder.motorcycle.model,
-      brand: currentOrder.motorcycle.brand})
+      color: currentOrder?.color,
+      motorcycle: currentOrder?.motorcycle.model,
+      brand: currentOrder?.motorcycle.brand})
     }, [currentOrder])
 
   async function handleSumbitImage(e) {
@@ -74,7 +74,7 @@ export default function CreateImageForm() {
         <section className={styles["my-form-box"]}>
           <form className={styles["my-form"]} onSubmit={handleSumbitImage}>
             <section className={styles["item-info"]}>
-              <h2>Congratulations on your purchase! Let's celebrate generating a cool image of your new {currentOrder.motorcycle.brand} {currentOrder.motorcycle.model}</h2>
+              <h2>Congratulations on your purchase! Let's celebrate generating a cool image of your new {currentOrder?.motorcycle.brand || "motorcycle"} {currentOrder?.motorcycle.model}</h2>
               <div>
                 <label for="style">Style</label>
                 <select
@@ -107,6 +107,7 @@ export default function CreateImageForm() {
               </div>
             </section>
             <input type="submit" value="Submit" />
+            <input type="submit" value="No, thank you" onClick={() => navigate('/')} style={{ marginLeft: '10px' }} />
           </form>
         </section>
         {image && (
