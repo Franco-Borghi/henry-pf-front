@@ -9,6 +9,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import swal from 'sweetalert2';
 import { convertirNumero } from '../../utils';
 import { Rating } from "@mui/material";
+import ReturnToHomeButton from "../ReturnToHomeButton/ReturnToHomeButton";
+
 
 export default function Detail() {
   const [motorcycle, setMotorcycle] = useState(null);
@@ -184,7 +186,9 @@ export default function Detail() {
   }
 
   return (
+    
     <>
+   
     <article className={styles['detail-container']}>
       {
         !stock
@@ -265,6 +269,8 @@ export default function Detail() {
         </div>
       </div>
     </article>
+    
+    
     </>
   );
 }

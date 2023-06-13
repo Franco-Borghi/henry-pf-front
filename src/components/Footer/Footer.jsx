@@ -45,6 +45,7 @@ export default function Footer(){
                             </a>     
                         </div>
                     <p>E-mail: motos@dinamo.com.mx</p>
+                    <p>Address: Tajin, 93330 Poza Rica de Hidalgo</p>
                 </div>
             </section>
 
