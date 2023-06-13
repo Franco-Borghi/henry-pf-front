@@ -19,7 +19,6 @@ export function Checkout() {
   useEffect(() => {
     if (shoppingCart && allMotorcycles) {
       const array = shoppingCart.map(el => allMotorcycles.find(moto => el.id === moto.id));
-      console.log(array);
       setMotosArray(array);
     }
   }, [shoppingCart, allMotorcycles])
@@ -30,7 +29,7 @@ export function Checkout() {
         <h4>Summary of purchase</h4>
         {
           shoppingCart.length && shoppingCart.map((el, i) => (
-            <>
+            <div key={i}>
               <div onClick={() => navigate(`/${el.id}`)} className={Style.infoContainer}>
                 <p className={Style.brand}>{motosArray && motosArray.length && `${motosArray[i].brand} ${motosArray[i].model}`}</p>
 
@@ -40,7 +39,7 @@ export function Checkout() {
                 <p className={Style.itemSubtotal}>Item subtotal: $USD {convertirNumero(el.unitPrice * el.quantity)}</p>
               </div>
               <div className={Style.separator}></div>
-            </>
+            </div>
           ))
         }
       </div>

@@ -157,7 +157,6 @@ export default function Detail() {
 
   React.useEffect(() => {
     if (motorcycle) {
-      console.log(motorcycle);
       setStock(allMotorcycles.some(moto => moto.id === motorcycle.id && moto.items.some(item => item.sold === false)))
     }
   }, [motorcycle])

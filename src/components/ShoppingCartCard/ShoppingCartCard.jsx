@@ -15,8 +15,6 @@ export function ShoppingCartCard({el}) {
   const allMotorcycles = useSelector(state => state.allMotorcycles);
   const [motorcycleDetails, setMotorcycleDetails] = React.useState(null);
 
-  console.log("el", el)
-
   const validateStock = (number) => {
     const motorcycle = allMotorcycles.find(motorcycle => motorcycle.id === el.id);
     let colorStock = 0;

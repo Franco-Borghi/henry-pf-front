@@ -3,14 +3,16 @@ import { PayPalScriptProvider,PayPalButtons,FUNDING,} from "@paypal/react-paypal
 import { useAuth0 } from "@auth0/auth0-react";
 import { useSelector } from "react-redux";
 import swal from "sweetalert2";
-import { addItemToCart, fetchData } from "../../redux/actions";
+import { addItemToCart, fetchData, setCurrentOrder } from "../../redux/actions";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export function CheckoutButton() {
 
   const { user } = useAuth0();
   const dispatch = useDispatch();
   const [isProcessing, setIsProcessing] = React.useState(false);
+  const navigate = useNavigate();
 
   function capitalizeString(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -23,6 +25,7 @@ export function CheckoutButton() {
     if (el.quantity > 1) {
         const array = [];
         for (let i = 0; i < el.quantity; i++) {
+          console.log(el)
             array.push({
             id: el.id,
             color: capitalizeString(el.color),
@@ -30,6 +33,8 @@ export function CheckoutButton() {
         }
         return array;
     } 
+    
+
 
     return {
         id: el.id,
@@ -85,6 +90,9 @@ export function CheckoutButton() {
           items: itemsToPost,
           orderStatus: "Completed",
         };
+
+        console.log(postData.items)
+        dispatch(setCurrentOrder({motorcycleId: postData.items[0].id, color: postData.items[0].color}))
   
         fetch(`${process.env.REACT_APP_HOST_NAME}/orders`, {
           method: "POST",
@@ -116,6 +124,8 @@ export function CheckoutButton() {
           .catch((error) => console.error("Error:", error));
         
         setIsProcessing(false);
+
+        navigate("/create-image")
       })
       .catch((error) => {
         setIsProcessing(false);
