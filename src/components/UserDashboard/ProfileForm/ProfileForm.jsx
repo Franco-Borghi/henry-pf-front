@@ -9,6 +9,7 @@ import styles from "./ProfileForm.module.scss";
 import Review from '../Reviews/Review';
 import PersonalData from '../PersonalData/PersonalData';
 import OrdersProfile from '../OrdersProfile/OrdersProfile';
+import validateProfile from './validate';
 
 export default function ProfileForm() {
   const [editMode, setEditMode] = useState(false);
@@ -20,6 +21,7 @@ export default function ProfileForm() {
   const [profile, setProfile] = useState(true);
   const [reviews, setReviews] = useState(false);
   const [selectedOrders, setSelectedOrders] = useState([]);
+  const [errors, setErrors] = useState({})
 
    useEffect(() => {
     if(!isAuthenticated) navigate("/")
@@ -74,7 +76,10 @@ export default function ProfileForm() {
 
   const handleSaveClick = (e) => {
     e.preventDefault()
+    const auxErrors = validateProfile(profileData)
+    if(Object.keys(auxErrors).length === 0){
     setEditMode(false);
+    setErrors({})
     console.log(profileData);
     if (profileData.idNumber === "") profileData.idNumber = null
     axios.put(`${process.env.REACT_APP_HOST_NAME}/users/${user?.sub}`, { ...profileData })
@@ -84,10 +89,16 @@ export default function ProfileForm() {
           icon: "success",
         })
       }).catch(err => console.log("ERROR", err))
+    }else{
+      setErrors(auxErrors)
+      mySwal.fire({
+        html: <strong>There are some incorrect fields, check the errors and try again</strong>,
+        icon: "warning",
+      })
+    }
   }
 
   return (
-
     <div className={styles.container}>
       <div className={styles.ProfileForm}>
         <h1>Profile Account</h1>
@@ -98,7 +109,7 @@ export default function ProfileForm() {
             <h4 onClick={handleReviews} className={styles[`${reviews}`]}>Reviews</h4>
           </div>
           <div data-visible={`${profile}`} className={styles[`selector-content`]}>
-            <PersonalData profileData={profileData} handleEditClick={handleEditClick} handleInputChange={handleInputChange} handleSaveClick={handleSaveClick} editMode={editMode}/>
+            <PersonalData errors={errors} profileData={profileData} handleEditClick={handleEditClick} handleInputChange={handleInputChange} handleSaveClick={handleSaveClick} editMode={editMode}/>
           </div>
           <div data-visible={`${orders}`} className={styles[`selector-content`]}>
             <OrdersProfile selectedOrders={selectedOrders} profileData={profileData} toggleItems={toggleItems} />
