@@ -8,19 +8,20 @@ export const CHANGE_FILTER_BRAND = "CHANGE_FILTER_BRAND"
 export const ORDER_ASC = "ORDER_ASC"
 export const ORDER_DESC = "ORDER_DESC"
 export const SET_ACTIVE_SEARCH = "SET_ACTIVE_SEARCH"
-export const ADD_ITEM_TO_CART ='ADD_ITEM_TO_CART';
-export const DELETE_ITEM_FROM_CART ='DELETE_ITEM_FROM_CART';
+export const ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART';
+export const DELETE_ITEM_FROM_CART = 'DELETE_ITEM_FROM_CART';
 export const UPDATE_CART_ITEM_QUANTITY = 'UPDATE_CART_ITEM_QUANTITY';
 export const GET_ORDERS = 'GET_ORDERS';
 export const GET_USER_BY_ID = 'GET_USER_BY_ID';
-export const ADD_ITEM_TO_FAVS ='ADD_ITEM_TO_FAVS';
-export const DELETE_ITEM_FROM_FAVS ='DELETE_ITEM_FROM_FAVS';
+export const ADD_ITEM_TO_FAVS = 'ADD_ITEM_TO_FAVS';
+export const DELETE_ITEM_FROM_FAVS = 'DELETE_ITEM_FROM_FAVS';
+export const SET_CURRENT_ORDER = 'SET_CURRENT_ORDER';
 
 
 export const fetchData = (dispatch) => {
     return axios.get(`${process.env.REACT_APP_HOST_NAME}/motorcycles`)
-    .then(d => dispatch(getAllMotos(d.data)))
-    .catch(err => console.log(err))
+        .then(d => dispatch(getAllMotos(d.data)))
+        .catch(err => console.log(err))
 }
 
 export const getAllMotos = (motos) => {
@@ -31,7 +32,7 @@ export const getAllMotos = (motos) => {
 }
 
 export const getMotosByName = (motos) => {
-    return{
+    return {
         type: GET_MOTOS_BY_NAME,
         payload: motos
     }
@@ -44,13 +45,13 @@ export const setActiveSearch = (value) => {
     }
 }
 
-export const fetchDataByName = (dispatch,value) => {
+export const fetchDataByName = (dispatch, value) => {
     return axios.get(`${process.env.REACT_APP_HOST_NAME}/motorcycles?name=${value}`)
-    .then(d => {
-        dispatch(getMotosByName(d.data));
-        dispatch(setActiveSearch(value));
-    })
-    .catch(err => console.log(err))
+        .then(d => {
+            dispatch(getMotosByName(d.data));
+            dispatch(setActiveSearch(value));
+        })
+        .catch(err => console.log(err))
 }
 
 export const postMotorcycle = async (data) => {
@@ -68,20 +69,20 @@ export const changeFilterCategory = (category) => {
     }
 }
 
-export const orderAscending =  (value) => {
-return {
+export const orderAscending = (value) => {
+    return {
         type: ORDER_ASC,
         payload: value
     }
 }
 
 
-export const orderDescending =  (value) => {
+export const orderDescending = (value) => {
     return {
-            type: ORDER_DESC,
-            payload: value
-        }
+        type: ORDER_DESC,
+        payload: value
     }
+}
 
 export const changeFilterBrand = (brand) => {
     return {
@@ -91,62 +92,62 @@ export const changeFilterBrand = (brand) => {
 }
 
 export const addItemToCart = (data) => {
-    return function(dispatch) {
+    return function (dispatch) {
 
         dispatch({
             type: ADD_ITEM_TO_CART,
             payload: data,
-          })
+        })
     }
 }
 
 export const deleteItemFromCart = (data) => {
-    return function(dispatch) {
+    return function (dispatch) {
 
         dispatch({
             type: DELETE_ITEM_FROM_CART,
             payload: data,
-          })
+        })
     }
 }
 
 export const updateCartItemQuantity = (data) => {
-    return function(dispatch) {
+    return function (dispatch) {
 
         dispatch({
             type: UPDATE_CART_ITEM_QUANTITY,
             payload: data,
-          })
+        })
     }
 }
 
-export const getOrders = ()=>{
-    return async function(dispatch){
+export const getOrders = () => {
+    return async function (dispatch) {
         const orderData = await axios.get(`${process.env.REACT_APP_HOST_NAME}/orders`)
         const orders = orderData.data;
         dispatch({
-            type: GET_ORDERS, 
+            type: GET_ORDERS,
             payload: orders
         })
     }
 }
 
 export const getUserById = (id) => {
-    return async function(dispatch) {
+    return async function (dispatch) {
         try {
             if (!id) {
                 dispatch({
                     type: GET_USER_BY_ID,
                     payload: null,
-                }) 
+                })
             }
             const response = await axios(`${process.env.REACT_APP_HOST_NAME}/users/${id}`);
             const data = await response.data;
-            
+
             dispatch({
                 type: GET_USER_BY_ID,
                 payload: data,
-            }) 
+            })
         } catch (error) {
             console.error(error.message);
         }
@@ -154,16 +155,52 @@ export const getUserById = (id) => {
 }
 
 export const addItemToFavs = (data) => {
-    return  {
+    return {
         type: ADD_ITEM_TO_FAVS,
         payload: data,
     }
-    
+
 }
 
 export const deleteItemFromFavs = (data) => {
     return {
         type: DELETE_ITEM_FROM_FAVS,
         payload: data,
+    }
+}
+
+export const setCurrentOrder = (data) => {
+
+    return async function (dispatch) {
+
+        // let orderItems = []
+
+        // data.map(async (item) => {
+        //     const response = await axios.get(`${process.env.REACT_APP_HOST_NAME}/motorcycles`)
+        //     const motorcycles = await response.data;
+        //     console.log(motorcycles)
+        //     orderItems.push({
+        //         color: item.color,
+        //         motorcycle: motorcycles.find(motorcycle => motorcycle.id === item.motorcycleId)
+        //     })
+
+        // })
+
+        // dispatch({
+        //     type: SET_CURRENT_ORDER,
+        //     payload: orderItems
+        // })
+        console.log(data)
+        const response = await axios.get(`${process.env.REACT_APP_HOST_NAME}/motorcycles/${data.motorcycleId}`)
+        const motorcycle = await response.data;
+        console.log(motorcycle)
+        
+        dispatch({
+            type: SET_CURRENT_ORDER,
+            payload: {
+                color: data.color,
+                motorcycle: motorcycle
+            }
+        })
     }
 }

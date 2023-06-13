@@ -20,13 +20,13 @@ export function ShoppingCart() {
 
 
   return (
-    <div style={{ gap: !shoppingCart.length && '0', flexDirection: !shoppingCart.length && 'column', justifyContent: !shoppingCart.length && 'center' }} className={styles['shopping-cart-container']}>
+    <div style={{ gap: !shoppingCart?.length && '0', flexDirection: !shoppingCart?.length && 'column', justifyContent: !shoppingCart?.length && 'center' }} className={styles['shopping-cart-container']}>
       {
-        shoppingCart.length
+        shoppingCart?.length
         ? <>
             <div className={styles['body-container']}>
               {
-                shoppingCart.map(element => (
+                shoppingCart?.map(element => (
                   <ShoppingCartCard el={element}/>
                 )).reverse()
               }
