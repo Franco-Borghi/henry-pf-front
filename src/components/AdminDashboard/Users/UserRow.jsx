@@ -3,6 +3,9 @@ import React from 'react';
 import swal from 'sweetalert2';
 import styles from './Users.module.scss';
 import { useNavigate } from 'react-router-dom';
+import validateUser from './validationsUser';
+import Swal from "sweetalert2";
+import withReactContent from 'sweetalert2-react-content';
 
 export function UserRow({user, getUsers}) {
 
@@ -14,8 +17,14 @@ export function UserRow({user, getUsers}) {
   const [active, setActive] = React.useState(user.active);
   const [role, setRole] = React.useState(user.role);
   const navigate = useNavigate();
+  const [errors, setErrors] = React.useState({});
+  const mySwal = withReactContent(Swal);
+ 
 
   const handlePut = () => {
+    const auxErrors = validateUser({firstName, lastName, phoneNumber, idNumber})
+    if(Object.keys(auxErrors).length === 0){
+      setErrors({}) 
     axios.put(`${process.env.REACT_APP_HOST_NAME}/users/${user.id}`, {
       // editedFromAdmin: true,
       firstName,
@@ -24,6 +33,7 @@ export function UserRow({user, getUsers}) {
       idNumber,
       active,
       role
+        
     })
     .then(() => {
       getUsers();
@@ -43,7 +53,14 @@ export function UserRow({user, getUsers}) {
         icon: "error",
         buttons: true,
       })
-    })
+      }) }
+      else{
+        setErrors(auxErrors)
+         mySwal.fire({
+          html: <strong>There are some incorrect fields, check the errors and try again</strong>,
+          icon: "warning",
+        })
+      }
   }
 
   const refreshState = () => {
