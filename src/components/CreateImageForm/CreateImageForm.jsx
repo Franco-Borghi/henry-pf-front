@@ -21,39 +21,33 @@ export default function CreateImageForm() {
     typeOfImage: "",
   })
   const [background, setBackground] = useState([
-    "Interstellar Nebula",
+    "Interstellar Nebula in space",
     "Lost Jungle Ruins",
     "Ultra-Modern Cityscape",
     "Deserted Ghost Town",
     "Burning Man",
-    "Mechanic Workshop",
+    "Mechanic's Workshop",
     "Medieval Castle",
     "Ancient Greek Temple",
     "Volcano Lair",
-    "Alien Planet",
   ])
   const [style, setStyle] = useState([
     "Cybernetic sci-fi",
     "Gothic fantasy",
     "Cyberpunk Futurism",
-    "Art Nouveau Fantasy",
-    "Cubist Abstraction",
     "Japanese Ukiyo-e",
-    "Gothic Noir",
     "Pop Art",
-    "Comic Book"
+    "Comic Book",
   ])
 
   const [typeOfImage, setTypeOfImage] = useState([
-    "Photograph",
     "Airbrush",
-    "Vector art",
     "Digital painting",
     "3D render",
-    "Marble sculpture",
     "Roman mosaic",
     "Baroque painting",
     "Abstract painting",
+    "hyperrealistic painting",
   ])
 
   useEffect(() => {
@@ -92,7 +86,7 @@ export default function CreateImageForm() {
 
               <div className={styles["input-container"]}>
                 <div>
-                  <label for="style">Style</label>
+                  <label htmlFor="style">Style</label>
                   <select
                     name="style"
                     onChange={handleChange}
@@ -107,7 +101,7 @@ export default function CreateImageForm() {
                 </div>
 
                 <div>
-                  <label for="background">Background</label>
+                  <label htmlFor="background">Background</label>
                   <select
                     name="background"
                     onChange={handleChange}
@@ -123,7 +117,7 @@ export default function CreateImageForm() {
                 </div>
 
                 <div>
-                  <label for="background">Type of image</label>
+                  <label htmlFor="background">Type of image</label>
                   <select
                     name="typeOfImage"
                     onChange={handleChange}
