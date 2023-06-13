@@ -1,6 +1,6 @@
 import styles from "../ProfileForm/ProfileForm.module.scss"
 
-export default function PersonalData({profileData, handleInputChange, handleEditClick, handleSaveClick, editMode}) {
+export default function PersonalData({profileData, handleInputChange, handleEditClick, handleSaveClick, editMode, errors}) {
     return (
       <section>
           <form>
@@ -32,6 +32,7 @@ export default function PersonalData({profileData, handleInputChange, handleEdit
                 ) : (
                   <p className={styles['user-data-label']}>{profileData?.firstName}</p>
                 )}
+                {errors.firstName ? <p className={styles['labelError']}>{errors.firstName}</p> : null}
               </label>
             </div>
   
@@ -50,6 +51,7 @@ export default function PersonalData({profileData, handleInputChange, handleEdit
                 ) : (
                   <p className={styles['user-data-label']}>{profileData?.lastName}</p>
                 )}
+                {errors.lastName ? <p className={styles['labelError']}>{errors.lastName}</p> : null}
               </label>
             </div>
   
@@ -68,6 +70,7 @@ export default function PersonalData({profileData, handleInputChange, handleEdit
                 ) : (
                   <p className={styles['user-data-label']}>{profileData?.phoneNumber}</p>
                 )}
+                {errors.phoneNumber ? <p className={styles['labelError']}>{errors.phoneNumber}</p> : null}
               </label>
             </div>
   
@@ -86,6 +89,7 @@ export default function PersonalData({profileData, handleInputChange, handleEdit
                 ) : (
                   <p className={styles['user-data-label']}>{profileData?.idNumber}</p>
                 )}
+                {errors.idNumber ? <p className={styles['labelError']}>{errors.idNumber}</p> : null}
               </label>
             </div>
         
