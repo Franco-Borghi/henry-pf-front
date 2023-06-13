@@ -36,8 +36,9 @@ export default function CreateImageForm() {
     "Gothic fantasy",
     "Cyberpunk Futurism",
     "Japanese Ukiyo-e",
-    "Pop Art",
-    "Comic Book",
+    "Post-Apocalyptic Dystopia",
+    "Retro 80s",
+    "Steampunk",
   ])
 
   const [typeOfImage, setTypeOfImage] = useState([
@@ -47,7 +48,8 @@ export default function CreateImageForm() {
     "Roman mosaic",
     "Baroque painting",
     "Abstract painting",
-    "hyperrealistic painting",
+    "Pop Art",
+    "Street Art Graffiti",
   ])
 
   useEffect(() => {
