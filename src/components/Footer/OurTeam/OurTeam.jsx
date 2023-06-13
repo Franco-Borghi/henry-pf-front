@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./OurTeam.module.scss";
 import imgAbout from "../img-about.jpg";
-import tony from "../tony.jpg";
 import { animateChildElements, animateElements } from "../../../utils";
 
 
@@ -10,11 +9,11 @@ const OurTeam = () => {
   const teamMembers = [
     {
       name: "Jose Antonio Flores",
-      position: "Full Stack Developer - Sales Manager",
+      position: "Full Stack Developer",
       education: "Benemerita Universidad Autonoma of Puebla, graduate of Henry",
       previousEmployment: "Commercial executive at Citibanamex",
-      image: tony,
-      linkedin: ''
+      image: "https://ca.slack-edge.com/TPRS7H4PN-U03HZEVB12R-29f3aebacb75-512",
+      linkedin: 'https://www.linkedin.com/in/antonio-flores-desarrollador/'
     },
     {
       // LISTO //
