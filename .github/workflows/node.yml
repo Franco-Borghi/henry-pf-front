@@ -1,0 +1,37 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Front CI
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      REACT_APP_AUTH0_DOMAIN: dev-d7oomompoyzdikuz.us.auth0.com
+      REACT_APP_AUTH0_CLIENT_ID: K17pPEVBIi4UqvYoQEQqEgk948G9oWt6
+      REACT_APP_CLIENT_ID_SANDBOX: AcTCep24viqXlaUug9XShWiauoDS3p6hvTmv5t3pQrOaahWVDdblCE7sq7orCcb_U295vTzA5zwJq3gY
+      REACT_APP_HOST_NAME: https://henry-pf-back-production-e577.up.railway.app
+      CI: false
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
