@@ -26,11 +26,11 @@ export default function CreateImageForm() {
     "Ultra-Modern Cityscape",
     "Deserted Ghost Town",
     "Burning Man",
+    "Mechanic Workshop",
     "Medieval Castle",
     "Ancient Greek Temple",
     "Volcano Lair",
     "Alien Planet",
-    ""
   ])
   const [style, setStyle] = useState([
     "Cybernetic sci-fi",
@@ -54,7 +54,6 @@ export default function CreateImageForm() {
     "Roman mosaic",
     "Baroque painting",
     "Abstract painting",
-    "Cubist painting",
   ])
 
   useEffect(() => {
@@ -87,8 +86,7 @@ export default function CreateImageForm() {
         <section className={styles["my-form-box"]}>
           <form className={styles["my-form"]} onSubmit={handleSumbitImage}>
             <section className={styles["item-info"]}>
-              <h2>Congratulations on your order! Let's celebrate generating a cool image of your new
-                {currentOrder?.motorcycle.brand || "motorcycle"} {currentOrder?.motorcycle.model}
+              <h2>Congratulations on your order! Let's celebrate generating a cool image of your new {currentOrder?.motorcycle.brand || "motorcycle"} {currentOrder?.motorcycle.model}
               </h2>
     
 
