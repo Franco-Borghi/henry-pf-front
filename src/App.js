@@ -25,6 +25,8 @@ import { Order } from "./components/AdminDashboard/Order/Order";
 import { Favourites } from "./containers/Favourites/Favourites";
 
 function App() {
+  
+  console.log("prueba")
 
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useAuth0();
