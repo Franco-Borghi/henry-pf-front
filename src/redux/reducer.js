@@ -1,4 +1,4 @@
-import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID, ORDER_ASC, ORDER_DESC, SET_ACTIVE_SEARCH, ADD_ITEM_TO_CART, DELETE_ITEM_FROM_CART, UPDATE_CART_ITEM_QUANTITY, GET_ORDERS, GET_USER_BY_ID, ADD_ITEM_TO_FAVS, DELETE_ITEM_FROM_FAVS  } from "./actions";
+import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID, ORDER_ASC, ORDER_DESC, SET_ACTIVE_SEARCH, ADD_ITEM_TO_CART, DELETE_ITEM_FROM_CART, UPDATE_CART_ITEM_QUANTITY, GET_ORDERS, GET_USER_BY_ID, ADD_ITEM_TO_FAVS, DELETE_ITEM_FROM_FAVS, CHANGE_MAX_PRICE, CHANGE_MIN_PRICE } from "./actions";
 
 const initialState = {
     motos: [],
@@ -12,6 +12,8 @@ const initialState = {
     activeSearch: '',
     orders:[],
     user: null,
+    minPrice: null,
+    maxPrice: null,
 
 }
 
@@ -55,6 +57,18 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 orderAsc: false,
                 orderDesc : action.payload,
+            }
+
+        case CHANGE_MIN_PRICE:
+            return {
+                ...state,
+                minPrice: action.payload
+            }
+
+        case CHANGE_MAX_PRICE:
+            return {
+                ...state,
+                maxPrice: action.payload
             }
 
         case CHANGE_FILTER_CATEGORY:

@@ -15,6 +15,9 @@ export const GET_ORDERS = 'GET_ORDERS';
 export const GET_USER_BY_ID = 'GET_USER_BY_ID';
 export const ADD_ITEM_TO_FAVS ='ADD_ITEM_TO_FAVS';
 export const DELETE_ITEM_FROM_FAVS ='DELETE_ITEM_FROM_FAVS';
+export const CHANGE_MIN_PRICE = 'CHANGE_MIN_PRICE';
+export const CHANGE_MAX_PRICE = 'CHANGE_MAX_PRICE';
+
 
 
 export const fetchData = (dispatch) => {
@@ -82,6 +85,20 @@ export const orderDescending =  (value) => {
             payload: value
         }
     }
+
+export const changeMinPrice = (value) => {
+    return {
+        type: CHANGE_MIN_PRICE,
+        payload: value
+    }
+}
+
+export const changeMaxPrice = (value) => {
+    return {
+        type: CHANGE_MAX_PRICE,
+        payload: value
+    }
+}
 
 export const changeFilterBrand = (brand) => {
     return {

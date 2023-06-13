@@ -15,6 +15,8 @@ export default function Motorcycles() {
   const brandsFilter = useSelector(state => state.filterBrand);
   const orderAscending = useSelector(state => state.orderAsc);
   const orderDescending = useSelector(state => state.orderDesc);
+  const minPrice = useSelector(state => state.minPrice);
+  const maxPrice = useSelector(state => state.maxPrice);
   const [displayedMotorcycles, setDisplayedMotorcycles] = useState([]);
   const [filterbar, setFilterbar] = React.useState(window.innerWidth > 1023 ? true : false);
   const [width, setWidth] = React.useState(window.innerWidth);
@@ -40,10 +42,17 @@ export default function Motorcycles() {
     if (orderDescending) {
       motorcyclesAux.sort((a, b) => b.price - a.price);
     }
+    if (minPrice !== null) {
+      motorcyclesAux = motorcyclesAux.filter(motorcycle => motorcycle.price >= minPrice);
+    }
+  
+    if (maxPrice !== null) {
+      motorcyclesAux = motorcyclesAux.filter(motorcycle => motorcycle.price <= maxPrice);
+    }
 
     setDisplayedMotorcycles(motorcyclesAux);
     setCurrentPage(1);
-  }, [motorcyclesData, categoriesFilter, brandsFilter, orderAscending, orderDescending]);
+  }, [motorcyclesData, categoriesFilter, brandsFilter, orderAscending, orderDescending, minPrice, maxPrice]);
 
   const totalMotorcycles = displayedMotorcycles.length;
   const totalPages = Math.ceil(totalMotorcycles / motorcyclesPerPage);

@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeFilterBrand, changeFilterCategory, fetchDataByName } from "../../redux/actions";
+import { changeFilterBrand, changeFilterCategory, fetchDataByName, changeMaxPrice, changeMinPrice} from "../../redux/actions";
 import styles from './Filter.module.scss';
+
 
 
 export default function Filter(){
     const allMotorcycles = useSelector(state => state.allMotorcycles)
     const [categories, setCategories] = useState([])
     const [brands, setBrands] = useState([])
+    const minPrice = useSelector(state => state.minPrice);
+    const maxPrice = useSelector(state => state.maxPrice);
     const dispatch = useDispatch();
     const categoriesFilter = useSelector(state => state.filterCategory)
     const brandsFilter = useSelector(state => state.filterBrand)
@@ -41,9 +44,26 @@ export default function Filter(){
         if (descendingState && document.getElementById('descending')) {
           document.getElementById('descending').click();
         }
+
+        dispatch(changeMinPrice(null));
+        dispatch(changeMaxPrice(null));
+   
     }
 
-    const areFiltersSelected = categoriesFilter.length > 0 || brandsFilter.length > 0;
+    function handleMinPriceChange(e) {
+      const value = e.target.value;
+      dispatch(changeMinPrice(value !== "" ? parseFloat(value) : null))
+      // setMinPrice(value !== "" ? parseFloat(value) : null);
+    }
+    
+    function handleMaxPriceChange(e) {
+      const value = e.target.value;
+      dispatch(changeMaxPrice(value !== "" ? parseFloat(value) : null))
+    }
+
+    const areFiltersSelected = categoriesFilter.length > 0 || brandsFilter.length > 0 ||  minPrice !== null || maxPrice !== null;
+   
+    
 
     return (
         <div className={styles['filters']}>
@@ -69,6 +89,12 @@ export default function Filter(){
               </div>
             )}
         </div>
+        <h3>Price Range</h3>
+  <label>Min Price:</label>
+  <input type="number" onChange={handleMinPriceChange} value={minPrice || ""} />
+  <br />
+  <label>Max Price:</label>
+  <input type="number" onChange={handleMaxPriceChange} value={maxPrice || ""} />
     </div>
     )
 }
