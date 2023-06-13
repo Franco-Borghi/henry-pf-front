@@ -76,7 +76,7 @@ const OurTeam = () => {
   }
 
   React.useEffect(() => {
-    window.innerWidth > 1023 && animateChildElements(['parent'], 'left', 1000, true);
+    window.innerWidth > 1023 && animateChildElements(['parent'], 'left', 700, true);
     window.innerWidth <= 1023 && animateElements(['child-0', 'child-1', 'child-2', 'child-3', 'child-4', 'child-5'], 'left', true)
     
   }, [])
@@ -84,7 +84,7 @@ const OurTeam = () => {
   return (
     <div className={styles.container}>
       <div className={styles.ourTeamSection}>
-        <h1 className={styles.ourTeamTitle}>Our Team Perfect</h1>
+        <h1 className={styles.ourTeamTitle}>OUR TEAM</h1>
         <div id="parent" className={styles.teamMembersContainer}>
           {sortTeamMembersByName(teamMembers).map((member, index) => (
             <div id={`child-${index}`} onClick={() => member.linkedin && window.open(member.linkedin, '_blank')} key={index} className={styles.teamMember}>
