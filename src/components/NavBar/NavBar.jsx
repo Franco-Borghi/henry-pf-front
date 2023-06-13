@@ -43,7 +43,6 @@ export default function NavBar(props) {
 
   React.useEffect(() => {
     if (isAuthenticated) {
-      console.log(user);
     }
   }, [isAuthenticated])
 

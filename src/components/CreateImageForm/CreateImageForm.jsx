@@ -1,15 +1,25 @@
 import styles from "./CreateImageForm.module.scss"
-import { Link, useLocation, useNavigate } from "react-router-dom"
-import NavBar from "../NavBar/NavBar"
-import { useState } from "react"
+import {  useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 import axios from "axios"
 
 export default function CreateImageForm() {
+  
   const navigate = useNavigate()
   const mySwal = withReactContent(Swal)
 
+  const currentOrder = useSelector(state => state.currentOrder)
+  const [image, setImage] = useState("")
+  const [inputs, setInputs] = useState({
+    brand: "BMW",
+    motorcycle: "R1250GS",
+    color: "Red",
+    style: "",
+    background: "",
+  })
   const [background, setBackground] = useState([
     "Interstellar Nebula",
     "Lost Jungle Ruins",
@@ -22,7 +32,6 @@ export default function CreateImageForm() {
     "Ancient Library Interior",
     "Underwater Atlantis",
   ])
-
   const [style, setStyle] = useState([
     "Reinassance Elegance",
     "Modernist Minimalis",
@@ -36,15 +45,13 @@ export default function CreateImageForm() {
     "Pop Art Extravaganza",
   ])
 
-  const [image, setImage] = useState("")
-
-  const [inputs, setInputs] = useState({
-    brand: "Kawasaki",
-    motorcycle: "Ninja",
-    color: "Red",
-    style: "",
-    background: "",
-  })
+  useEffect(() => {
+    setInputs({
+      ...inputs,
+      color: currentOrder.color,
+      motorcycle: currentOrder.motorcycle.model,
+      brand: currentOrder.motorcycle.brand})
+    }, [currentOrder])
 
   async function handleSumbitImage(e) {
     e.preventDefault()
@@ -53,7 +60,6 @@ export default function CreateImageForm() {
       `${process.env.REACT_APP_HOST_NAME}/openAI/generateImage`,
       inputs
     )
-    console.log(generateImage.data.image)
     setImage(generateImage.data.image)
   }
 
@@ -68,7 +74,7 @@ export default function CreateImageForm() {
         <section className={styles["my-form-box"]}>
           <form className={styles["my-form"]} onSubmit={handleSumbitImage}>
             <section className={styles["item-info"]}>
-              <h2>Generate your image to celebrate your new motorcycle</h2>
+              <h2>Congratulations on your purchase! Let's celebrate generating a cool image of your new {currentOrder.motorcycle.brand} {currentOrder.motorcycle.model}</h2>
               <div>
                 <label for="style">Style</label>
                 <select
