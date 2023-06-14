@@ -9,7 +9,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import swal from 'sweetalert2';
 import { convertirNumero } from '../../utils';
 import { Rating } from "@mui/material";
-import ReturnToHomeButton from "../ReturnToHomeButton/ReturnToHomeButton";
+import Swal from "sweetalert2";
+import withReactContent from 'sweetalert2-react-content';
 
 
 export default function Detail() {
@@ -25,8 +26,10 @@ export default function Detail() {
   const [shoppingCartButton, setShoppingCartButton] = React.useState(false);
   const { isAuthenticated, user, loginWithRedirect } = useAuth0();
   const [stock, setStock] = React.useState(true);
-  const [rating, setRating] = useState(null)
+  const [rating, setRating] = useState(null);
+  const [reviews, setReviews] = useState([])
   const [item, setItem] = React.useState(null);
+  const mySwal= withReactContent(Swal);
 
   const handleDescription = () => {
     setDetails(false);
@@ -126,6 +129,22 @@ export default function Detail() {
     else dispatch(addItemToFavs(item));
   }
 
+  const showReviews = () => {
+    mySwal.fire({
+      title: "Reviews",
+      icon: "info",
+      html: <div>
+        {reviews?.map(r => {
+          return <div> 
+            <Rating readOnly value={r.rating} />
+            <p>{r.comment}</p>
+            <hr />
+          </div>
+        })}
+      </div>
+    })
+  }
+
   React.useEffect(() => {
 
     if (motorcycle && shoppingCart.some(el => el.id === motorcycle.id && el.color === pickedColor)) {
@@ -149,6 +168,7 @@ export default function Detail() {
 
       axios.get(`${process.env.REACT_APP_HOST_NAME}/reviews/motorcycles/${id}`)
       .then(d => {
+        setReviews(d.data)
         if(d.data.length > 0) {let total = 0;
         d.data.forEach(r => total += r.rating)
         setRating(Math.ceil(total/d.data.length))}
@@ -213,12 +233,16 @@ export default function Detail() {
             <p>{motorcycle.category}</p>
             <h1>{motorcycle.brand} {motorcycle.model}</h1>
             <h3>{motorcycle.year}</h3>
-            {rating !== null ? <Rating
+            {rating !== null ? 
+            <>
+            <Rating
             name="read-only-detail"
             value={rating}
             readOnly
             size="large"
-          />  : null }
+          /><p style={{ fontWeight: '700'}} onClick={showReviews}>Reviews</p>
+          </>
+          : null }
           </div>
           <div className={styles['separator']}></div>
           <div className={styles['price-container']}>
