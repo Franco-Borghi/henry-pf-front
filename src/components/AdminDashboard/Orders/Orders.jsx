@@ -122,8 +122,8 @@ export default function Orders() {
                 <thead className={styles.thead}>
                     <tr className={styles.tr}>
                         {
-                            orders && orders.length &&
-                            <>
+                            orders && orders.length
+                            ? <>
                                 <th className={styles.th}>Order Number</th>
                                 <th className={styles.th}>Order Status</th>
                                 <th className={styles.th}>User ID</th>
@@ -131,7 +131,8 @@ export default function Orders() {
                                 <th className={styles.th}>Items Quantity</th>
                                 <th className={styles.th}>Amount Paid</th>
                                 <th className={styles.th}>Action</th>
-                            </>
+                              </>
+                            : null
                         }
                     </tr>
                 </thead>
