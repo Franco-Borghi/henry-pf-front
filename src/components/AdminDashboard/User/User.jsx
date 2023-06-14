@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './User.module.scss';
 import swal from 'sweetalert2';
 import { convertirNumero } from '../../../utils';
+import validateUser from '../Users/validationsUser';
 
 export const User = () => {
 
@@ -17,6 +18,7 @@ export const User = () => {
   const [idNumber, setIdNumber] = React.useState(null);
   const [active, setActive] = React.useState(null);
   const [role, setRole] = React.useState(null);
+  const [errors, setErrors] = useState({})
   const navigate = useNavigate();
 
   const getUser = () => {
@@ -40,6 +42,9 @@ export const User = () => {
   }
 
   const handlePut = () => {
+    let auxErrors = validateUser({firstName, lastName, phoneNumber, idNumber});
+    if(Object.keys(auxErrors).length === 0){
+      setErrors({})
     axios.put(`${process.env.REACT_APP_HOST_NAME}/users/${user.id}`, {
       // editedFromAdmin: true,
       firstName,
@@ -50,6 +55,7 @@ export const User = () => {
       role
     })
     .then(() => {
+      setEdit(false)
       getUser();
     })
     .then(res => {
@@ -68,6 +74,14 @@ export const User = () => {
         buttons: true,
       })
     })
+  }else{
+    setErrors(auxErrors);
+    new swal({
+      title: "Error",
+      text: "There are some incorrect fields",
+      icon: "error",
+    })
+  }
   }
 
   React.useEffect(() => {
@@ -90,7 +104,7 @@ export const User = () => {
             edit && user.role !== 'admin'
             ? <div className={styles['absolute']}>
                 <div className={styles["save-div"]}>
-                  <button className={styles.save} onClick={() => {handlePut(); setEdit(false)}} type='button'>Save</button>
+                  <button className={styles.save} onClick={() => {handlePut()}} type='button'>Save</button>
                   <button className={styles.cancel} onClick={() => {refreshState(); setEdit(false)}} type='button'>Cancel</button>
                 </div>
               </div>
@@ -107,11 +121,11 @@ export const User = () => {
             edit
             ? <>
                 <div><span>ID:</span> {user.id} </div>
-                <div><span>First Name:</span><input placeholder='empty' type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} /></div>
-                <div><span>Last Name:</span><input placeholder='empty' type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} /></div>
+                <div><span>First Name:</span><input placeholder='empty' type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />{errors.firstName ? <p>{errors.firstName}</p> : null}</div>
+                <div><span>Last Name:</span><input placeholder='empty' type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />{errors.lastName ? <p>{errors.lastName}</p> : null}</div>
                 <div><span>Email:</span> {user.email}</div>
-                <div><span>Phone Number:</span><input placeholder='empty' type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} /></div>
-                <div><span>ID Number:</span><input placeholder='empty' type="text" value={idNumber} onChange={(e) => setIdNumber(e.target.value)} /></div>
+                <div><span>Phone Number:</span><input placeholder='empty' type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />{errors.phoneNumber ? <p>{errors.phoneNumber}</p> : null}</div>
+                <div><span>ID Number:</span><input placeholder='empty' type="text" value={idNumber} onChange={(e) => setIdNumber(e.target.value)} />{errors.idNumber ? <p>{errors.idNumber}</p> : null}</div>
                 <div>
                   <span>Active:</span>
                   <select value={active} onChange={(e) => setActive(e.target.value === "true")}>

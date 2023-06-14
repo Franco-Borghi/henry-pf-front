@@ -3,6 +3,7 @@ import React from 'react';
 import swal from 'sweetalert2';
 import styles from './Items.module.scss';
 import { useNavigate } from 'react-router-dom';
+import validateColor from './validateColor';
 
 export function ItemRow({item, getItems}) {
 
@@ -11,10 +12,13 @@ export function ItemRow({item, getItems}) {
   const navigate = useNavigate();
 
   const handlePut = () => {
+    let error = validateColor(color)
+    if(error === ""){
     axios.put(`${process.env.REACT_APP_HOST_NAME}/items/${item.chassisId}`, {
       color,
     })
     .then(() => {
+      setEdit(false)
       getItems();
     })
     .then(res => {
@@ -36,6 +40,14 @@ export function ItemRow({item, getItems}) {
         buttons: true,
       })
     })
+  }else{
+    return new swal({
+      title: "Error",
+      text: `${error}`,
+      icon: "error",
+      buttons: true,
+    })
+  }
   }
 
   const refreshState = () => {
@@ -65,7 +77,7 @@ export function ItemRow({item, getItems}) {
         {
           edit
           ? <>
-              <button className={styles.save} onClick={() => {handlePut(); setEdit(false)}} type='button'>Save</button>
+              <button className={styles.save} onClick={() => {handlePut()}} type='button'>Save</button>
               <button className={styles.cancel} onClick={() => {refreshState(); setEdit(false)}} type='button'>Cancel</button>
             </>
           : <>

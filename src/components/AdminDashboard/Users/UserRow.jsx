@@ -17,14 +17,12 @@ export function UserRow({user, getUsers}) {
   const [active, setActive] = React.useState(user.active);
   const [role, setRole] = React.useState(user.role);
   const navigate = useNavigate();
-  const [errors, setErrors] = React.useState({});
   const mySwal = withReactContent(Swal);
  
 
   const handlePut = () => {
     const auxErrors = validateUser({firstName, lastName, phoneNumber, idNumber})
     if(Object.keys(auxErrors).length === 0){
-      setErrors({}) 
     axios.put(`${process.env.REACT_APP_HOST_NAME}/users/${user.id}`, {
       // editedFromAdmin: true,
       firstName,
@@ -36,6 +34,7 @@ export function UserRow({user, getUsers}) {
         
     })
     .then(() => {
+      setEdit(false);
       getUsers();
     })
     .then(res => {
@@ -55,9 +54,10 @@ export function UserRow({user, getUsers}) {
       })
       }) }
       else{
-        setErrors(auxErrors)
          mySwal.fire({
-          html: <strong>There are some incorrect fields, check the errors and try again</strong>,
+          html: <div>
+            {Object.values(auxErrors).map(e => <p>{e}</p>)}
+            </div>,
           icon: "warning",
         })
       }
@@ -115,7 +115,7 @@ export function UserRow({user, getUsers}) {
         {
           edit
           ? <>
-              <button className={styles.save} onClick={() => {handlePut(); setEdit(false)}} type='button'>Save</button>
+              <button className={styles.save} onClick={() => {handlePut()}} type='button'>Save</button>
               <button className={styles.cancel} onClick={() => {refreshState(); setEdit(false)}} type='button'>Cancel</button>
             </>
           : <>
