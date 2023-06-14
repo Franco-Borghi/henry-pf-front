@@ -41,7 +41,8 @@ export default function Form(){
     async function handleSumbitMotorcycle(e){
         e.preventDefault()
         let errorsAux = validate(inputs, categories);
-        if(JSON.stringify(errorsAux) === JSON.stringify({})) {
+        console.log(errorsAux);
+        if(Object.keys(errorsAux).length === 0) {
             postMotorcycle({...inputs, 
                 year: Number(inputs.year), 
                 cc: Number(inputs.cc), 
