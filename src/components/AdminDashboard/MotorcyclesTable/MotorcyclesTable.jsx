@@ -7,6 +7,8 @@ import { fetchData } from "../../../redux/actions"
 import AdminSearchBar from "../AdminSearchBar/AdminSearchBar"
 import Pagination from "../../Pagination/Pagination"
 import swal from "sweetalert2"
+import validateMotorcycle from "./validations"
+import withReactContent from "sweetalert2-react-content"
 
 export default function MotorcyclesTable() {
   const [filteredData, setFilteredData] = useState([])
@@ -19,7 +21,9 @@ export default function MotorcyclesTable() {
   const dispatch = useDispatch()
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
+  const MySwal = withReactContent(swal)
 
+  
   useEffect(() => {
     setFilteredData(allMotorcycles)
   }, [allMotorcycles])
@@ -69,6 +73,7 @@ export default function MotorcyclesTable() {
     const { name, value } = e.target
     const newValue = name === "active" ? value === "active" : value
     setNewMotorcycle({ ...newMotorcycle, [name]: newValue })
+    console.log(name, newValue)
   }
 
   const startEditing = moto => {
@@ -84,6 +89,8 @@ export default function MotorcyclesTable() {
   }
 
   const submitUpdatedMotorcycle = motoId => {
+    const auxErrors = validateMotorcycle(newMotorcycle)
+    if(Object.keys(auxErrors).length === 0){
     axios
       .put(
         `${process.env.REACT_APP_HOST_NAME}/motorcycles/${motoId}`,
@@ -107,6 +114,16 @@ export default function MotorcyclesTable() {
       .catch(error => {
         console.error("Error retrieving data:", error)
       })
+     
+  }
+  else{
+    MySwal.fire({
+      html: <div>
+            {Object.values(auxErrors).map(e => <p>{e}</p>)}
+            </div>,
+          icon: "warning",
+    })
+  }
   }
 
   const searchSubmit = e => {
