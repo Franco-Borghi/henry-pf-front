@@ -41,12 +41,12 @@ const OurTeam = () => {
       linkedin: ''
     },
     {
-      name: "Compa",
+      name: "Franco Triadani",
       position: "Full Stack Developer - ",
-      education: "Benemerita Universidad Autonoma of Puebla, graduate of Henry",
-      previousEmployment: "Commercial executive at Citibanamex",
+      education: "UE Siglo 21 - Cordoba, Argentina, Analista de Mercado, Henry Academy",
+      previousEmployment: "",
       image: imgAbout,
-      linkedin: ''
+      linkedin: 'https://www.linkedin.com/in/francotriadani/'
     },
     {
       name: "Compa",
