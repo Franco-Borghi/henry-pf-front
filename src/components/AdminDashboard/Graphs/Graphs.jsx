@@ -90,7 +90,7 @@ const COLORS = ['#DDE6ED', '#9BABB8', '#EEE3CB', '#D7C0AE', "#967E76"];
                         ))}
                     </Pie>
                     <Tooltip />
-                    <Legend verticalAlign="bottom" align='right'layout='vertical' height={0}/>
+                    <Legend verticalAlign="bottom" align='right'layout='vertical' height={0} wrapperStyle={{right: "-30px"}}/>
                 </PieChart>
             </div>
 
@@ -122,7 +122,7 @@ const COLORS = ['#DDE6ED', '#9BABB8', '#EEE3CB', '#D7C0AE', "#967E76"];
                 </div>
                 <BarChart width={200} height={200} data={users}>
                     <CartesianGrid stroke='#c7c7c7' strokeDasharray="3 3" />
-                    <XAxis stroke='#c7c7c7' dataKey="name" />
+                    <XAxis stroke='#c7c7c7' dataKey="name" hide/>
                     <YAxis stroke='#c7c7c7' />
                     <Tooltip />
                     <Bar
