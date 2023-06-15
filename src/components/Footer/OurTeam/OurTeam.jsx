@@ -45,7 +45,7 @@ const OurTeam = () => {
       position: "Full Stack Developer - ",
       education: "UE Siglo 21 - Cordoba, Argentina, Analista de Mercado, Henry Academy",
       previousEmployment: "",
-      image: imgAbout,
+      image: 'https://ca.slack-edge.com/TPRS7H4PN-U037RDSS4NQ-4787d9808eb7-512',
       linkedin: 'https://www.linkedin.com/in/francotriadani/'
 
     },
