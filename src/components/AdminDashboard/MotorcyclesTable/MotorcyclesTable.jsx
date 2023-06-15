@@ -149,7 +149,7 @@ export default function MotorcyclesTable() {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Motorcycle List </h2>
+      <h2 className={styles.title}>MOTORCYLES</h2>
 
       <section className={styles["filters-section"]}>
         <div className={styles["filters-section-first-child"]}>

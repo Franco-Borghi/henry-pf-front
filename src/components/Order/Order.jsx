@@ -29,7 +29,7 @@ export default function Order(){
 
     return (
         <div className={styles.order}>
-    <h4>Order by price</h4>
+    <h4>Order by Price</h4>
     <div>
     <input type="checkbox" value="ascending" name="order" id="ascending" onClick={handleClick} ref={ascendingBtn}/> <label htmlFor="ascending">Ascending</label>
     </div>

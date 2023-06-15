@@ -96,7 +96,7 @@ export default function Users() {
 
     return (
         <div className={styles.container}>
-            <h2>Users List</h2>
+            <h2>USERS</h2>
 
             <section className={styles['filters-section']}>
                 <div className={styles['filters-section-first-child']}>
