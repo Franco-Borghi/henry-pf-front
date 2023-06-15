@@ -19,11 +19,11 @@ export default function Dashboard() {
         <FilterBar status={true}>
           {/* <ReturnToHomeButton/> */}
           {/* <h3 style={{ paddingTop: '40px'}}>Admin Bar</h3> */}
-          <NavLink to="/admin" end >Dashboard</NavLink>
-          <NavLink to="/admin/motorcycles">Motorcycles List</NavLink>
-          <NavLink to="/admin/items">Items List</NavLink>
-          <NavLink to="/admin/users">Users List</NavLink>
-          <NavLink to="/admin/orders">Orders List</NavLink>
+          <NavLink to="/admin" end >Overview</NavLink>
+          <NavLink to="/admin/motorcycles">Motorcyles</NavLink>
+          <NavLink to="/admin/items">Stock</NavLink>
+          <NavLink to="/admin/users">Users</NavLink>
+          <NavLink to="/admin/orders">Orders</NavLink>
           <NavLink to="/admin/create">Create Model / Item</NavLink>
         </FilterBar>
         <Outlet></Outlet>

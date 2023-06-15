@@ -86,7 +86,7 @@ export default function Orders() {
 
     return (
         <div className={styles.container}>
-            <h2>Orders List</h2>
+            <h2>ORDERS</h2>
 
             <section className={styles['filters-section']}>
                 <div className={styles['filters-section-first-child']}>

@@ -91,7 +91,7 @@ export default function Items() {
 
     return (
         <div className={styles.container}>
-            <h2>Items List</h2>
+            <h2>STOCK</h2>
 
             <section className={styles['filters-section']}>
                 <div className={styles['filters-section-first-child']}>
