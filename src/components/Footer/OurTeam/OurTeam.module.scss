@@ -1,0 +1,92 @@
+.container {
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('../tech.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.ourTeamSection {
+    padding: 80px 40px;
+    min-height: 100vh;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.ourTeamTitle {
+  text-align: center;
+  padding-bottom: 40px;
+  background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding-bottom: 40px;
+}
+
+.teamMembersContainer {
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.teamMember {
+  cursor: pointer;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 40px;
+  text-align: left;
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 10px rgba(2,117,255,1);
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.teamMember:hover {
+  transform: scale(1.02);
+}
+
+.memberImage {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: -40px;
+  margin-bottom: -20px;
+  border: 3px solid rgba(2,117,255,1);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.memberDetails {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.memberName {
+  font-size: 18px;
+  font-weight: 500;
+  background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.memberPosition {
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+}
+
+.memberEducation {
+  font-size: 16px;
+  color: #c7c7c7;
+}
+
+.memberEmployment {
+  font-size: 16px;
+  color: #c7c7c7;
+}

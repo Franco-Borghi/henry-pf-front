@@ -13,6 +13,16 @@
   color: #fff;
   position: relative;
 
+  .heart-container {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+    z-index: 2;
+  }
+
   > h1 {
     opacity: 1;
     z-index: 2;
@@ -37,8 +47,7 @@
     img {
       position: relative;
       z-index: 1;
-      // width: 100%;
-      height: 550px;
+      width: 90%;
       object-fit: contain;
       object-position: center;
     }
@@ -162,6 +171,37 @@
         &[data-visible="true"] {
           display: block;
         }
+      }
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  .detail-container {
+    max-width: 700px;
+    flex-direction: column;
+
+    .heart-container {
+      top: 10px;
+      right: 10px;
+    }
+
+    .img-container {
+      width: 100%;
+    }
+
+    .detail {
+      width: 100%;
+
+      h1 {
+        font-size: 32px !important;
+        line-height: 38px !important;
+      }
+
+      .price-container {
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: flex-start;
       }
     }
   }

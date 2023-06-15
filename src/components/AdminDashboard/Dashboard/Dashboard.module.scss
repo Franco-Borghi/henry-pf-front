@@ -1,0 +1,43 @@
+.list-container {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  padding-left: 250px;
+  // background-color: #fff;
+
+  nav {
+    background-color: #fff;
+
+    > div {
+      > div {
+        padding-top: 60px;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+
+        a {
+          list-style: none;
+          color: #000;
+          padding: 10px;
+          border-radius: 10px;
+          font-weight: 500;
+          width: fit-content;
+          background-color: #c7c7c7;
+          transition: all 0.3s ease-in-out;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .return-to-home-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    cursor: pointer;
+  }
+
+  
+}
