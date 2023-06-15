@@ -68,7 +68,8 @@
   margin: 0 auto;
 
   .item-info {
-    h1 {
+    h2 {
+      font-weight: 700;
       text-align: center;
       background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
       background-clip: text;
@@ -356,7 +357,7 @@
     .my-form {
       .item-info {
 
-        h1 {
+        h2 {
           font-size: 24px;
         }
 

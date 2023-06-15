@@ -24,11 +24,12 @@ import Items from "./components/AdminDashboard/Items/Items";
 import { Order } from "./components/AdminDashboard/Order/Order";
 import { Favourites } from "./containers/Favourites/Favourites";
 import CreateImageForm from "./components/CreateImageForm/CreateImageForm";
+import swal from "sweetalert2";
 
 function App() {
 
   const dispatch = useDispatch();
-  const { user, isAuthenticated } = useAuth0();
+  const { user, isAuthenticated, logout } = useAuth0();
   const reduxUser = useSelector(state => state.user);
 
   useEffect(() => {
@@ -61,6 +62,17 @@ function App() {
   useEffect(() => {
     fetchData(dispatch)
   }, [])
+
+  useEffect(() => {
+    if (isAuthenticated && user && reduxUser && !reduxUser.active) {
+      return new swal({
+        title: "Error",
+        text: "We regret to inform you that your account has been deactivated. To reactivate it, please contact our support team through the contact form on our website.",
+        icon: "error",
+        buttons: true,
+      }).then(() => logout({ logoutParams: { returnTo: window.location.origin } }))
+    }
+  }, [reduxUser])
 
 
   
