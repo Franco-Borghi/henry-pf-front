@@ -101,7 +101,7 @@ export default function ProfileForm() {
   return (
     <div className={styles.container}>
       <div className={styles.ProfileForm}>
-        <h1>Profile Account</h1>
+        <h1>PROFILE ACCOUNT</h1>
       <div className={styles['selector-container']}>
           <div className={styles['selector']}>
             <h4 onClick={handleProfile} className={styles[`${profile}`]}>Personal Data</h4>
@@ -114,7 +114,7 @@ export default function ProfileForm() {
           <div data-visible={`${orders}`} className={styles[`selector-content`]}>
             <OrdersProfile selectedOrders={selectedOrders} profileData={profileData} toggleItems={toggleItems} />
           </div>
-          <div data-visible={`${reviews}`} className={styles[`selector-content`]}>
+          <div style={{ overflowX: 'scroll' }} data-visible={`${reviews}`} className={styles[`selector-content`]}>
             <Review orders={profileData?.orders} user={user} />
           </div>
         </div>

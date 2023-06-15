@@ -48,7 +48,7 @@ const navigate = useNavigate()
 
   return (
     <div className={styles.contactUsContainer}>
-      <h1>Contact us</h1>
+      <h1>CONTACT US</h1>
       <div className={styles['my-form-box']}>
         <div className={styles.formContainer}>
           <form onSubmit={handleSubmit} className={styles.contactForm}>

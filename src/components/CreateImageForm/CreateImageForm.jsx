@@ -11,6 +11,7 @@ export default function CreateImageForm() {
   const mySwal = withReactContent(Swal)
 
   const currentOrder = useSelector(state => state.currentOrder)
+  const [loader, setLoader] = useState(false);
   const [image, setImage] = useState("")
   const [inputs, setInputs] = useState({
     brand: "BMW",
@@ -64,11 +65,13 @@ export default function CreateImageForm() {
   async function handleSumbitImage(e) {
     e.preventDefault()
 
+    setLoader(true);
     const generateImage = await axios.post(
       `${process.env.REACT_APP_HOST_NAME}/openAI/generateImage`,
       inputs
     )
     setImage(generateImage.data.image)
+    setLoader(false);
   }
 
   function handleChange(e) {
@@ -76,18 +79,42 @@ export default function CreateImageForm() {
     setInputs(inputsAux)
   }
 
+  const handleDownload = () => {
+    const link = document.createElement('a');
+    link.href = image;
+    link.download = 'imagen.png';
+    link.click();
+  };
+
   return (
     <>
+      {
+        loader
+        ? 
+          <div className={styles["loader-openia"]}>
+            <div class={styles["pyramid-loader"]}>
+              <div class={styles["wrapper"]}>
+                <span class={styles["side1"]}></span>
+                <span class={styles["side2"]}></span>
+                <span class={styles["side3"]}></span>
+                <span class={styles["side4"]}></span>
+                <span class={styles["shadow"]}></span>
+              </div>  
+            </div>
+          </div>
+          
+        : null
+      }
       <div className={styles["form-container"]}>
         <section className={styles["my-form-box"]}>
           <form className={styles["my-form"]} onSubmit={handleSumbitImage}>
             <section className={styles["item-info"]}>
-              <h2>Congratulations on your order! Let's celebrate generating a cool image of your new {currentOrder?.motorcycle.brand || "motorcycle"} {currentOrder?.motorcycle.model}
-              </h2>
+              <h1>{`Congratulations!`.toUpperCase()}</h1>
+              <h4>Let's celebrate generating a cool image of your new {currentOrder?.motorcycle.brand || "motorcycle"} {currentOrder?.motorcycle.model}</h4>
     
 
               <div className={styles["input-container"]}>
-                <div>
+                <div className={styles["input-container-item"]}>
                   <label htmlFor="style">Style</label>
                   <select
                     name="style"
@@ -102,7 +129,7 @@ export default function CreateImageForm() {
                   </select>
                 </div>
 
-                <div>
+                <div className={styles["input-container-item"]}>
                   <label htmlFor="background">Background</label>
                   <select
                     name="background"
@@ -118,7 +145,7 @@ export default function CreateImageForm() {
                   </select>
                 </div>
 
-                <div>
+                <div className={styles["input-container-item"]}>
                   <label htmlFor="background">Type of image</label>
                   <select
                     name="typeOfImage"
@@ -135,13 +162,14 @@ export default function CreateImageForm() {
                 </div>
               </div>
             </section>
-            <input type="submit" value="Generate" />
-            <input
-              type="submit"
-              value="No, thank you"
-              onClick={() => navigate("/")}
-              style={{ marginLeft: "10px" }}
-            />
+            <div className={styles['inputs-container']}>
+              <input type="submit" value="Generate" />
+              <input
+                type="button"
+                value="No, thank you"
+                onClick={() => navigate("/")}
+              />
+            </div>
           </form>
         </section>
         {image && (
@@ -149,6 +177,16 @@ export default function CreateImageForm() {
             <img src={image} alt="generated image" />
           </div>
         )}
+        {
+          image
+          ? <div style={{ display: 'flex', justifyContent: 'center'}}>
+              <button onClick={handleDownload} className={styles['boton-afanado']}>
+                <span class="text">Download</span>
+              </button>
+            </div>
+          : null
+        }
+        
       </div>
     </>
   )

@@ -31,10 +31,10 @@ export default function Review ({orders, user}){
         <table className={styles['order-details-table']}>
             <thead>
                 <tr className={styles['order-item-row']}>
-                <th>Motorcycle</th>
-                <th>Rating</th>
-                <th>Comment</th>
-                <th>Review</th>
+                    <th>Motorcycle</th>
+                    <th>Rating</th>
+                    <th>Comment</th>
+                    <th>Review</th>
                 </tr>
             </thead>
             <tbody>

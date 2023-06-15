@@ -6,9 +6,13 @@
   flex-direction: column;
   gap: 40px;
 
-  h2 {
+  h1 {
     font-weight: 700;
     text-align: center;
+    background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .grid-container {
