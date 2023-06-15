@@ -79,23 +79,22 @@ export default function CreateImageForm() {
     setInputs(inputsAux)
   }
 
-  function downloadImage(url) {
-    fetch(url)
-      .then(response => response.blob())
-      .then(blob => {
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'image.jpg';
-        link.style.display = 'none';
-  
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+  function downloadImage() {
+      const url = image;
+      fetch(url)
+      .then(response => {
+      return response.blob();
       })
-      .catch(error => {
-        console.error('Error downloading image:', error);
+      .then(blob => {
+      const urlBlob = window.URL.createObjectURL(new Blob([blob]));
+      const link = document.createElement('a');
+      link.href = urlBlob;
+      link.setAttribute('download', 'purchase-generated-image.png');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
       });
-  }
+}
 
   return (
     <>
@@ -191,7 +190,7 @@ export default function CreateImageForm() {
         {
           image
           ? <div style={{ display: 'flex', justifyContent: 'center'}}>
-              <button onClick={() => downloadImage(image)} className={styles['boton-afanado']}>
+              <button onClick={downloadImage} className={styles['boton-afanado']}>
                 <span class="text">Download</span>
               </button>
             </div>
