@@ -27,7 +27,8 @@ export default function Review ({orders, user}){
     }, [orders])
 
     return <>
-    {motorcyclesList.length === 0 ? <div><h3>No orders made/delivered</h3></div> :
+    {motorcyclesList.length === 0 ? <div><h4 className={styles['no-reviews-message']}>No orders made/delivered</h4>
+</div> :
         <table className={styles['order-details-table']}>
             <thead>
                 <tr className={styles['order-item-row']}>

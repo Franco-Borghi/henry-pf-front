@@ -4,7 +4,7 @@ import { convertirNumero } from '../../../utils';
 export default function OrdersProfile({profileData, toggleItems, selectedOrders}) {
     return (
       <ul className={styles['orders-list']}>
-        {profileData?.orders ? (
+        {profileData?.orders && profileData.orders.length ? (
           profileData.orders.map((o) => (
             <li className={styles['order-item']}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px'}}>
@@ -47,9 +47,9 @@ export default function OrdersProfile({profileData, toggleItems, selectedOrders}
               </div>
             </li>
           ))
-        ) : (
+        ) : 
           <h4 className={styles['no-orders-message']}>You don't have any orders</h4>
-        )}
+        }
       </ul>
     )
 }
