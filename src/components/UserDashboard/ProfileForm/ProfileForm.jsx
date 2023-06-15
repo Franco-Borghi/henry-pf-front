@@ -10,6 +10,8 @@ import Review from '../Reviews/Review';
 import PersonalData from '../PersonalData/PersonalData';
 import OrdersProfile from '../OrdersProfile/OrdersProfile';
 import validateProfile from './validate';
+import { useDispatch } from 'react-redux';
+import { getUserById } from '../../../redux/actions';
 
 export default function ProfileForm() {
   const [editMode, setEditMode] = useState(false);
@@ -22,6 +24,7 @@ export default function ProfileForm() {
   const [reviews, setReviews] = useState(false);
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [errors, setErrors] = useState({})
+  const dispatch = useDispatch();
 
    useEffect(() => {
     if(!isAuthenticated) navigate("/")
@@ -83,6 +86,9 @@ export default function ProfileForm() {
     console.log(profileData);
     if (profileData.idNumber === "") profileData.idNumber = null
     axios.put(`${process.env.REACT_APP_HOST_NAME}/users/${user?.sub}`, { ...profileData })
+      .then(() => {
+        dispatch(getUserById(user.sub));
+      })
       .then(() => {
         mySwal.fire({
           html: <strong>The info has been updated</strong>,

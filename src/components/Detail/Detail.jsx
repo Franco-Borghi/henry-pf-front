@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from './Detail.module.scss';
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart, addItemToFavs, deleteItemFromFavs } from "../../redux/actions";
@@ -30,6 +30,7 @@ export default function Detail() {
   const [reviews, setReviews] = useState([])
   const [item, setItem] = React.useState(null);
   const mySwal= withReactContent(Swal);
+  const navigate = useNavigate();
 
   const handleDescription = () => {
     setDetails(false);

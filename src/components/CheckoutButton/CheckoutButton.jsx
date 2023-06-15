@@ -19,6 +19,7 @@ export function CheckoutButton() {
   }
 
   const shoppingCart = useSelector((state) => state.shoppingCart); 
+  const reduxUser = useSelector(state => state.user);
 
   const itemsToPost = shoppingCart.map((el) => {
     
@@ -48,23 +49,28 @@ export function CheckoutButton() {
   }
 
   const handleOrderCreate = (data, actions) => {
-    return actions.order
-      .create({
-        purchase_units: [
-          {
-            amount: {
-              currency_code: "USD",
-              value: handleSubmit(),
+
+    if (reduxUser && (!reduxUser.firstName || !reduxUser.lastName || !reduxUser.phoneNumber || !reduxUser.idNumber)) {
+      throw new Error('SWAL')
+    }
+
+      return actions.order
+        .create({
+          purchase_units: [
+            {
+              amount: {
+                currency_code: "USD",
+                value: handleSubmit(),
+              },
             },
-          },
-        ],
-      })
-      .then((orderId) => {
-        return orderId;
-      })
-      .catch((error) => {
-        console.error("Order creation error:", error);
-      });
+          ],
+        })
+        .then((orderId) => {
+          return orderId;
+        })
+        .catch((error) => {
+          console.error("Order creation error:", error);
+        });
   };
 
   const handleOrderCapture = (data, actions) => {
@@ -156,9 +162,22 @@ export function CheckoutButton() {
             fundingSource="paypal"
             createOrder={handleOrderCreate}
             onApprove={handleOrderCapture}
-            onError={
-              function(error) {
-                console.log(error);                      
+            onError={(error) => {
+              if (error.message === 'SWAL') {
+                return new swal({
+                  title: "Profile Incomplete",
+                  text: "Please complete your profile to proceed",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonText: 'Complete',
+                  cancelButtonText: 'Cancel'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    navigate('/profile')
+                  }
+                });
+              }
+                console.log('Button log: ', error.message);
               } 
             }
           />
