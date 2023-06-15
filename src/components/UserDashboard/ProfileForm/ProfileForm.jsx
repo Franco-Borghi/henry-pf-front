@@ -101,7 +101,7 @@ export default function ProfileForm() {
   return (
     <div className={styles.container}>
       <div className={styles.ProfileForm}>
-        <h1>PROFILE ACCOUNT</h1>
+        <h2>PROFILE ACCOUNT</h2>
       <div className={styles['selector-container']}>
           <div className={styles['selector']}>
             <h4 onClick={handleProfile} className={styles[`${profile}`]}>Personal Data</h4>

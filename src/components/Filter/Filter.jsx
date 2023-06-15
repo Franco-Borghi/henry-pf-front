@@ -67,14 +67,14 @@ export default function Filter(){
 
     return (
         <div className={styles['filters']}>
-        <h1 style={{ marginBottom: '10px'}}>Filters</h1>
+        <h2 style={{ marginBottom: '10px'}}>Filters</h2>
         {
         areFiltersSelected || ascendingState || descendingState || activeSearch
         ? <button className={styles.buttonReset} onClick={resetFilters}>Reset</button>
         : <button className={styles.buttonResetFalse}>Reset</button>
         }
         <div className={styles['filterSection']}>
-            <h3>Category</h3>
+            <h4>Category</h4>
             {categories.map(c => 
               <div key={c}>
                 <input type="checkbox" onClick={handleFilterCat} value={c} checked={categoriesFilter.includes(c)}/><label>{c}</label><br/>
@@ -82,19 +82,24 @@ export default function Filter(){
             )}
         </div>
         <div className={styles['filterSection']}>
-            <h3>Brand</h3>
+            <h4>Brand</h4>
             {brands.map(c => 
               <div key={c}>
                 <input type="checkbox" onClick={handleFilterBrand} value={c} checked={brandsFilter.includes(c)} /><label>{c}</label><br/>
               </div>
             )}
         </div>
-        <h3>Price Range</h3>
-  <label>Min Price:</label>
-  <input type="number" onChange={handleMinPriceChange} value={minPrice || ""} />
-  <br />
-  <label>Max Price:</label>
-  <input type="number" onChange={handleMaxPriceChange} value={maxPrice || ""} />
+          <h4>Price Range</h4>
+          <div className={styles['price-wrapper']}>
+            <div>
+              <label>Min Price:</label>
+              <input type="number" onChange={handleMinPriceChange} value={minPrice || ""} />
+            </div>
+            <div>
+              <label>Max Price:</label>
+              <input type="number" onChange={handleMaxPriceChange} value={maxPrice || ""} />
+            </div>
+          </div>
     </div>
     )
 }

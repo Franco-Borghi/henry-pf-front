@@ -109,7 +109,7 @@ export default function CreateImageForm() {
         <section className={styles["my-form-box"]}>
           <form className={styles["my-form"]} onSubmit={handleSumbitImage}>
             <section className={styles["item-info"]}>
-              <h1>{`Congratulations!`.toUpperCase()}</h1>
+              <h2>{`Congratulations!`.toUpperCase()}</h2>
               <h4>Let's celebrate generating a cool image of your new {currentOrder?.motorcycle.brand || "motorcycle"} {currentOrder?.motorcycle.model}</h4>
     
 

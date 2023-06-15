@@ -48,10 +48,10 @@ const navigate = useNavigate()
 
   return (
     <div className={styles.contactUsContainer}>
-      <h1>CONTACT US</h1>
       <div className={styles['my-form-box']}>
         <div className={styles.formContainer}>
           <form onSubmit={handleSubmit} className={styles.contactForm}>
+            <h2>CONTACT US</h2>
             <label className={styles.formLabel}>
               Name:
               <input type="text" name="firstName" value={formState.firstName} onChange={handleChange} className={styles.formInput} required />
