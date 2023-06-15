@@ -65,6 +65,8 @@ function App() {
     fetchData(dispatch)
   }, [])
 
+  
+
   useEffect(() => {
     if (isAuthenticated && user && reduxUser && !reduxUser.active) {
       return new swal({
