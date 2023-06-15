@@ -53,7 +53,9 @@ function App() {
     }
 
     if (isAuthenticated && user && user.email) {
+      setTimeout(() => {
       dispatch(getUserById(user.sub));
+      }, 1250)
     } else {
       dispatch(getUserById(null));
     }
@@ -62,6 +64,8 @@ function App() {
   useEffect(() => {
     fetchData(dispatch)
   }, [])
+
+  
 
   useEffect(() => {
     if (isAuthenticated && user && reduxUser && !reduxUser.active) {
@@ -75,7 +79,7 @@ function App() {
   }, [reduxUser])
 
 
-  
+
 
   return (
     <>
@@ -93,19 +97,19 @@ function App() {
             <Route path="/create-image" element={<CreateImageForm />} />
           </Route>
           {/* //ruta dashAdmin */}
-          {/*    {
-            isAuthenticated  &&  reduxUser && reduxUser.role === 'admin' &&   TODO: descomentar */}
-          <Route path="admin" element={<Dashboard />} >
-            <Route index element={<Graphs />} />
-            <Route path="items" element={<Items />} />
-            <Route path="motorcycles" element={<MotorcyclesTable />} /> {/* A cambiar luego */}
-            <Route path="create" element={<Form />} />
-            <Route path="users" element={<Users />} />
-            <Route path="users/:id" element={<User />}/>
-            <Route path="orders" element={<Orders />} />
-            <Route path="orders/:id" element={<Order />} />
-          </Route>
-          {/*    } */}
+          {
+            isAuthenticated && reduxUser && reduxUser.role === 'admin' &&
+            <Route path="admin" element={<Dashboard />} >
+              <Route index element={<Graphs />} />
+              <Route path="items" element={<Items />} />
+              <Route path="motorcycles" element={<MotorcyclesTable />} /> 
+              <Route path="create" element={<Form />} />
+              <Route path="users" element={<Users />} />
+              <Route path="users/:id" element={<User />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="orders/:id" element={<Order />} />
+            </Route>
+          }
         </Routes>
       </BrowserRouter>
     </>
