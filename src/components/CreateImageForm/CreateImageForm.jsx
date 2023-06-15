@@ -79,22 +79,12 @@ export default function CreateImageForm() {
     setInputs(inputsAux)
   }
 
-  function downloadImage() {
-      const url = image;
-      fetch(url)
-      .then(response => {
-      return response.blob();
-      })
-      .then(blob => {
-      const urlBlob = window.URL.createObjectURL(new Blob([blob]));
-      const link = document.createElement('a');
-      link.href = urlBlob;
-      link.setAttribute('download', 'purchase-generated-image.png');
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      });
-}
+  const handleDownload = () => {
+    const link = document.createElement('a');
+    link.href = image;
+    link.download = 'imagen.png';
+    link.click();
+  };
 
   return (
     <>
@@ -190,8 +180,8 @@ export default function CreateImageForm() {
         {
           image
           ? <div style={{ display: 'flex', justifyContent: 'center'}}>
-              <button onClick={downloadImage} className={styles['boton-afanado']}>
-                <span class="text">Download</span>
+              <button onClick={handleDownload} className={styles['boton-afanado']}>
+                <span class="text">Preview</span>
               </button>
             </div>
           : null
