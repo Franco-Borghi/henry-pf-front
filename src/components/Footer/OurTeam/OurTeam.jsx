@@ -29,16 +29,16 @@ const OurTeam = () => {
       position: "Full Stack Developer",
       education: "Sophmore at Florida International Univeristy - Business Analytics, Henry Academy",
       previousEmployment: "",
-      image: imgAbout,
-      linkedin: ''
+      image: 'https://media.licdn.com/dms/image/D4E03AQGIco5ycGf4kQ/profile-displayphoto-shrink_200_200/0/1686872918530?e=1692230400&v=beta&t=13CLKtJD-9nGg3OU-b6Lg_-6dhwehMcssZgDVXjB6Tc',
+      linkedin: 'https://www.linkedin.com/in/lucas-schneebeli-593733253/'
     },
     {
       name: "Ivan Nicolas Daicich",
       position: "Full Stack Developer - ",
       education: "Universidad del Salvador - Computer Engineer, Henry Academy",
       previousEmployment: "",
-      image: imgAbout,
-      linkedin: ''
+      image: 'https://media.licdn.com/dms/image/D4D03AQF8Nv8083lsaA/profile-displayphoto-shrink_800_800/0/1686872681129?e=1692230400&v=beta&t=n6fWXRdXm1TP2iw_YLq5efh1vXK9BPzWCeYwcvFRPb8',
+      linkedin: 'https://www.linkedin.com/in/ivan-daicich-166479215/'
     },
     {
       name: "Franco Triadani",
