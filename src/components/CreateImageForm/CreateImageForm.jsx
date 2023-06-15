@@ -82,6 +82,7 @@ export default function CreateImageForm() {
   const handleDownload = () => {
     const link = document.createElement('a');
     link.href = image;
+    link.target = '_blank';
     link.download = 'imagen.png';
     link.click();
   };
