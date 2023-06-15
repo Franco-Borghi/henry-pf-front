@@ -1,13 +1,49 @@
 .graphs-container {
   width: -webkit-fill-available;
-  padding-top: 5%;
-  padding-left: 25%;
-  padding-bottom: 5%;
+  padding: 40px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 60px;
+  background-image: url('https://img.freepik.com/free-vector/smooth-white-wave-background_52683-55288.jpg?w=1480&t=st=1686790830~exp=1686791430~hmac=a2bd034e35c168cc1a72832bcc0821850fa9a167594ee4251def570f2c29971e');
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 25px;
+
+    .grid-item  {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 25px;
+      border-radius: 10px;
+      background-color: #282828;
+
+      .text {
+        color: white;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding-bottom: 40px;
+
+        h3 {
+          font-weight: 500;
+          background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
+        p {
+          color: #c7c7c7;
+        }
+      }
+    }
+  }
+
 }
+
 .pie{
   align-items: center ;
 }
