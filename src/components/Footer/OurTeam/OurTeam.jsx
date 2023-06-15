@@ -93,7 +93,7 @@ const OurTeam = () => {
                 <h4 className={styles.memberName}>{member.name}</h4>
                 <p className={styles.memberPosition}>{member.position}</p>
                 <p className={styles.memberEducation}>University: {member.education}</p>
-                <p className={styles.memberEmployment}>Relevant trajectory: {member.previousEmployment}</p>  
+                {member.previousEmployment ? <p className={styles.memberEmployment}>Relevant trajectory: {member.previousEmployment}</p>: null  }
               </div>
             </div>
           ))}
