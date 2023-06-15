@@ -1,13 +1,16 @@
 import { Link } from 'react-router-dom';
-import React from 'react'
+import React, { useState } from 'react'
 import styles from "./Motorcycle.module.scss";
 import { useSelector } from 'react-redux';
+import axios from 'axios';
+import Rating from '@mui/material/Rating'; 
 
 export default function Motorcycle(props) {
 
   const { id, brand, image, price, model, category, description, year } = props.info;
   const allMotorcycles = useSelector(state => state.allMotorcycles);
   const [stock, setStock] = React.useState(true);
+  const [rating, setRating] = useState(null)
 
   function convertirNumero(numero) {
     // Convertir el número a string
@@ -35,6 +38,12 @@ export default function Motorcycle(props) {
 
   React.useEffect(() => {
     setStock(allMotorcycles.some(moto => moto.id === id && moto.items.some(item => item.sold === false)))
+    axios.get(`${process.env.REACT_APP_HOST_NAME}/reviews/motorcycles/${id}`)
+      .then(d => {
+        if(d.data.length > 0) {let total = 0;
+        d.data.forEach(r => total += r.rating)
+        setRating( Math.ceil(total/d.data.length))}
+      })
   }, [])
 
   return (
@@ -54,6 +63,13 @@ export default function Motorcycle(props) {
             <p>{category}</p>
             <h4>{`${brand} ${model}`}</h4>
             <p>{year}</p>
+            {rating !== null ? 
+            <Rating
+            name="read-only-motorcycle"
+            value={rating}
+            readOnly
+          /> 
+            :null}
             {/* <p>{description}</p> */}
           </div>
           <div className={styles.buttonContainer}>

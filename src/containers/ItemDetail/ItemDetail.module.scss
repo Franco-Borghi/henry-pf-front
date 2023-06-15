@@ -5,7 +5,7 @@
   justify-content: center;
   width: 100%;
   min-height: 100vh;
-  padding: 100px 40px 80px;
+  padding: 40px 40px 80px;
   max-width: 1440px;
   margin: 0 auto;
 }
@@ -23,5 +23,11 @@
     gap: 10px;
     width: fit-content;
     cursor: pointer;
+  }
+}
+
+@media (max-width: 1023px) {
+  .card-detail-container {
+    padding: 40px 25px;
   }
 }

@@ -1,14 +1,24 @@
-import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID, ORDER_ASC, ORDER_DESC, SET_ACTIVE_SEARCH, ADD_ITEM_TO_CART, DELETE_ITEM_FROM_CART, UPDATE_CART_ITEM_QUANTITY } from "./actions";
+
+import { CHANGE_FILTER_BRAND, CHANGE_FILTER_CATEGORY, GET_ALL_MOTOS, GET_MOTOS_BY_NAME, GET_MOTO_BY_ID, ORDER_ASC, ORDER_DESC, SET_ACTIVE_SEARCH, ADD_ITEM_TO_CART, DELETE_ITEM_FROM_CART, UPDATE_CART_ITEM_QUANTITY, GET_ORDERS, GET_USER_BY_ID, ADD_ITEM_TO_FAVS, DELETE_ITEM_FROM_FAVS, CHANGE_MAX_PRICE, CHANGE_MIN_PRICE, SET_CURRENT_ORDER } from "./actions";
+
+
+
 
 const initialState = {
     motos: [],
     allMotorcycles: [],
     shoppingCart: [],
+    favourites: [],
     filterCategory: [],
     filterBrand: [],
     orderAsc : false,
     orderDesc : false,
     activeSearch: '',
+    orders:[],
+    user: null,
+    minPrice: null,
+    maxPrice: null,
+    currentOrder: null,
 }
 
 export const reducer = (state = initialState, action) => {
@@ -53,6 +63,18 @@ export const reducer = (state = initialState, action) => {
                 orderDesc : action.payload,
             }
 
+        case CHANGE_MIN_PRICE:
+            return {
+                ...state,
+                minPrice: action.payload
+            }
+
+        case CHANGE_MAX_PRICE:
+            return {
+                ...state,
+                maxPrice: action.payload
+            }
+
         case CHANGE_FILTER_CATEGORY:
             if(state.filterCategory.includes(action.payload)){
             return {
@@ -93,7 +115,21 @@ export const reducer = (state = initialState, action) => {
                     shoppingCart: [...state.shoppingCart, action.payload],
                 }
             }
-            
+
+        case ADD_ITEM_TO_FAVS:
+            if (Array.isArray(action.payload)) {
+                return {
+                    ...state,
+                    favourites: [...action.payload]
+                }
+            } else {
+                console.log(`favourites${action.payload.userEmail}`);
+                localStorage.setItem(`favourites${action.payload.userEmail}`, JSON.stringify([...state.favourites, action.payload]));
+                return {
+                    ...state,
+                    favourites: [...state.favourites, action.payload],
+                }
+            }
 
         case DELETE_ITEM_FROM_CART:
             const itemToRemove = state.shoppingCart.indexOf(action.payload);
@@ -105,6 +141,20 @@ export const reducer = (state = initialState, action) => {
                 return {
                     ...state,
                     shoppingCart: [...newState],
+                }
+            }
+
+        case DELETE_ITEM_FROM_FAVS:
+            const fav = state.favourites.filter(el => el.id === action.payload.id)
+            const favsToRemove = state.favourites.indexOf(fav[0]);
+
+            if (favsToRemove > -1) {
+                const newState = state.favourites;
+                newState.splice(favsToRemove, 1)
+                localStorage.setItem(`favourites${action.payload.userEmail}`, JSON.stringify([...newState]));
+                return {
+                    ...state,
+                    favourites: [...newState],
                 }
             }
 
@@ -121,7 +171,25 @@ export const reducer = (state = initialState, action) => {
                     shoppingCart: [...cart],
                 }
             }
+            
+        case GET_ORDERS:
+            return{
+                ...state,
+                orders: action.payload
+            }
 
+        case GET_USER_BY_ID:
+            return {
+                ...state,
+                user: action.payload,
+            }
+
+        case SET_CURRENT_ORDER:
+            return {
+                ...state,
+                currentOrder: action.payload,
+            }
+        
         default:
             return state
     }

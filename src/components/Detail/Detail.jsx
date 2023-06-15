@@ -1,24 +1,36 @@
 import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from './Detail.module.scss';
 import { useDispatch, useSelector } from "react-redux";
-import { addItemToCart } from "../../redux/actions";
+import { addItemToCart, addItemToFavs, deleteItemFromFavs } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import swal from 'sweetalert2';
+import { convertirNumero } from '../../utils';
+import { Rating } from "@mui/material";
+import Swal from "sweetalert2";
+import withReactContent from 'sweetalert2-react-content';
+
 
 export default function Detail() {
   const [motorcycle, setMotorcycle] = useState(null);
+  const reduxUser = useSelector(state => state.user);
   const allMotorcycles = useSelector(state => state.allMotorcycles);
+  const favourites = useSelector(state => state.favourites);
   const [colors, setColors] = useState([]);
   const [pickedColor, setPickedColor] = useState(null);
   const { id } = useParams();
   const [description, setDescription] = React.useState(true);
   const [details, setDetails] = React.useState(false);
   const [shoppingCartButton, setShoppingCartButton] = React.useState(false);
-  const { isAuthenticated, user } = useAuth0();
+  const { isAuthenticated, user, loginWithRedirect } = useAuth0();
   const [stock, setStock] = React.useState(true);
+  const [rating, setRating] = useState(null);
+  const [reviews, setReviews] = useState([])
+  const [item, setItem] = React.useState(null);
+  const mySwal= withReactContent(Swal);
+  const navigate = useNavigate();
 
   const handleDescription = () => {
     setDetails(false);
@@ -36,6 +48,30 @@ export default function Detail() {
   const handleDispatch = () => {
     if (!stock) {
       return false;
+    }
+
+    if (!isAuthenticated) {
+      return new swal({
+        title: "Please login",
+        text: "You need to login to add items to the shopping cart",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: 'Login',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          loginWithRedirect();
+        }
+      });      
+    }
+    
+    if (reduxUser && reduxUser.role === 'admin') {
+      return new swal({
+        title: "Error",
+        text: "Admins can't make purchases",
+        icon: "error",
+        buttons: true,
+      })
     }
 
     if (!pickedColor) {
@@ -63,28 +99,51 @@ export default function Detail() {
     })
   }
 
-  function convertirNumero(numero) {
-    // Convertir el número a string
-    let numeroString = numero.toString();
-  
-    // Verificar si el número tiene parte decimal
-    if (numeroString.includes('.')) {
-      // Dividir el número en parte entera y parte decimal
-      let partes = numeroString.split('.');
-      
-      // Formatear la parte entera
-      let parteEntera = partes[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  
-      // Combinar la parte entera formateada con la parte decimal
-      let resultado = parteEntera + ',' + partes[1];
-      
-      return resultado;
-    } else {
-      // Formatear el número entero
-      let numeroFormateado = numeroString.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  
-      return numeroFormateado;
+  const handleFavourites = () => {
+    if (!isAuthenticated) {
+      return new swal({
+        title: "Please login",
+        text: "You need to login to add items to favourites",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: 'Login',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          loginWithRedirect();
+        }
+      });      
     }
+    
+    if (reduxUser && reduxUser.role === 'admin') {
+      return new swal({
+        title: "Error",
+        text: "Admins can't add to favourites",
+        icon: "error",
+        buttons: true,
+      })
+    }
+    
+    if (JSON.stringify(favourites).includes(JSON.stringify(item))) {
+      dispatch(deleteItemFromFavs(item));
+    } 
+    else dispatch(addItemToFavs(item));
+  }
+
+  const showReviews = () => {
+    mySwal.fire({
+      title: "Reviews",
+      icon: "info",
+      html: <div>
+        {reviews?.map(r => {
+          return <div> 
+            <Rating readOnly value={r.rating} />
+            <p>{r.comment}</p>
+            <hr />
+          </div>
+        })}
+      </div>
+    })
   }
 
   React.useEffect(() => {
@@ -107,6 +166,14 @@ export default function Detail() {
       } catch (error) {
         console.log(error);
       }
+
+      axios.get(`${process.env.REACT_APP_HOST_NAME}/reviews/motorcycles/${id}`)
+      .then(d => {
+        setReviews(d.data)
+        if(d.data.length > 0) {let total = 0;
+        d.data.forEach(r => total += r.rating)
+        setRating(Math.ceil(total/d.data.length))}
+      })
     };
     fetchMotorcycle();
   }, [id]);
@@ -117,17 +184,46 @@ export default function Detail() {
     }
   }, [motorcycle])
 
+  React.useEffect(() => {
+    if (motorcycle && user) {
+      setItem({
+        id: motorcycle.id,
+        brand: motorcycle.brand,
+        model: motorcycle.model,
+        year: motorcycle.year,
+        cc: motorcycle.cc,
+        transmission: motorcycle.transmission,
+        description: motorcycle.description,
+        image: motorcycle.image,
+        price: motorcycle.price,
+        category: motorcycle.category,
+        userEmail: user.email,
+      })
+    }
+  }, [motorcycle, user])
+
   if (!motorcycle) {
     return <div>Searching...</div>;
   }
 
   return (
+    
     <>
+   
     <article className={styles['detail-container']}>
       {
         !stock
         ? <h1>Item out of stock</h1>
         : null
+      }
+      {
+        user && item && favourites && favourites.length && JSON.stringify(favourites).includes(JSON.stringify(item))
+        ? <div onClick={(handleFavourites)} className={styles["heart-container"]}>
+            <ion-icon style={{ color: 'red', fontSize: '25px' }} name="heart"></ion-icon>
+          </div>
+        : <div onClick={(handleFavourites)} className={styles["heart-container"]}>
+            <ion-icon style={{ color: window.innerWidth < 1024 ? 'black' : 'white', fontSize: '25px' }} name="heart-outline"></ion-icon>
+          </div>
       }
       <div style={{ opacity: stock ? '1' : '0.5'}} className={styles['img-container']}>
         <img src={motorcycle.image} alt='product-image' />
@@ -138,6 +234,16 @@ export default function Detail() {
             <p>{motorcycle.category}</p>
             <h1>{motorcycle.brand} {motorcycle.model}</h1>
             <h3>{motorcycle.year}</h3>
+            {rating !== null ? 
+            <>
+            <Rating
+            name="read-only-detail"
+            value={rating}
+            readOnly
+            size="large"
+          /><p style={{ fontWeight: '700'}} onClick={showReviews}>Reviews</p>
+          </>
+          : null }
           </div>
           <div className={styles['separator']}></div>
           <div className={styles['price-container']}>
@@ -147,12 +253,13 @@ export default function Detail() {
             </div>
 
             <div>
-              <label onClick={() => motorcycle && motorcycle.stock > 0 && isAuthenticated && user && handleDispatch()} className={shoppingCartButton && motorcycle.stock > 0 && isAuthenticated && pickedColor ? styles['cart-container'] : styles['cart-container-disabled']}>
+              <label onClick={() => motorcycle && motorcycle.stock > 0 && handleDispatch()} className={shoppingCartButton && motorcycle.stock > 0 && isAuthenticated && pickedColor && reduxUser && reduxUser.role !== 'admin' ? styles['cart-container'] : styles['cart-container-disabled']}>
                 Add to cart 
                 <ion-icon style={{ color: "#000 "}} className='svg' size="small" name="cart-outline"></ion-icon>
               </label>
             </div>
           </div>
+
           <div className={styles['color-container']}>
             <div className={styles['color']} >
               {
@@ -164,7 +271,7 @@ export default function Detail() {
               {
                 colors.map(el => (
                   allMotorcycles.some(moto => moto.id === motorcycle.id && moto.items.some(item => item.sold === false && item.color === el ))
-                  ? <div onClick={() => setPickedColor(el.toLowerCase())} style={{ width: '20px', height: '20px', background: `${el.toLowerCase()}`, cursor: 'pointer', boxShadow: pickedColor === el.toLowerCase() ? 'rgba(255, 255, 255, 1) 0px 0px 0px 2px, rgba(255, 255, 255, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset' : ''}}></div>
+                  ? <div onClick={() => setPickedColor(el.toLowerCase())} style={{border: '1px solid #c7c7c7', width: '20px', height: '20px', background: `${el.toLowerCase()}`, cursor: 'pointer', boxShadow: pickedColor === el.toLowerCase() ? 'rgba(255, 255, 255, 1) 0px 0px 0px 1px, rgba(255, 255, 255, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset' : ''}}></div>
                   :  null
                 ))
               }
@@ -187,6 +294,8 @@ export default function Detail() {
         </div>
       </div>
     </article>
+    
+    
     </>
   );
 }
