@@ -26,6 +26,11 @@
     font-weight: 700;
     text-align: center;
     padding-bottom: 20px;
+    text-align: center;
+    background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 }
 
@@ -75,13 +80,15 @@
   margin: 0 auto;
   // box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
-  .item-info {
-    width: 50%;
+  h2 {
+    position: relative;
+    text-align: center;
+    color: #fff;
+  }
 
-    h2 {
-      text-align: start;
-      color: #fff;
-    }
+  .item-info {
+    width: 100%;
+
   }
 
   .create-model {
@@ -114,8 +121,7 @@
   .motorcycle-info {
     h2 {
       margin-top: 40px;
-      text-align: start;
-      color: #fff;
+      text-align: center;
     }
 
     .brandModel,

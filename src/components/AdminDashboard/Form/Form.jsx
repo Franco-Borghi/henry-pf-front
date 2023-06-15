@@ -120,8 +120,8 @@ export default function Form(){
         <div className={styles['form-container']}>
             <section className={styles['my-form-box']}>
                 <form className={styles['my-form']} onSubmit={handleSumbitMotorcycle}>
+                    <h2>ITEM INFO</h2>
                     <section className={styles['item-info']}>
-                        <h2>Item Info</h2>
                         <div>
                             <label for="chassisId">Chassis Number:</label>
                             <input className={styles[`${errors.chassisId ? 'error' : ''}`]} type="text" id="chassisId" name="chassisId" onChange={handleChange} value={inputs.chassisId}/>
@@ -168,7 +168,7 @@ export default function Form(){
                     </section>
                         {createModel ? 
                     <section className={styles['motorcycle-info']}>
-                        <h2>Motorcycle Info</h2>
+                        <h2>MOTORCYCLE INFO</h2>
 
                         <div className={styles.brandModel}>
                             <div className={styles.brand}>
