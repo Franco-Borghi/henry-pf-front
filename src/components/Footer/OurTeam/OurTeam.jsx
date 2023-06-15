@@ -47,14 +47,15 @@ const OurTeam = () => {
       previousEmployment: "",
       image: imgAbout,
       linkedin: 'https://www.linkedin.com/in/francotriadani/'
+
     },
     {
-      name: "Compa",
-      position: "Full Stack Developer - ",
-      education: "Benemerita Universidad Autonoma of Puebla, graduate of Henry",
-      previousEmployment: "Commercial executive at Citibanamex",
-      image: imgAbout,
-      linkedin: ''
+      name: "Ramiro Roballos",
+      position: "Full Stack Developer",
+      education: "Universidad del Salvador, Kellogg, Henry Academy",
+      previousEmployment: "Associate Partner at McKinsey & Company",
+      image: "https://media.licdn.com/dms/image/D4E03AQGIsoTzTg-P5w/profile-displayphoto-shrink_400_400/0/1664922341051?e=1692230400&v=beta&t=m9EKkZLYrSprA1TVkskrovvnEH7LyzhLCLHQlgOFmWI",
+      linkedin: 'https://www.linkedin.com/in/ramiro-roballos-0ba01450/'
     },
   ];
 
