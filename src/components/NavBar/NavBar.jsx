@@ -116,9 +116,9 @@ export default function NavBar(props) {
 
               <div className={styles['icon-container']} >
                 {
-                  isAuthenticated && reduxUser  
+                  isAuthenticated && reduxUser
                   ? <>
-                      <Link to={`/profile`}>
+                      <Link to={ reduxUser.role === 'client' ? `/profile` : `/admin`}>
                         {/* <div style={{height: '40px', width: '40px', borderRadius: '50%', cursor: 'pointer',backgroundColor: '#c7c7c7', backgroundImage: user && `url('${user.picture}')`, backgroundSize: 'cover', backgroundPosition: 'center'}}></div> */}
                         <img style={{height: '40px', width: '40px', borderRadius: '50%', cursor: 'pointer', backgroundColor: '#c7c7c7'}} src={user && user.picture} />
                         <p className={styles.txtBtnIcons}>Profile</p>
