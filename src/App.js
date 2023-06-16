@@ -96,9 +96,7 @@ function App() {
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/our-team" element={<OurTime />} />
             <Route path="/create-image" element={<CreateImageForm />} />
-            <Route path="*" element={<NotFoundPage />}/>
-          </Route>
-          {/* //ruta dashAdmin */}
+
             <Route path="admin" element={<Dashboard />} >
               <Route index element={<Graphs />} />
               <Route path="items" element={<Items />} />
@@ -110,6 +108,10 @@ function App() {
               <Route path="orders/:id" element={<Order />} />
               <Route path="*" element={<NotFoundPage />}/>
             </Route>
+
+            <Route path="/not-found" element={<NotFoundPage />}/>
+            <Route path="*" element={<NotFoundPage />}/>
+          </Route>
         </Routes>
       </BrowserRouter>
     </>

@@ -2,15 +2,24 @@ import React from "react";
 import styles from "./Dashboard.module.scss"
 import NavBar from "../../NavBar/NavBar";
 import FilterBar from "../../FilterBar/FilterBar";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Navigate, Outlet, useNavigate } from "react-router-dom";
 import ItemsTable from "../ItemsTable/ItemsTable";
 import Footer from "../../Footer/Footer";
 import Graphs from "../Graphs/Graphs";
 import ReturnToHomeButton from "../../ReturnToHomeButton/ReturnToHomeButton";
 import './Dashboard.scss'
+import { useSelector } from "react-redux";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Dashboard() {
-  const navigate = useNavigate();
+  const reduxUser = useSelector(state => state.user);
+
+  if (!reduxUser || reduxUser.role !== "admin") {
+    console.log(reduxUser);
+    return (
+      <Navigate replace to={"/not-found"} />
+    )
+  }
 
   return (
     <>

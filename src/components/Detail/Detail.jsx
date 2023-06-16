@@ -172,7 +172,7 @@ export default function Detail() {
           throw new Error("Error fetching motorcycle");
         }
       } catch (error) {
-        navigate("*");
+        navigate("/not-found");
       }
   
       try {
@@ -184,7 +184,7 @@ export default function Detail() {
           setRating(Math.ceil(total / reviewsResponse.data.length));
         }
       } catch (error) {
-        navigate("*");
+        navigate("/not-found");
       }
     };
   
