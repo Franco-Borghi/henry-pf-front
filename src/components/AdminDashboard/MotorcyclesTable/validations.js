@@ -16,7 +16,7 @@ export default function validateMotorcycle(inputs){
     if(inputs.cc <= 0 ) errors.cc = "The cc has to be greater than 0."
     if(inputs.transmission !== "Manual" && inputs.transmission !== "Automatic") errors.transmission = "The transmission has to be Manual or Automatic."
     if(inputs.category.lenght > 20) errors.category = "The category cannot be longer than 20 characters."
-    if(!(/^[a-zA-Z]+$/.test(inputs.category)) && !errors.category) errors.category = "The brand cannot have non-alphabetic characters."
+    // if(!(/^[a-zA-Z]+$/.test(inputs.category)) && !errors.category) errors.category = "The category cannot have non-alphabetic characters."
     if(inputs.description.length > 250) errors.description = "The description cannot be longer than 250 characters."
     // if(!(/\.(jpg|jpeg|png|svg)$/.test(inputs.image)) && !errors.image) errors.image = "The image has to be a .jpg/.jpeg/.png/.svg file."
     if(inputs.price <= 0) errors.price = "The price has to be greater than 0."

@@ -18,7 +18,7 @@ export default function validate(inputs, categories){
     if(inputs.description.length > 250) errors.description = "The description cannot be longer than 250 characters."
     // if(!(/\.(jpg|jpeg|png|svg)$/.test(inputs.image)) && !errors.image) errors.image = "The image has to be a .jpg/.jpeg/.png/.svg file."
     if(inputs.price <= 0) errors.price = "The price has to be greater than 0."
-    if(!(/^[a-zA-Z]+$/.test(inputs.category)) && !errors.category) errors.category = "The category have non-alphabetic characters."
+    // if(!(/^[a-zA-Z]+$/.test(inputs.category)) && !errors.category) errors.category = "The category have non-alphabetic characters."
     // if([...categories.map(c => c.toUpperCase())].includes(inputs.category.toUpperCase())) errors.category = "The category is included in the dropdown menu above, please, select it from there." CHEQUEAR ESTA LINEA, HAY QUE IDENTIFICAR SI VIENE POR DROPDOWN O POR INPUT
     return errors
 }

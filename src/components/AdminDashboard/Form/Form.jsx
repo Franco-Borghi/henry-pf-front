@@ -14,7 +14,7 @@ export default function Form(){
     const mySwal= withReactContent(Swal);
 
     const [categories, setCategories] = useState([])
-    const motorcyclesData = useSelector(state => state.motos)
+    const motorcyclesData = useSelector(state => state.allMotorcycles)
     motorcyclesData?.forEach(m => {if(!categories.includes(m.category)) setCategories(categories.concat(m.category))})
     const [inputs, setInputs] = useState({
         chassisId: "",
