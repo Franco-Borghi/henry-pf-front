@@ -64,7 +64,7 @@ export default function CreateImageForm() {
 
   async function handleSumbitImage(e) {
     e.preventDefault()
-
+    try{
     setLoader(true);
     const generateImage = await axios.post(
       `${process.env.REACT_APP_HOST_NAME}/openAI/generateImage`,
@@ -72,6 +72,10 @@ export default function CreateImageForm() {
     )
     setImage(generateImage.data.image)
     setLoader(false);
+    }catch(err){
+      console.log(err);
+      setLoader(false);
+    }
   }
 
   function handleChange(e) {
