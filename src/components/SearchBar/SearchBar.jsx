@@ -31,7 +31,7 @@ export default function SearchBar(props){
           placeholder="Search"
           ref={props.searchInput}
         />
-        <button type="submit" className={styles.btnIconSearch} onClick={() => searchMoto(props.searchInput.current.value)}>
+        <button type="submit" className={styles.btnIconSearch} onClick={() => searchMoto(props.searchInput?.current?.value)}>
           <ion-icon style={{ color: '#fff' }} size="small" name="search-outline"></ion-icon>
         </button>
       </form>
