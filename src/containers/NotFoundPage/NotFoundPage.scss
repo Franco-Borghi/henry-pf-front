@@ -1,0 +1,36 @@
+.not-found-page {
+    &__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .card {
+            border-radius: 15px;
+            min-height: 300px;
+            justify-content: center;
+            gap: 40px;
+
+            h1 {
+                background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-weight: 700;
+                text-align: center;
+            }
+
+            p {
+                color: #c7c7c7;
+
+                a {
+                    text-decoration: none;
+                    background: linear-gradient(360deg, rgba(2,94,255,1) 0%, rgba(2,117,255,1) 28%, rgba(2,141,255,1) 60%, rgba(2,200,255,1) 100%);
+                    background-clip: text;
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    font-weight: 500;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}

@@ -25,6 +25,7 @@ import { Order } from "./components/AdminDashboard/Order/Order";
 import { Favourites } from "./containers/Favourites/Favourites";
 import CreateImageForm from "./components/CreateImageForm/CreateImageForm";
 import swal from "sweetalert2";
+import { NotFoundPage } from "./containers/NotFoundPage/NotFoundPage";
 
 function App() {
 
@@ -95,10 +96,9 @@ function App() {
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/our-team" element={<OurTime />} />
             <Route path="/create-image" element={<CreateImageForm />} />
+            <Route path="*" element={<NotFoundPage />}/>
           </Route>
           {/* //ruta dashAdmin */}
-          {
-            isAuthenticated && reduxUser && reduxUser.role === 'admin' &&
             <Route path="admin" element={<Dashboard />} >
               <Route index element={<Graphs />} />
               <Route path="items" element={<Items />} />
@@ -108,8 +108,8 @@ function App() {
               <Route path="users/:id" element={<User />} />
               <Route path="orders" element={<Orders />} />
               <Route path="orders/:id" element={<Order />} />
+              <Route path="*" element={<NotFoundPage />}/>
             </Route>
-          }
         </Routes>
       </BrowserRouter>
     </>
