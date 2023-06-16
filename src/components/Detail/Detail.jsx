@@ -249,14 +249,15 @@ export default function Detail() {
             <h1>{motorcycle.brand} {motorcycle.model}</h1>
             <h3>{motorcycle.year}</h3>
             {rating !== null ? 
-            <>
-            <Rating
-            name="read-only-detail"
-            value={rating}
-            readOnly
-            size="large"
-          /><p style={{ fontWeight: '700'}} onClick={showReviews}>Reviews</p>
-          </>
+            <div style={{ marginTop: "16px"}}>
+              <Rating
+                name="read-only-detail"
+                value={rating}
+                readOnly
+                size="large"
+              />
+              <p className={styles.reviews} onClick={showReviews}>View all reviews</p>
+            </div>
           : null }
           </div>
           <div className={styles['separator']}></div>
