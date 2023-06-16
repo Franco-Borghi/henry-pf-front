@@ -4,13 +4,13 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import Swal from "sweetalert2";
 import withReactContent from 'sweetalert2-react-content';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import styles from "./ProfileForm.module.scss";
 import Review from '../Reviews/Review';
 import PersonalData from '../PersonalData/PersonalData';
 import OrdersProfile from '../OrdersProfile/OrdersProfile';
 import validateProfile from './validate';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getUserById } from '../../../redux/actions';
 
 export default function ProfileForm() {
@@ -25,9 +25,10 @@ export default function ProfileForm() {
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [errors, setErrors] = useState({})
   const dispatch = useDispatch();
+  const reduxUser = useSelector(state => state.user);
 
    useEffect(() => {
-    if(!isAuthenticated) navigate("/")
+    if(!isAuthenticated || (reduxUser && reduxUser.role !== "client")) navigate("/")
     else{
       if(!editMode){
       axios.get(`${process.env.REACT_APP_HOST_NAME}/orders/${user?.sub}`)

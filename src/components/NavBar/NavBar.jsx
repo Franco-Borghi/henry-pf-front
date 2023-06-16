@@ -116,7 +116,7 @@ export default function NavBar(props) {
 
               <div className={styles['icon-container']} >
                 {
-                  isAuthenticated && reduxUser  
+                  isAuthenticated && reduxUser  && reduxUser.role === 'client'
                   ? <>
                       <Link to={`/profile`}>
                         {/* <div style={{height: '40px', width: '40px', borderRadius: '50%', cursor: 'pointer',backgroundColor: '#c7c7c7', backgroundImage: user && `url('${user.picture}')`, backgroundSize: 'cover', backgroundPosition: 'center'}}></div> */}
