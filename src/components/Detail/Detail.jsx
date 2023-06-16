@@ -154,41 +154,6 @@ export default function Detail() {
 
   }, [shoppingCart, motorcycle, pickedColor])
 
-  // useEffect(() => {
-  //   const fetchMotorcycle = async () => {
-  //     try {
-  //       const response = await axios.get(`${process.env.REACT_APP_HOST_NAME}/motorcycles/${id}`);
-  //       console.log(response.status);
-  //       if (response.status === 200) {
-  //         setMotorcycle(response.data);
-  //         let auxColors = []
-  //         response.data.items.forEach(i => {if(!auxColors.includes(i.color)) auxColors.push(i.color)
-  //         setColors(auxColors)
-  //         })
-  //       } else {
-  //         throw new Error("error")
-  //       }
-  //     } catch (error) {
-  //       navigate("/");
-  //       console.log("error 1: ", error);
-  //     }
-
-  //     try {
-  //       axios.get(`${process.env.REACT_APP_HOST_NAME}/reviews/motorcycles/${id}`)
-  //       .then(d => {
-  //         setReviews(d.data)
-  //         if(d.data.length > 0) {let total = 0;
-  //         d.data.forEach(r => total += r.rating)
-  //         setRating(Math.ceil(total/d.data.length))}
-  //       }) 
-  //     } catch (error) {
-  //       navigate("/");
-  //       console.log("Error 2: ", error);
-  //     }
-  //   };
-  //   fetchMotorcycle();
-  // }, [id]);
-
   useEffect(() => {
     const fetchMotorcycle = async () => {
       try {
