@@ -81,14 +81,15 @@
         gap: 25px;
 
         > input {
-            background-color: #c7c7c7;
+            background-color: #fff;
             border-radius: 4px;
             padding: 0;
             width: 100px;
-            box-shadow: inset rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            outline: 1px solid #282828;
 
-            &:focus {
-                border: 1px solid #282828;
+            &:focus,
+            &:hover {
+                outline: 2px solid rgba(2,240,255,1);
             }
         }
     } 

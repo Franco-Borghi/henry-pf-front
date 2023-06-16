@@ -1,5 +1,5 @@
 import "./App.scss";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./components/Home/Home"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -25,6 +25,7 @@ import { Order } from "./components/AdminDashboard/Order/Order";
 import { Favourites } from "./containers/Favourites/Favourites";
 import CreateImageForm from "./components/CreateImageForm/CreateImageForm";
 import swal from "sweetalert2";
+import { NotFoundPage } from "./containers/NotFoundPage/NotFoundPage";
 
 function App() {
 
@@ -95,10 +96,7 @@ function App() {
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/our-team" element={<OurTime />} />
             <Route path="/create-image" element={<CreateImageForm />} />
-          </Route>
-          {/* //ruta dashAdmin */}
-          {
-            isAuthenticated && reduxUser && reduxUser.role === 'admin' &&
+
             <Route path="admin" element={<Dashboard />} >
               <Route index element={<Graphs />} />
               <Route path="items" element={<Items />} />
@@ -108,8 +106,12 @@ function App() {
               <Route path="users/:id" element={<User />} />
               <Route path="orders" element={<Orders />} />
               <Route path="orders/:id" element={<Order />} />
+              <Route path="*" element={<NotFoundPage />}/>
             </Route>
-          }
+
+            <Route path="/not-found" element={<NotFoundPage />}/>
+            <Route path="*" element={<Navigate replace to={"/not-found"} />}/>
+          </Route>
         </Routes>
       </BrowserRouter>
     </>

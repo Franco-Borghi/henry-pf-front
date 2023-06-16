@@ -9,25 +9,27 @@ export const Favourites = () => {
   const favourites = useSelector(state => state.favourites);
 
   return (
-    <div className={styles.container}>
-      <h1>FAVOURITES</h1>
+    <div style={{ justifyContent: favourites && favourites.length ? "" : "center"}} className={styles.container}>
       {
         favourites && favourites.length
-        ? <div className={styles['grid-container']}>
-            {
-              favourites && favourites.length 
+        ? <>
+            <h1>FAVOURITES</h1>
+            <div className={styles['grid-container']}>
+              {
+                favourites && favourites.length 
 
-              ? favourites.map((el, i) => (
-                <div key={i} className={styles['grid-item']}>
-                  <FavouriteCard 
-                  data = { el }
-                  />
-                </div>
-              ))
+                ? favourites.map((el, i) => (
+                  <div key={i} className={styles['grid-item']}>
+                    <FavouriteCard 
+                    data = { el }
+                    />
+                  </div>
+                ))
 
-              : null
-            }
-          </div>
+                : null
+              }
+            </div>
+          </>
         : <div className={styles['no-favs-section']}>
             <h4>No Favorites Yet!</h4>
             <p>Explore our collection of motorcycles and save your favorites for easy access later.</p>

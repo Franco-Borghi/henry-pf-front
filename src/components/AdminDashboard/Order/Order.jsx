@@ -136,9 +136,9 @@ export const Order = () => {
         </table>
 
         <div style={orderFooterStyles}>
-          <p style={{ display: 'flex', alignItems: 'flex-end', gap: '16px' }}>Authrised by: <span style={spanStyles}></span></p>
+          <p style={{ display: 'flex', alignItems: 'flex-end', gap: '16px' }}>Authorised by: <span style={spanStyles}></span></p>
           <p style={{ display: 'flex', alignItems: 'flex-end', gap: '16px' }}>Buyer's signature: <span style={spanStyles}></span></p>
-          <p style={{ display: 'flex', alignItems: 'flex-end', gap: '16px' }}>Retirement date: <span style={spanStyles}></span></p>
+          <p style={{ display: 'flex', alignItems: 'flex-end', gap: '16px' }}>Delivered : <span style={spanStyles}></span></p>
           <p style={{ display: 'flex', alignItems: 'flex-end', gap: '16px' }}></p>
         </div>
 
