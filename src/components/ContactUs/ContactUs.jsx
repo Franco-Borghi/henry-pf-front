@@ -29,7 +29,7 @@ const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post(`${process.env.REACT_APP_HOST_NAME}/email`, { destination: 'motorcyclesdinamo@gmail.com', body: formState.message, title: formState.subject} )
+    axios.post(`${process.env.REACT_APP_HOST_NAME}/email`, { destination: 'motorcyclesdinamo@gmail.com', body: `Nombre: ${formState.firstName}\n\nApellido: ${formState.lastName}\n\nEmail: ${formState.email}\n\n${formState.message}`, title: formState.subject} )
         .then(d => {
             mySwal.fire({
                 html: <strong>The email has been sent. We will contact you soon!</strong>,
