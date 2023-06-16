@@ -37,7 +37,6 @@ export default function Dashboard() {
         </FilterBar>
         <Outlet></Outlet>
       </div>
-      <Footer />
     </>
   );
 }
